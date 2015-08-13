@@ -1,0 +1,477 @@
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+%require "3"
+
+%skeleton "lalr1.cc"
+
+%defines
+%define parser_class_name {GraphQLParserImpl}
+
+%define api.token.prefix {TOK_}
+
+%define parse.error verbose
+
+%code requires
+{
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include "Ast.h"
+
+using facebook::graphql::ast::Node;
+using facebook::graphql::ast::Name;
+using facebook::graphql::ast::Definition;
+using facebook::graphql::ast::Document;
+using facebook::graphql::ast::OperationDefinition;
+using facebook::graphql::ast::VariableDefinition;
+using facebook::graphql::ast::Variable;
+using facebook::graphql::ast::SelectionSet;
+using facebook::graphql::ast::Selection;
+using facebook::graphql::ast::Field;
+using facebook::graphql::ast::Argument;
+using facebook::graphql::ast::FragmentSpread;
+using facebook::graphql::ast::InlineFragment;
+using facebook::graphql::ast::FragmentDefinition;
+using facebook::graphql::ast::Value;
+using facebook::graphql::ast::IntValue;
+using facebook::graphql::ast::FloatValue;
+using facebook::graphql::ast::StringValue;
+using facebook::graphql::ast::BooleanValue;
+using facebook::graphql::ast::EnumValue;
+using facebook::graphql::ast::ArrayValue;
+using facebook::graphql::ast::ObjectValue;
+using facebook::graphql::ast::ObjectField;
+using facebook::graphql::ast::Directive;
+using facebook::graphql::ast::Type;
+using facebook::graphql::ast::NamedType;
+using facebook::graphql::ast::ListType;
+using facebook::graphql::ast::NonNullType;
+
+union yystype {                                         \
+    const char *str;                                    \
+    Name *name;                                         \
+    Definition *definition;                             \
+    Document *document;                                 \
+    OperationDefinition *operationDefinition;           \
+    VariableDefinition *variableDefinition;             \
+    Variable *variable;                                 \
+    SelectionSet *selectionSet;                     \
+    Selection *selection;                           \
+    Field *field;                                   \
+    Argument *argument;                             \
+    FragmentSpread *fragmentSpread;                 \
+    InlineFragment *inlineFragment;                 \
+    FragmentDefinition *fragmentDefinition;         \
+    Value *value;                                   \
+    IntValue *intValue;                             \
+    FloatValue *floatValue;                         \
+    StringValue *stringValue;                       \
+    BooleanValue *booleanValue;                     \
+    EnumValue *enumValue;                           \
+    ArrayValue *arrayValue;                         \
+    ObjectValue *objectValue;                       \
+    ObjectField *objectField;                       \
+    Directive *directive;                           \
+    Type *type;                                     \
+    NamedType *namedType;                           \
+    ListType *listType;                             \
+    NonNullType *nonNullType;                       \
+    \
+    std::vector<std::unique_ptr<Name>> *nameList;                   \
+    std::vector<std::unique_ptr<Definition>> *definitionList;       \
+    std::vector<std::unique_ptr<Document>> *documentList;           \
+    std::vector<std::unique_ptr<OperationDefinition>> *operationDefinitionList; \
+    std::vector<std::unique_ptr<VariableDefinition>> *variableDefinitionList; \
+    std::vector<std::unique_ptr<Variable>> *variableList;           \
+    std::vector<std::unique_ptr<SelectionSet>> *selectionSetList;   \
+    std::vector<std::unique_ptr<Selection>> *selectionList;         \
+    std::vector<std::unique_ptr<Field>> *fieldList;                 \
+    std::vector<std::unique_ptr<Argument>> *argumentList;           \
+    std::vector<std::unique_ptr<FragmentSpread>> *fragmentSpreadList; \
+    std::vector<std::unique_ptr<InlineFragment>> *inlineFragmentList; \
+    std::vector<std::unique_ptr<FragmentDefinition>> *fragmentDefinitionList; \
+    std::vector<std::unique_ptr<Value>> *valueList;                 \
+    std::vector<std::unique_ptr<IntValue>> *intValueList;           \
+    std::vector<std::unique_ptr<FloatValue>> *floatValueList;       \
+    std::vector<std::unique_ptr<StringValue>> *stringValueList;     \
+    std::vector<std::unique_ptr<BooleanValue>> *booleanValueList;   \
+    std::vector<std::unique_ptr<EnumValue>> *enumValueList;         \
+    std::vector<std::unique_ptr<ArrayValue>> *arrayValueList;       \
+    std::vector<std::unique_ptr<ObjectValue>> *objectValueList;     \
+    std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
+    std::vector<std::unique_ptr<Directive>> *directiveList;         \
+    std::vector<std::unique_ptr<Type>> *typeList;                   \
+    std::vector<std::unique_ptr<ListType>> *listTypeList;           \
+    std::vector<std::unique_ptr<NonNullType>> *nonNullTypeList;     \
+};
+
+#define YYSTYPE union yystype
+#define YYLTYPE yy::location
+}
+                      
+%parse-param { Node ** outAST } { const char **outError }
+
+%locations
+
+%code
+{
+#include "syntaxdefs.h"
+}
+
+%token EOF 0
+%token <str> FALSE "false"
+%token <str> FRAGMENT "fragment"
+%token <str> MUTATION "mutation"
+%token <str> NULL "null"
+%token <str> QUERY "query"
+%token <str> ON "on"
+%token <str> TRUE "true"
+%token BANG "!"
+%token LPAREN "("
+%token RPAREN ")"
+%token ELLIPSIS "..."
+%token COLON ":"
+%token EQUAL "="
+%token AT "@"
+%token LBRACKET "["
+%token RBRACKET "]"
+%token LBRACE "{"
+%token PIPE "|"
+%token RBRACE "}"
+
+%token <str> VARIABLE
+%token <str> INTEGER
+%token <str> FLOAT
+%token <str> STRING
+%token <str> IDENTIFIER
+
+%type <variable> variable
+%type <intValue> int_value
+%type <floatValue> float_value
+%type <stringValue> string_value
+
+%type <document> start
+%type <document> document
+%type <name> fragment_name
+%type <name> name
+
+%type <definitionList> definition_list
+%type <definition> definition
+
+%type <operationDefinition> operation_definition
+%type <variableDefinitionList> variable_definitions
+%type <variableDefinitionList> variable_definition_list
+%type <variableDefinition> variable_definition
+%type <value> default_value_opt
+%type <value> default_value
+%type <selectionSet> selection_set
+%type <selectionSet> selection_set_opt
+%type <selectionList> selection_list
+%type <selection> selection
+%type <field> field
+%type <argumentList> arguments_opt
+%type <argumentList> arguments
+%type <argumentList> argument_list
+%type <argument> argument
+
+%type <fragmentSpread> fragment_spread
+%type <inlineFragment> inline_fragment
+%type <fragmentDefinition> fragment_definition
+%type <namedType> type_condition
+
+%type <value> value
+%type <value> value_const
+%type <booleanValue> boolean_value
+%type <enumValue> enum_value
+%type <arrayValue> array_value
+%type <arrayValue> array_value_const
+%type <valueList> value_list
+%type <valueList> value_const_list
+%type <objectValue> object_value
+%type <objectValue> object_value_const
+%type <objectFieldList> object_field_list
+%type <objectFieldList> object_field_const_list
+%type <objectField> object_field
+%type <objectField> object_field_const
+
+
+%type <directiveList> directives
+%type <directiveList> directives_opt
+%type <directiveList> directive_list
+%type <directive> directive
+
+%type <type> type
+%type <namedType> type_name
+%type <listType> list_type
+%type <nonNullType> non_null_type
+
+%type <str> operation_type
+
+%printer { yyoutput << $$; } <str>
+
+%%
+
+start:          document  { *outAST = $1; }
+        ;
+
+/* All of the non-identifier tokens are to accommodate various flavors
+   of name that don't include those tokens. */
+fragment_name:  IDENTIFIER { $$ = new Name(@1, strdup($1)); }
+        |       FALSE { $$ = new Name(@1, strdup($1)); }
+        |       FRAGMENT { $$ = new Name(@1, strdup($1)); }
+        |       MUTATION { $$ = new Name(@1, strdup($1)); }
+        |       NULL { $$ = new Name(@1, strdup($1)); }
+        |       QUERY { $$ = new Name(@1, strdup($1)); }
+        |       TRUE { $$ = new Name(@1, strdup($1)); }
+        ;
+
+name: fragment_name
+        |       ON { $$ = new Name(@1, strdup($1)); }
+        ;
+/* 8.3.1 Document */
+
+document:       definition_list { $$ = new Document(@$, $1); }
+        ;
+                
+definition_list:definition { $$ = new std::vector<std::unique_ptr<Definition>>(); $$->emplace_back($1); }
+        |       definition_list definition { $1->emplace_back($2); $$ = $1; }
+        ;
+
+definition:     operation_definition { $$ = static_cast<Definition *>($1); }
+        |       fragment_definition { $$ = static_cast<Definition *>($1);}
+        ;
+
+
+/* 8.3.2 Operations */
+operation_definition:
+                selection_set { $$ = new OperationDefinition(@$, strdup("query"), nullptr, nullptr, nullptr, $1); }
+        |       operation_type name selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, nullptr, $3); }
+        |       operation_type name variable_definitions selection_set { $$ = new OperationDefinition(@$, $1, $2, $3, nullptr, $4); }
+        |       operation_type name directives selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, $3, $4); }
+        |       operation_type name variable_definitions directives selection_set { $$ = new OperationDefinition(@$, $1, $2, $3, $4, $5); }
+        ;
+
+operation_type: QUERY { $$ = strdup($1); }
+        |       MUTATION { $$ = strdup($1); }
+        ;
+
+variable_definitions:
+                "(" variable_definition_list ")" { $$ = $2; }
+        ;
+
+variable_definition_list:
+                variable_definition { $$ = new std::vector<std::unique_ptr<VariableDefinition>>(); $$->emplace_back($1); }
+        |       variable_definition_list variable_definition { $1->emplace_back($2); $$ = $1; }
+        ;
+
+variable:       VARIABLE { $$ = new Variable(@$, new Name(@1, strdup($1))); }
+        ;
+
+variable_definition:
+                variable ":" type default_value_opt { $$ = new VariableDefinition(@$, $1, $3, $4); }
+        ;
+
+default_value_opt:
+                %empty { $$ = nullptr; }
+        |       default_value
+        ;
+
+default_value:  "=" value_const { $$ = $2; }
+        ;
+
+selection_set:
+                  "{" selection_list "}" { $$ = new SelectionSet(@$, $2); }
+        ;
+
+selection_set_opt:
+                %empty { $$ = nullptr; }
+        |       selection_set
+        ;
+selection_list: selection { $$ = new std::vector<std::unique_ptr<Selection>>(); $$->emplace_back($1); }
+        |       selection_list selection { $1->emplace_back($2); $$ = $1; }
+        ;
+
+selection:      field { $$ = static_cast<Selection *>($1); }
+        |       fragment_spread { $$ = static_cast<Selection *>($1); }
+        |       inline_fragment { $$ = static_cast<Selection *>($1); }
+        ;
+
+field:          name arguments_opt directives_opt selection_set_opt { $$ = new Field(@$, nullptr, $1, $2, $3, $4); }
+        |       name ":" name arguments_opt directives_opt selection_set_opt { $$ = new Field(@$, $1, $3, $4, $5, $6); }
+        ;
+
+arguments:      "(" argument_list ")" { $$ = $2; }
+        ;
+
+arguments_opt:  %empty { $$ = nullptr; }
+        |       arguments { $$ = $1; }
+        ;
+
+argument_list:  argument { $$ = new std::vector<std::unique_ptr<Argument>>(); $$->emplace_back($1); }
+        |       argument_list argument { $1->emplace_back($2); $$ = $1; }
+        ;
+
+argument:       name ":" value { $$ = new Argument(@$, $1, $3); }
+        ;
+
+/* 8.3.3 Fragments */
+fragment_spread:
+                "..." fragment_name directives_opt { $$ = new FragmentSpread(@$, $2, $3); }
+        ;
+
+inline_fragment:
+                "..." "on" type_condition directives_opt selection_set { $$ = new InlineFragment(@$, $3, $4, $5); }
+        ;
+
+fragment_definition:
+                "fragment" fragment_name "on" type_condition directives_opt selection_set { $$ = new FragmentDefinition(@$, $2, $4, $5, $6); }
+        ;
+
+type_condition: type_name
+        ;
+
+/* 8.3.4 Values */
+value:          variable { $$ = static_cast<Value *>($1); }
+        |       int_value { $$ = static_cast<Value *>($1); }
+        |       float_value { $$ = static_cast<Value *>($1); }
+        |       string_value { $$ = static_cast<Value *>($1); }
+        |       boolean_value { $$ = static_cast<Value *>($1); }
+        |       enum_value { $$ = static_cast<Value *>($1); }
+        |       array_value { $$ = static_cast<Value *>($1); }
+        |       object_value { $$ = static_cast<Value *>($1); }
+        ;
+
+int_value:      INTEGER { $$ = new IntValue(@$, strdup($1)); }
+        ;
+
+float_value:    FLOAT { $$ = new FloatValue(@$, strdup($1)); }
+        ;
+
+string_value:   STRING { $$ = new StringValue(@$, strdup($1)); }
+        ;
+
+value_const:    int_value { $$ = static_cast<Value *>($1); }
+        |       float_value { $$ = static_cast<Value *>($1); }
+        |       string_value { $$ = static_cast<Value *>($1); }
+        |       boolean_value { $$ = static_cast<Value *>($1); }
+        |       enum_value { $$ = static_cast<Value *>($1); }
+        |       array_value_const { $$ = static_cast<Value *>($1); }
+        |       object_value_const { $$ = static_cast<Value *>($1); }
+        ;
+
+boolean_value:  TRUE { $$ = new BooleanValue(@$, true); }
+        |       FALSE { $$ = new BooleanValue(@$, false); }
+        ;
+
+enum_value:     IDENTIFIER { $$ = new EnumValue(@$, strdup($1)); }
+        |       FRAGMENT { $$ = new EnumValue(@$, strdup($1)); }
+        |       MUTATION { $$ = new EnumValue(@$, strdup($1)); }
+        |       ON { $$ = new EnumValue(@$, strdup($1)); }
+        |       QUERY { $$ = new EnumValue(@$, strdup($1)); }
+        ;
+
+/* 8.3.4.1 Array Value */
+
+/* REVIEW: the empty case is inefficient; consider implementing
+   ArrayValue manually. Don't forget to also do array_value_const. */
+array_value:    "[" "]" { $$ = new ArrayValue(@$, new std::vector<std::unique_ptr<Value>>()); }
+        |       "[" value_list "]" { $$ = new ArrayValue(@$, $2); }
+        ;
+
+value_list:     value { $$ = new std::vector<std::unique_ptr<Value>>(); $$->emplace_back($1); }
+        |       value_list value { $1->emplace_back($2); $$ = $1; }
+        ;
+
+array_value_const:
+                "[" "]" { $$ = new ArrayValue(@$, new std::vector<std::unique_ptr<Value>>()); }
+        |       "[" value_const_list "]" { $$ = new ArrayValue(@$, $2); }
+        ;
+
+value_const_list:
+                value_const { $$ = new std::vector<std::unique_ptr<Value>>(); $$->emplace_back($1); }
+        |       value_const_list value_const { $1->emplace_back($2); $$ = $1; }
+        ;
+
+/* 8.3.4.2 Object Value */
+/* REVIEW: Inefficient, like ArrayValue. */
+object_value:   "{" "}" { $$ = new ObjectValue(@$, new std::vector<std::unique_ptr<ObjectField>>()); }
+        |       "{" object_field_list "}" { $$ = new ObjectValue(@$, $2); }
+        ;
+
+object_field_list:
+                object_field { $$ = new std::vector<std::unique_ptr<ObjectField>>(); $$->emplace_back($1); }
+        |       object_field_list object_field { $1->emplace_back($2); $$ = $1; }
+        ;
+
+object_field:   name ":" value { $$ = new ObjectField(@$, $1, $3); }
+        ;
+
+object_value_const:
+                "{" "}" { $$ = new ObjectValue(@$, new std::vector<std::unique_ptr<ObjectField>>()); }
+        |       "{" object_field_const_list "}" { $$ = new ObjectValue(@$, $2); }
+        ;
+
+object_field_const_list:
+                object_field_const { $$ = new std::vector<std::unique_ptr<ObjectField>>(); $$->emplace_back($1); }
+        |       object_field_const_list object_field_const { $1->emplace_back($2); $$ = $1; }
+        ;
+
+object_field_const: name ":" value_const { $$ = new ObjectField(@$, $1, $3); }
+        ;
+
+/* 8.3.5 Directives */
+
+directives:     directive_list
+        ;
+
+directives_opt: %empty { $$ = nullptr; }
+        |       directives
+        ;
+
+directive_list: directive { $$ = new std::vector<std::unique_ptr<Directive>>(); $$->emplace_back($1); }
+        |       directive_list directive { $1->emplace_back($2); $$ = $1; }
+        ;
+
+directive:      "@" name arguments_opt { $$ = new Directive(@$, $2, $3); }
+        ;
+
+/* 8.3.6 Types */
+
+type:           type_name { $$ = static_cast<Type *>($1); }
+        |       list_type { $$ = static_cast<Type *>($1); }
+        |       non_null_type { $$ = static_cast<Type *>($1); }
+        ;
+
+type_name:      name { $$ = new NamedType(@$, $1); }
+        ;
+
+list_type:      "[" type "]" { $$ = new ListType(@$, $2); }
+        ;
+
+non_null_type:  type_name "!" { $$ = new NonNullType(@$, $1); }
+        |       list_type "!" { $$ = new NonNullType(@$, $1); }
+        ;
+%%
+void yy::GraphQLParserImpl::error(const yy::location &loc, const std::string &str) {
+  std::ostringstream out;
+  out << loc << ": " << str;
+  if (outError) {
+    *outError = strdup(out.str().c_str());
+  }
+}
+
+/* Workaround for syntax_error ctor being marked inline, which causes link
+   errors if used from lexer.lpp. */
+yy::GraphQLParserImpl::syntax_error make_error(const yy::location &loc, const std::string &str) {
+  return yy::GraphQLParserImpl::syntax_error(loc, str);
+}

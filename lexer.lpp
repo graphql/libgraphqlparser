@@ -1,0 +1,131 @@
+/**
+ * Copyright (c) 2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+%{
+#include <cassert>
+#include <vector>
+#include "location.hh"
+#include "position.hh"
+#include "parser.tab.hpp"
+#include "syntaxdefs.h"
+
+static std::string str;
+static yy::location loc;
+
+// Keep track of token lengths.
+#define YY_USER_ACTION loc.columns(yyleng);
+
+void lexer_reset() {
+  str.clear();
+  loc.initialize();
+}
+
+%}
+
+%option bison-bridge bison-locations
+%option noyywrap batch noinput nounput
+
+%x STRING_STATE
+%x C_COMMENT_STATE
+%x LINE_COMMENT_STATE
+
+FLOAT -?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?
+INTEGER -?(0|[1-9][0-9]*)
+IDENTIFIER [_A-Za-z][_0-9A-Za-z]*
+VARIABLE $[_0-9A-Za-z]+
+
+blank [ \t\v\f\xa0,]
+/* NOTE: When we do UTF-8, we need to add \u2028
+  and \u2029 here. */
+newline [\n\r]
+notnewline [^\n\r]
+
+%%
+
+%{
+  loc.step();
+%}
+
+{blank}+ { loc.step(); }
+{newline}+ { loc.lines(yyleng); loc.step(); }
+
+# {loc.step(); BEGIN(LINE_COMMENT_STATE); }
+
+<LINE_COMMENT_STATE>{
+  {newline} { loc.step(); BEGIN(INITIAL); }
+  {notnewline}+ /* eat comment character */
+}
+
+false   { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_FALSE; }
+fragment { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_FRAGMENT; }
+mutation { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_MUTATION; }
+null { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_NULL; }
+on { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_ON; }
+query { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_QUERY; }
+true { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_TRUE; }
+
+{INTEGER} { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_INTEGER; }
+{FLOAT} { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_FLOAT; }
+{IDENTIFIER} { yylval->str = yytext; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_IDENTIFIER; }
+{VARIABLE} { yylval->str = yytext + 1; *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_VARIABLE; }
+
+"!" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_BANG; }
+"(" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_LPAREN; }
+")" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_RPAREN; }
+"..." { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_ELLIPSIS; }
+":" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_COLON; }
+"=" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_EQUAL; }
+"@" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_AT; }
+"[" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_LBRACKET; }
+"]" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_RBRACKET; }
+"{" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_LBRACE; }
+"|" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_PIPE; }
+"}" { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_RBRACE; }
+
+
+<<EOF>> { *yylloc = loc; return yy::GraphQLParserImpl::token::TOK_EOF; }
+
+\"   {
+  BEGIN(STRING_STATE);
+  str.clear();
+}
+
+<STRING_STATE>{
+  \"    {
+    BEGIN(INITIAL);
+    yylval->str = str.c_str();
+    return yy::GraphQLParserImpl::token::TOK_STRING;
+  }
+
+  [^"\\]+  {
+    char *p = yytext;
+    while (*p) {
+      loc.columns();
+      str.push_back(*p++);
+    }
+  }
+
+  \\\" { loc.columns(); str.push_back('"'); }
+  \\\\ { loc.columns(); str.push_back('\\'); }
+  \\\/ { loc.columns(); str.push_back('/'); }
+  \\n { loc.columns(); str.push_back('\n'); }
+  \\t { loc.columns(); str.push_back('\t'); }
+  \\r { loc.columns(); str.push_back('\r'); }
+  \\b { loc.columns(); str.push_back('\b'); }
+  \\f { loc.columns(); str.push_back('\f'); }
+
+  \\u[0-9A-Fa-f]{4} {
+    loc.columns(6);
+    int ch;
+    sscanf(yytext + 1, "%x", &ch);
+    str.push_back(ch);
+  }
+}
+
+. {throw make_error(loc, std::string("unrecognized character ") + yytext[0]); }

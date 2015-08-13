@@ -1,0 +1,123 @@
+# Mini-language for AST definition.
+# All AST nodes extend AstNode.
+# All AST nodes are visitible.
+# All AST fields have a getter and a setter and are a constructor argument.
+# We have concrete types (code T) and unions (code U).
+# S for singular field, P for plural, ? for nullable.
+# O for option in a union.
+# Scalar type ontology: string, boolean
+
+# Location tracking for Identifier is probably useful for error messages.
+U Definition
+O OperationDefinition
+O FragmentDefinition
+
+T Document
+P Definition definitions
+
+T OperationDefinition
+S OperationKind operation
+S? Name name
+P? VariableDefinition variableDefinitions
+P? Directive directives
+S SelectionSet selectionSet
+
+T VariableDefinition
+S Variable variable
+S Type type
+S? Value defaultValue
+
+T SelectionSet
+P Selection selections
+
+U Selection
+O Field
+O FragmentSpread
+O InlineFragment
+
+T Field
+S? Name alias
+S Name name
+P? Argument arguments
+P? Directive directives
+S? SelectionSet selectionSet
+
+T Argument
+S Name name
+S Value value
+
+T FragmentSpread
+S Name name
+P? Directive directives
+
+T InlineFragment
+S NamedType typeCondition
+P? Directive directives
+S SelectionSet selectionSet
+
+T FragmentDefinition
+S Name name
+S NamedType typeCondition
+P? Directive directives
+S SelectionSet selectionSet
+
+U Value
+O Variable
+O IntValue
+O FloatValue
+O StringValue
+O BooleanValue
+O EnumValue
+O ArrayValue
+O ObjectValue
+
+T Variable
+S Name name
+
+T IntValue
+S string value
+
+T FloatValue
+S string value
+
+T StringValue
+S string value
+
+T BooleanValue
+S boolean value
+
+T EnumValue
+S string value
+
+T ArrayValue
+P Value values
+
+T ObjectValue
+P ObjectField fields
+
+T ObjectField
+S Name name
+S Value value
+
+T Directive
+S Name name
+P? Argument arguments
+
+U Type
+O NamedType
+O ListType
+O NonNullType
+
+T NamedType
+S Name name
+
+T ListType
+S Type type
+
+T NonNullType
+# JS version prohibits nesting nonnull in nonnull, we can't because we
+# can't support multiple unions. Fix?
+S Type type  
+
+T Name
+S string value
