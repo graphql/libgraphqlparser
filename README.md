@@ -29,7 +29,7 @@ in the `test` subdirectory.
 ## Building libgraphqlparser
 
 libgraphqlparser is built with [CMake](http://www.cmake.org/). If a
-sufficiently-recent version of Flex and Bison are installed on your
+sufficiently-recent version of [Flex](http://flex.sourceforge.net/) and [Bison](http://www.gnu.org/software/bison/) are installed on your
 system, it will use them; otherwise, it will rely on the checked-in
 `parser.tab.{c,h}pp` and `lexer.{h,cpp}`.
 
