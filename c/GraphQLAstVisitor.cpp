@@ -7,12 +7,12 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#include "GraphQLAstVisitor.h"
-#include "../AstVisitor.h"
+#include "c/GraphQLAstVisitor.h"
+#include "AstVisitor.h"
 
 using namespace facebook::graphql::ast;
 
-#include "GraphQLAstForEachConcreteType.h"
+#include "c/GraphQLAstForEachConcreteType.h"
 
 #define DECLARE_VISIT(type, snake_type) \
   bool visit##type(const type &node) override; \

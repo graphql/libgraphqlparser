@@ -11,28 +11,36 @@ FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
 FIND_PACKAGE(BISON 3)
 FIND_PACKAGE(FLEX)
 IF (BISON_FOUND)
-  BISON_TARGET(graphqlparser parser.ypp parser.tab.cpp)
+  BISON_TARGET(graphqlparser parser.ypp ${CMAKE_CURRENT_SOURCE_DIR}/parser.tab.cpp)
 ENDIF()
 
 IF(FLEX_FOUND)
-  FLEX_TARGET(GraphQLScanner lexer.lpp lexer.cpp COMPILE_FLAGS "--header-file=lexer.h")
+  FLEX_TARGET(GraphQLScanner lexer.lpp ${CMAKE_CURRENT_SOURCE_DIR}/lexer.cpp COMPILE_FLAGS "--header-file=lexer.h")
   IF (BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(GraphQLScanner graphqlparser)
   ENDIF()
 ENDIF()
 
+FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/c)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+
 ADD_LIBRARY(graphqlparser SHARED
-  Ast.cpp
-  JsonVisitor.cpp Ast.h AstVisitor.h
-  c/GraphQLAst.h
-  c/GraphQLAst.cpp
+  JsonVisitor.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/Ast.h
+  ${CMAKE_CURRENT_BINARY_DIR}/Ast.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/AstVisitor.h
+  ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAst.h
+  ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAst.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAstForEachConcreteType.h
   c/GraphQLAstNode.cpp
-  c/GraphQLAstForEachConcreteType.h
   c/GraphQLAstVisitor.h
   c/GraphQLAstVisitor.cpp
   c/GraphQLParser.cpp
-  parser.tab.cpp parser.tab.hpp
+  parser.tab.hpp
+  parser.tab.cpp
   lexer.cpp
+  lexer.h
   GraphQLParser.cpp)
 
 TARGET_COMPILE_FEATURES(graphqlparser PUBLIC cxx_auto_type cxx_override)
@@ -40,41 +48,24 @@ TARGET_COMPILE_FEATURES(graphqlparser PUBLIC cxx_auto_type cxx_override)
 ADD_EXECUTABLE(dump_json_ast dump_json_ast.cpp)
 TARGET_LINK_LIBRARIES(dump_json_ast graphqlparser)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT Ast.h
-  COMMAND python ./ast/ast.py c++ ./ast/ast.ast > Ast.h
-  DEPENDS ./ast/ast.ast
-  )
+FUNCTION(GENERATE_AST_FILE FILE_TYPE FILE_RELATIVE_PATH)
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${FILE_RELATIVE_PATH}
+    COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py ${FILE_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast > ${CMAKE_CURRENT_BINARY_DIR}/${FILE_RELATIVE_PATH}
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py)
+ENDFUNCTION(GENERATE_AST_FILE)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT AstVisitor.h
-  COMMAND python ./ast/ast.py c++visitor ./ast/ast.ast > AstVisitor.h
-  DEPENDS ./ast/ast.ast
-  )
+GENERATE_AST_FILE(c++ Ast.h)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT Ast.cpp
-  COMMAND python ./ast/ast.py c++impl ./ast/ast.ast > Ast.cpp
-  DEPENDS ./ast/ast.ast
-  )
+GENERATE_AST_FILE(c++visitor AstVisitor.h)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT c/GraphQLAst.h
-  COMMAND python ./ast/ast.py c ./ast/ast.ast > c/GraphQLAst.h
-  DEPENDS ./ast/ast.ast
-  )
+GENERATE_AST_FILE(c++impl Ast.cpp)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT c/GraphQLAst.cpp
-  COMMAND python ./ast/ast.py cimpl ./ast/ast.ast > c/GraphQLAst.cpp
-  DEPENDS ./ast/ast.ast
-  )
+GENERATE_AST_FILE(c c/GraphQLAst.h)
 
-ADD_CUSTOM_COMMAND(
-  OUTPUT c/GraphQLAstForEachConcreteType.h
-  COMMAND python ./ast/ast.py cvisitorimpl ./ast/ast.ast > c/GraphQLAstForEachConcreteType.h
-  DEPENDS ./ast/ast.ast
-  )
+GENERATE_AST_FILE(cimpl c/GraphQLAst.cpp)
+
+GENERATE_AST_FILE(cvisitorimpl c/GraphQLAstForEachConcreteType.h)
 
 ADD_SUBDIRECTORY(python)
 
