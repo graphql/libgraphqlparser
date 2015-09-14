@@ -1,5 +1,7 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(libgraphqlparser C CXX)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 FIND_PACKAGE(PythonInterp)
 IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
@@ -43,7 +45,10 @@ ADD_LIBRARY(graphqlparser SHARED
   lexer.h
   GraphQLParser.cpp)
 
-TARGET_COMPILE_FEATURES(graphqlparser PUBLIC cxx_auto_type cxx_override)
+# Enable this and remove CMAKE_CXX_FLAGS fiddle above when we are able
+# to upgrade to CMake 2.8.12. Blocker seems to be Travis CI being on
+# Ubuntu Precise; Trusty has 2.8.12.
+# TARGET_COMPILE_OPTIONS(graphqlparser PUBLIC -std=gnu++11)
 
 ADD_EXECUTABLE(dump_json_ast dump_json_ast.cpp)
 TARGET_LINK_LIBRARIES(dump_json_ast graphqlparser)
