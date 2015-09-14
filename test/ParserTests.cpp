@@ -10,8 +10,8 @@
 #include <gtest/gtest.h>
 #include <cstdlib>
 
-#include "../Ast.h"
-#include "../GraphQLParser.h"
+#include "Ast.h"
+#include "GraphQLParser.h"
 
 using namespace facebook::graphql;
 using namespace facebook::graphql::ast;
