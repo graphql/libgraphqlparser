@@ -76,11 +76,12 @@ ADD_SUBDIRECTORY(python)
 
 OPTION(test "Build tests." OFF)
 
-INSTALL(DIRECTORY c ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/c DESTINATION include/graphqlparser
-  FILES_MATCHING PATTERN "*.h"
-  PATTERN "build" EXCLUDE)
+file(GLOB CXXHEADERS *.h *.hh)
+file(GLOB CHEADERS ${CMAKE_CURRENT_BINARY_DIR}/c/*.h)
 
-INSTALL(FILES AstNode.h GraphQLParser.h JsonVisitor.h DESTINATION include/graphqlparser)
+INSTALL(FILES ${CXXHEADERS} DESTINATION include/graphqlparser)
+INSTALL(FILES ${CHEADERS} DESTINATION include/graphqlparser/c)
+
 INSTALL(TARGETS graphqlparser
   LIBRARY DESTINATION lib)
 
