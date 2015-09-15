@@ -7,7 +7,7 @@ Ast.h
 Ast.cpp
 AstVisitor.h
 *.dSYM
-CmakeCache.txt
+CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Makefile
