@@ -18,7 +18,9 @@ def load_lang(lang):
     'c++visitor': 'ast_cxx_visitor',
     'js': 'ast_js',
     'cython': 'ast_cython',
+    'cythonimpl': 'ast_cython_impl',
     'cythonvisitor': 'ast_cython_visitor',
+    'cythonvisitorimpl': 'ast_cython_visitor_impl',
    }
   module_name = lang2modulename.get(lang)
   if module_name is None:
