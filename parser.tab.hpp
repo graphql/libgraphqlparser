@@ -372,7 +372,7 @@ namespace yy {
 
 
     /// Build a parser object.
-    GraphQLParserImpl (Node ** outAST_yyarg, const char **outError_yyarg);
+    GraphQLParserImpl (Node **outAST_yyarg, const char **outError_yyarg, void *scanner_yyarg);
     virtual ~GraphQLParserImpl ();
 
     /// Parse.
@@ -585,14 +585,15 @@ namespace yy {
 
 
     // User arguments.
-    Node ** outAST;
+    Node **outAST;
     const char **outError;
+    void *scanner;
   };
 
 
 
 } // yy
-#line 596 "parser.tab.hpp" // lalr1.cc:392
+#line 597 "parser.tab.hpp" // lalr1.cc:392
 
 
 
