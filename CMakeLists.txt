@@ -77,7 +77,7 @@ ADD_SUBDIRECTORY(python)
 OPTION(test "Build tests." OFF)
 
 file(GLOB CXXHEADERS *.h *.hh)
-file(GLOB CHEADERS ${CMAKE_CURRENT_BINARY_DIR}/c/*.h)
+file(GLOB CHEADERS c/*.h)
 
 INSTALL(FILES ${CXXHEADERS} DESTINATION include/graphqlparser)
 INSTALL(FILES ${CHEADERS} DESTINATION include/graphqlparser/c)
