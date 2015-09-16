@@ -11,10 +11,19 @@ import ast_cython
 
 
 def field_prototype(owning_type, type, name, nullable, plural):
+  _map = {'cmodule': ast_cython_c.CMODULE_NAME,
+          'owning_st': ast_cython_c.struct_name(owning_type),
+          'snake': snake(name)}
   if plural:
-    return 'def get_%s_size(self):' % snake(name)
+    return '''
+    def get_%(snake)s_size(self):
+        return %(cmodule)s.%(owning_st)s_get_%(snake)s_size(self._wrapped)
+''' % _map
   else:
-    return 'def get_%s(self):' % snake(name)
+    return '''
+    def get_%(snake)s(self):
+        pass
+''' % _map
 
 
 class Printer(object):
@@ -55,8 +64,7 @@ cdef class %(name)s(GraphQLAst):
        'cmodule': ast_cython_c.CMODULE_NAME}
 
   def field(self, type, name, nullable, plural):
-    pass
-    #print field_prototype(self._current_type, type, name, nullable, plural)
+    print '    ' + field_prototype(self._current_type, type, name, nullable, plural)
 
   def end_type(self, name):
     print
