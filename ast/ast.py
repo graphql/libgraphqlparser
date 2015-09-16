@@ -17,6 +17,7 @@ def load_lang(lang):
     'c++impl': 'ast_cxx_impl',
     'c++visitor': 'ast_cxx_visitor',
     'js': 'ast_js',
+    'cythonc': 'ast_cython_c',
     'cython': 'ast_cython',
     'cythonimpl': 'ast_cython_impl',
     'cythonvisitor': 'ast_cython_visitor',

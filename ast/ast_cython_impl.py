@@ -6,22 +6,16 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 from casing import snake
-from license import C_LICENSE_COMMENT
+import ast_cython_c
 import ast_cython
 
-CMODULE_NAME = 'cGraphQLAst'
 
 def field_prototype(owning_type, type, name, nullable, plural):
-  _map = {'st_name': ast_cython.struct_name(owning_type),
-          'snake': snake(name),
-          'cmodule': CMODULE_NAME}
   if plural:
-    return '    def get_%(snake)s_size(self):\n        return %(cmodule)s.%(st_name)s_get_%(snake)s_size(self._wrapped)' % _map
+    return 'def get_%s_size(self):' % snake(name)
   else:
-    return ''
-    ret_type = ast_cython.return_type(type)
-    return '%s %s_get_%s(const %s *node)' % (
-      ret_type, st_name, snake(name), st_name)
+    return 'def get_%s(self):' % snake(name)
+
 
 class Printer(object):
   '''Printer for a visitor in cython
@@ -31,30 +25,42 @@ class Printer(object):
     self._types = []
 
   def start_file(self):
-    print ast_cython.license_comment() + '''
+    print ast_cython_c.license_comment() + '''
 
 cimport %s
 
-''' % CMODULE_NAME
+cdef class GraphQLAst:
+   """Base class for all Ast pieces"""
+
+   def __init__(self, name=None, alias=None):
+       self.name = name
+       self.alias = alias
+
+''' % ast_cython_c.CMODULE_NAME
 
   def start_type(self, name):
     self._current_type = name
     _map = {'snake': snake(name), 'name': name}
     print '''
 
+cdef class %(name)s(GraphQLAst):
 
-cdef class %(name)s:
+    @staticmethod
+    cdef create(%(cmodule)s.%(name)s *thing):
+        node = %(name)s()
+        node._wrapped = thing
+        return node
 
-    cdef %(cmodule)s.%(name)s* _wrapped
-
-''' % {'name': ast_cython.struct_name(name),
-       'cmodule': CMODULE_NAME}
+''' % {'name': ast_cython_c.struct_name(name),
+       'cmodule': ast_cython_c.CMODULE_NAME}
 
   def field(self, type, name, nullable, plural):
-    print field_prototype(self._current_type, type, name, nullable, plural)
+    pass
+    #print field_prototype(self._current_type, type, name, nullable, plural)
 
   def end_type(self, name):
-    pass
+    print
+    print
 
   def end_file(self):
     pass

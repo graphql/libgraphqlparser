@@ -6,26 +6,27 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 from casing import snake
-from license import C_LICENSE_COMMENT
-import ast_cython
+import ast_cython_c
 
 CMODULE_NAME = 'cGraphQLAstVisitor'
 
 
 class Printer(object):
-  '''Printer for a visitor in cython
+  '''Printer for a visitor implementation in cython
   '''
 
   def __init__(self):
     self._types = []
 
   def start_file(self):
-    print ast_cython.license_comment() + '''
+    print ast_cython_c.license_comment() + '''
 
 from libc.string cimport memset
 cimport %(cmodule)s
 cimport GraphQLAstNode
 cimport cGraphQLAstNode
+cimport cGraphQLAst
+cimport GraphQLAst
 
 cdef class GraphQLAstVisitor:
 
@@ -55,20 +56,22 @@ cdef class GraphQLAstVisitor:
       print '''
 
 cdef int visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
-    cdef GraphQLAstVisitor visitor;
+    cdef GraphQLAstVisitor visitor
+    ast = GraphQLAst.GraphQLAst%(name)s.create(node)
     if userData is not NULL:
       visitor = <GraphQLAstVisitor>userData
       if hasattr(visitor, 'visit_%(snake)s'):
-        retval = visitor.visit_%(snake)s()
+        retval = visitor.visit_%(snake)s(ast)
         return 0 if retval is None else retval
     return 1
 
 cdef void end_visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
-    cdef GraphQLAstVisitor visitor;
+    cdef GraphQLAstVisitor visitor
+    ast = GraphQLAst.GraphQLAst%(name)s.create(node)
     if userData is not NULL:
       visitor = <GraphQLAstVisitor>userData
       if hasattr(visitor, 'end_visit_%(snake)s'):
-        visitor.end_visit_%(snake)s()
+        visitor.end_visit_%(snake)s(ast)
 ''' % _map
 
     print '''

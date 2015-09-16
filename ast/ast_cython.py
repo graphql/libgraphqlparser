@@ -7,47 +7,25 @@
 
 from casing import snake
 import re
-import ast_cython
-from license import C_LICENSE_COMMENT
+import ast_cython_c
 
-
-def struct_name(type):
-  return 'GraphQLAst' + type
-
-
-def return_type(type):
-  if type == 'OperationKind' or type == 'string':
-    return 'const char *'
-
-  if type == 'boolean':
-    return 'int'
-
-  return 'const %s *' % struct_name(type)
-
-
-def field_prototype(owning_type, type, name, nullable, plural):
-  st_name = struct_name(owning_type)
-  if plural:
-    return 'int %s_get_%s_size(const %s *node)' % (
-      st_name, snake(name), st_name)
-  else:
-    ret_type = return_type(type)
-    return '%s %s_get_%s(const %s *node)' % (
-      ret_type, st_name, snake(name), st_name)
-
-
-def license_comment():
-  return re.sub(re.compile(r'^[ ]*', re.MULTILINE), '#', C_LICENSE_COMMENT) + '# @generated'
+CMODULE_NAME = 'GraphQLAst'
 
 
 class Printer(object):
-  '''Printer for the visitor cython interface.
+  '''Printer for the Ast Python Object level cython interface.
 
   '''
   def start_file(self):
-    print license_comment() + '''
+    print ast_cython_c.license_comment() + '''
 
-cdef extern from "GraphQLAst.h":
+cimport cGraphQLAst
+
+
+cdef class GraphQLAst:
+   """Base class for all Ast pieces"""
+   cdef object name
+   cdef object alias
 
 '''
 
@@ -55,21 +33,28 @@ cdef extern from "GraphQLAst.h":
     pass
 
   def start_type(self, name):
-    # Forward declarations for AST nodes.
-    st_name = struct_name(name)
-    print '    struct ' + st_name + ':'
-    print '        pass'
+    st_name = ast_cython_c.struct_name(name)
+    print '''
+cdef class %(name)s(GraphQLAst):
+
+    cdef %(cmodule)s.%(name)s* _wrapped
+
+    @staticmethod
+    cdef create(cGraphQLAst.%(name)s *thing)
+
+''' % {'name': st_name, 'cmodule': ast_cython_c.CMODULE_NAME}
     self._current_type = name
 
   def field(self, type, name, nullable, plural):
-    print '    ' + field_prototype(self._current_type, type, name, nullable, plural)
+    #print '    ' + field_prototype(self._current_type, type, name, nullable, plural)
+    pass
 
   def end_type(self, name):
     print
+    print
 
   def start_union(self, name):
-    print '    struct ' + struct_name(name) + ':'
-    print '        pass'
+    pass
 
   def union_option(self, option):
     pass

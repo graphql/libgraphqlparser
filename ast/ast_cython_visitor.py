@@ -6,8 +6,7 @@
 # of patent rights can be found in the PATENTS file in the same directory.
 
 from casing import snake
-from license import C_LICENSE_COMMENT
-import ast_cython
+import ast_cython_c
 
 
 class Printer(object):
@@ -18,7 +17,7 @@ class Printer(object):
     self._types = []
 
   def start_file(self):
-    print ast_cython.license_comment() + '''
+    print ast_cython_c.license_comment() + '''
 
 cdef extern from "GraphQLAstVisitor.h":
 
@@ -31,7 +30,7 @@ cdef extern from "GraphQLAstVisitor.h":
   def start_type(self, name):
     self._types.append(name)
     _map = {'snake': snake(name), 'name': name}
-    print '    struct %s:' % ast_cython.struct_name(name)
+    print '    struct %s:' % ast_cython_c.struct_name(name)
     print '        pass'
     print '    ctypedef int (*visit_%(snake)s_func)(GraphQLAst%(name)s*, void*)' % _map
     print '    ctypedef void (*end_visit_%(snake)s_func)(GraphQLAst%(name)s*, void*)' % _map
