@@ -19,15 +19,14 @@ class Printer(object):
   def start_file(self):
     print ast_cython_c.license_comment() + '''
 
-cimport cGraphQLAst
+cimport %s
 
 
 cdef class GraphQLAst:
-   """Base class for all Ast pieces"""
-   cdef object name
-   cdef object alias
+    """Base class for all Ast pieces"""
+    pass
 
-'''
+''' % ast_cython_c.CMODULE_NAME
 
   def end_file(self):
     pass
@@ -46,7 +45,6 @@ cdef class %(name)s(GraphQLAst):
     self._current_type = name
 
   def field(self, type, name, nullable, plural):
-    #print '    ' + field_prototype(self._current_type, type, name, nullable, plural)
     pass
 
   def end_type(self, name):

@@ -13,18 +13,29 @@ import ast_cython
 def field_prototype(owning_type, type, name, nullable, plural):
   _map = {'cmodule': ast_cython_c.CMODULE_NAME,
           'owning_st': ast_cython_c.struct_name(owning_type),
-          'snake': snake(name)}
+          'snake': snake(name),
+          'return_st': ast_cython_c.struct_name(type)}
   if plural:
     return '''
     def get_%(snake)s_size(self):
         return %(cmodule)s.%(owning_st)s_get_%(snake)s_size(self._wrapped)
 ''' % _map
-  else:
+  if type in ['boolean', 'int', 'string', 'OperationKind']:
+    # extension type return
     return '''
     def get_%(snake)s(self):
-        pass
+        return %(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped)
 ''' % _map
-
+  elif type in ['Type', 'Value']:
+    # XXX
+    return '''
+'''
+  else:
+    # python object return type
+    return '''
+    def get_%(snake)s(self):
+        return %(return_st)s.create(%(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped))
+''' % _map
 
 class Printer(object):
   '''Printer for a visitor in cython
@@ -39,11 +50,8 @@ class Printer(object):
 cimport %s
 
 cdef class GraphQLAst:
-   """Base class for all Ast pieces"""
-
-   def __init__(self, name=None, alias=None):
-       self.name = name
-       self.alias = alias
+    """Base class for all Ast pieces"""
+    pass
 
 ''' % ast_cython_c.CMODULE_NAME
 
@@ -64,7 +72,7 @@ cdef class %(name)s(GraphQLAst):
        'cmodule': ast_cython_c.CMODULE_NAME}
 
   def field(self, type, name, nullable, plural):
-    print '    ' + field_prototype(self._current_type, type, name, nullable, plural)
+    print field_prototype(self._current_type, type, name, nullable, plural)
 
   def end_type(self, name):
     print
