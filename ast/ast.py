@@ -9,20 +9,7 @@
 from importlib import import_module
 
 def load_lang(lang):
-  lang2modulename = {
-    'c': 'ast_c',
-    'cimpl': 'ast_c_impl',
-    'cvisitorimpl': 'ast_c_visitor_impl',
-    'c++': 'ast_cxx',
-    'c++impl': 'ast_cxx_impl',
-    'c++visitor': 'ast_cxx_visitor',
-    'js': 'ast_js'
-   }
-  module_name = lang2modulename.get(lang)
-  if module_name is None:
-    raise Exception('Unknown language ' + lang)
-
-  return import_module(module_name).Printer()
+  return import_module(lang).Printer()
 
 
 def print_ast(lang_module, input_file):

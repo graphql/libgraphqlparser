@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree. An additional grant
 # of patent rights can be found in the PATENTS file in the same directory.
 
-from ast_c import field_prototype, return_type, struct_name
+from c import field_prototype, return_type, struct_name
 from casing import title
 from license import C_LICENSE_COMMENT
 
