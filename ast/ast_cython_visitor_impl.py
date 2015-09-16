@@ -59,12 +59,16 @@ cdef int visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
     if userData is not NULL:
       visitor = <GraphQLAstVisitor>userData
       if hasattr(visitor, 'visit_%(snake)s'):
-        return visitor.visit_%(snake)s()
-    print \'visited %(name)s\'
+        retval = visitor.visit_%(snake)s()
+        return 0 if retval is None else retval
     return 1
 
 cdef void end_visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
-    print \'end visited %(name)s\'
+    cdef GraphQLAstVisitor visitor;
+    if userData is not NULL:
+      visitor = <GraphQLAstVisitor>userData
+      if hasattr(visitor, 'end_visit_%(snake)s'):
+        visitor.end_visit_%(snake)s()
 ''' % _map
 
     print '''

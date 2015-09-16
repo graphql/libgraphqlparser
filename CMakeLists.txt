@@ -36,7 +36,9 @@ ADD_LIBRARY(graphqlparser SHARED
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAst.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAstForEachConcreteType.h
   ${CMAKE_CURRENT_BINARY_DIR}/cython/cGraphQLAst.pxd
+  ${CMAKE_CURRENT_BINARY_DIR}/cython/GraphQLAst.pyx
   ${CMAKE_CURRENT_BINARY_DIR}/cython/cGraphQLAstVisitor.pxd
+  ${CMAKE_CURRENT_BINARY_DIR}/cython/GraphQLAstVisitor.pyx
   c/GraphQLAstNode.cpp
   c/GraphQLAstVisitor.h
   c/GraphQLAstVisitor.cpp
@@ -76,7 +78,11 @@ GENERATE_AST_FILE(cvisitorimpl c/GraphQLAstForEachConcreteType.h)
 
 GENERATE_AST_FILE(cython cython/cGraphQLAst.pxd)
 
+GENERATE_AST_FILE(cythonimpl cython/GraphQLAst.pyx)
+
 GENERATE_AST_FILE(cythonvisitor cython/cGraphQLAstVisitor.pxd)
+
+GENERATE_AST_FILE(cythonvisitorimpl cython/GraphQLAstVisitor.pyx)
 
 ADD_SUBDIRECTORY(python)
 
