@@ -55,23 +55,22 @@ cdef class GraphQLAstVisitor:
       _map = {'snake': snake(type), 'name': type, 'cmodule': CMODULE_NAME}
       print '''
 
-cdef int visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
+cdef int _visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData, int end):
     cdef GraphQLAstVisitor visitor
     ast = GraphQLAst.GraphQLAst%(name)s.create(node)
     if userData is not NULL:
       visitor = <GraphQLAstVisitor>userData
-      if hasattr(visitor, 'visit_%(snake)s'):
-        retval = visitor.visit_%(snake)s(ast)
+      attname = 'end_visit_%(snake)s' if end else 'visit_%(snake)s'
+      fun = getattr(visitor, attname, None)
+      if fun is not None:
+        retval = fun(ast)
         return 0 if retval is None else retval
-    return 1
+
+cdef int visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
+    return _visit_%(snake)s(node, userData, 0)
 
 cdef void end_visit_%(snake)s(%(cmodule)s.GraphQLAst%(name)s* node, void* userData):
-    cdef GraphQLAstVisitor visitor
-    ast = GraphQLAst.GraphQLAst%(name)s.create(node)
-    if userData is not NULL:
-      visitor = <GraphQLAstVisitor>userData
-      if hasattr(visitor, 'end_visit_%(snake)s'):
-        visitor.end_visit_%(snake)s(ast)
+    _visit_%(snake)s(node, userData, 1)
 ''' % _map
 
     print '''

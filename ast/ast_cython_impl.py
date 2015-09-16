@@ -9,6 +9,20 @@ from casing import snake
 import ast_cython_c
 import ast_cython
 
+SIMPLE_RETURN_CASTS = {
+  'boolean': 'bool',
+  'int': '',
+  'string': '',  # XXX decode?
+  'OperationKind': ''
+}
+
+SOURCE_TYPE_CASTS = {
+  'IntValue': 'int',
+  'FloatValue': 'float',
+  'StringValue': '',  # XXX decode?
+  'BooleanValue': 'bool',
+  'EnumValue': ''  # XXX decode?
+}
 
 def field_prototype(owning_type, type, name, nullable, plural):
   _map = {'cmodule': ast_cython_c.CMODULE_NAME,
@@ -18,23 +32,32 @@ def field_prototype(owning_type, type, name, nullable, plural):
   if plural:
     return '''
     def get_%(snake)s_size(self):
-        return %(cmodule)s.%(owning_st)s_get_%(snake)s_size(self._wrapped)
+        return int(%(cmodule)s.%(owning_st)s_get_%(snake)s_size(self._wrapped))
 ''' % _map
-  if type in ['boolean', 'int', 'string', 'OperationKind']:
-    # extension type return
+  if type in SIMPLE_RETURN_CASTS:
+    # TODO: convert string to unicode
+    if owning_type in SOURCE_TYPE_CASTS:
+      _map['cast'] = SOURCE_TYPE_CASTS[owning_type]
+    else:
+      _map['cast'] = SIMPLE_RETURN_CASTS[type]
     return '''
     def get_%(snake)s(self):
-        return %(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped)
+        val = %(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped)
+        return %(cast)s(val) if val is not None else val
 ''' % _map
   elif type in ['Type', 'Value']:
-    # XXX
+    # XXX this types have no functions...
     return '''
 '''
   else:
     # python object return type
     return '''
     def get_%(snake)s(self):
-        return %(return_st)s.create(%(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped))
+        cdef %(cmodule)s.%(return_st)s *next
+        next = %(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped)
+        if next is NULL:
+           return None
+        return %(return_st)s.create(next)
 ''' % _map
 
 class Printer(object):
