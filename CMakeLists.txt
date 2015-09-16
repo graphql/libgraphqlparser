@@ -60,17 +60,17 @@ FUNCTION(GENERATE_AST_FILE FILE_TYPE FILE_RELATIVE_PATH)
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py)
 ENDFUNCTION(GENERATE_AST_FILE)
 
-GENERATE_AST_FILE(c++ Ast.h)
+GENERATE_AST_FILE(cxx Ast.h)
 
-GENERATE_AST_FILE(c++visitor AstVisitor.h)
+GENERATE_AST_FILE(cxx_visitor AstVisitor.h)
 
-GENERATE_AST_FILE(c++impl Ast.cpp)
+GENERATE_AST_FILE(cxx_impl Ast.cpp)
 
 GENERATE_AST_FILE(c c/GraphQLAst.h)
 
-GENERATE_AST_FILE(cimpl c/GraphQLAst.cpp)
+GENERATE_AST_FILE(c_impl c/GraphQLAst.cpp)
 
-GENERATE_AST_FILE(cvisitorimpl c/GraphQLAstForEachConcreteType.h)
+GENERATE_AST_FILE(c_visitor_impl c/GraphQLAstForEachConcreteType.h)
 
 ADD_SUBDIRECTORY(python)
 
