@@ -43,7 +43,9 @@ def field_prototype(owning_type, type, name, nullable, plural):
     return '''
     def get_%(snake)s(self):
         val = %(cmodule)s.%(owning_st)s_get_%(snake)s(self._wrapped)
-        return %(cast)s(val) if val is not None else val
+        if val is None:
+            return None
+        return %(cast)s(val)
 ''' % _map
   elif type in ['Type', 'Value']:
     # XXX this types have no functions...

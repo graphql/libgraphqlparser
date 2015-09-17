@@ -1,4 +1,8 @@
 cGraphQLAst.pxd
+GraphQLAst.pxd
 GraphQLAst.pyx
 cGraphQLAstVisitor.pxd
 GraphQLAstVisitor.pyx
+*~
+*.c
+.python-version

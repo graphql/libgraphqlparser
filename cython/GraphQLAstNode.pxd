@@ -6,4 +6,3 @@ cdef class GraphQLAstNode:
 
     @staticmethod
     cdef create(cGraphQLAstNode.GraphQLAstNode* node_c)
-
