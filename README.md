@@ -56,3 +56,7 @@ programming languages.
 
 ## License
 libgraphqlparser is BSD-licensed. We also provide an additional patent grant.
+
+## Related Projects
+
+- [graphql-parser (Ruby interface)](https://github.com/Shopify/graphql-parser)
