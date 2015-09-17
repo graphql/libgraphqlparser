@@ -80,7 +80,17 @@ INSTALL(DIRECTORY c ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/c DE
   FILES_MATCHING PATTERN "*.h"
   PATTERN "build" EXCLUDE)
 
-INSTALL(FILES AstNode.h GraphQLParser.h JsonVisitor.h DESTINATION include/graphqlparser)
+INSTALL(FILES
+  AstNode.h
+  GraphQLParser.h
+  JsonVisitor.h
+  lexer.h
+  location.hh
+  parser.tab.hpp
+  position.hh
+  stack.hh
+  syntaxdefs.h
+  DESTINATION include/graphqlparser)
 INSTALL(TARGETS graphqlparser
   LIBRARY DESTINATION lib)
 
