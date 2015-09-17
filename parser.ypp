@@ -118,13 +118,15 @@ union yystype {                                         \
 #define YYSTYPE union yystype
 #define YYLTYPE yy::location
 }
-                      
-%parse-param { Node ** outAST } { const char **outError }
+
+%lex-param { void *scanner }
+%parse-param { Node **outAST } { const char **outError } { void *scanner }
 
 %locations
 
 %code
 {
+#include "lexer.h"
 #include "syntaxdefs.h"
 }
 

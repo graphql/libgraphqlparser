@@ -13,9 +13,9 @@
  * and the lexer.
  */
 
-#define YY_DECL                                 \
-  int yylex(YYSTYPE *yylval_param, YYLTYPE *yylloc_param)
-
-YY_DECL;
-
 yy::GraphQLParserImpl::syntax_error make_error(const yy::location &loc, const std::string &str);
+
+struct LexerExtra {
+  std::string str;
+  yy::location loc;
+};
