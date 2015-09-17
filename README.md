@@ -17,6 +17,10 @@ text on stdin and prints a JSON representation of the AST to stdout.
 The `python` subdirectory contains an example Python binding for the
 pure C API.
 
+The `cython` subdirectory contains experimental bindings for python3
+using cython.
+
+
 ## Requirements
 
 libgraphqlparser requires a C++ compiler that supports C++11. It
