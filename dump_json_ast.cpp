@@ -9,7 +9,7 @@
 
 #include "AstNode.h"
 #include "GraphQLParser.h"
-#include "JsonVisitor.h"
+#include "c/GraphQLAstToJSON.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -31,10 +31,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  facebook::graphql::ast::visitor::JsonVisitor visitor;
-  AST->accept(&visitor);
-
-  cout << visitor.getResult() << endl;
+  cout << graphql_ast_to_json((const struct GraphQLAstNode *)AST.get()) << endl;
 
   return 0;
 }

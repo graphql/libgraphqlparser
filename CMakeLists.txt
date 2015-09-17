@@ -36,6 +36,7 @@ ADD_LIBRARY(graphqlparser SHARED
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAst.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAstForEachConcreteType.h
   c/GraphQLAstNode.cpp
+  c/GraphQLAstToJSON.cpp
   c/GraphQLAstVisitor.h
   c/GraphQLAstVisitor.cpp
   c/GraphQLParser.cpp
