@@ -19,19 +19,30 @@
 using std::cout;
 using std::cerr;
 using std::endl;
+using std::fopen;
+using std::fclose;
 using std::free;
 
 
 int main(int argc, char **argv) {
   const char *error;
-  auto AST = facebook::graphql::parseFile(stdin, &error);
+  FILE * in;
+  if (argc > 1) {
+    in = fopen(argv[1], "r");
+  } else {
+    in = stdin;
+  }
+  auto AST = facebook::graphql::parseFile(in, &error);
+  if (argc > 1) {
+    fclose(in);
+  }
   if (!AST) {
     cerr << "Parser failed with error: " << error << endl;
     free((void *)error);
     return 1;
   }
 
-  cout << graphql_ast_to_json((const struct GraphQLAstNode *)AST.get()) << endl;
+  puts(graphql_ast_to_json((const struct GraphQLAstNode *)AST.get()));
 
   return 0;
 }
