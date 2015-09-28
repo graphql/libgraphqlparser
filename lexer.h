@@ -212,6 +212,8 @@ void *yyalloc (yy_size_t ,yyscan_t yyscanner );
 void *yyrealloc (void *,yy_size_t ,yyscan_t yyscanner );
 void yyfree (void * ,yyscan_t yyscanner );
 
+/* Begin user sect3 */
+
 #define yywrap(n) 1
 #define YY_SKIP_YYWRAP
 
@@ -337,8 +339,9 @@ extern int yylex \
 #undef YY_DECL
 #endif
 
-#line 126 "lexer.lpp"
+#line 155 "lexer.lpp"
 
-#line 343 "lexer.h"
+
+#line 346 "lexer.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

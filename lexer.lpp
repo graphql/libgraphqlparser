@@ -9,6 +9,8 @@
 
 %{
 #include <cassert>
+#include <cctype>
+#include <cstdio>
 #include <vector>
 #include "location.hh"
 #include "position.hh"
@@ -17,6 +19,8 @@
 
 // Keep track of token lengths.
 #define YY_USER_ACTION yyextra->loc.columns(yyleng);
+
+static void escape(char c, char *buf);
 
 %}
 
@@ -33,10 +37,12 @@ FLOAT -?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?
 INTEGER -?(0|[1-9][0-9]*)
 IDENTIFIER [_A-Za-z][_0-9A-Za-z]*
 VARIABLE $[_0-9A-Za-z]+
+BOM \xef\xbb\xbf
+CRLF \r\n
+BADCHAR [\x00-\x08\x0b\x0c\x0e-\x1f]
+STRINGCHAR [^\x00-\x1f\\\x22]
 
-blank [ \t\v\f\xa0,]
-/* NOTE: When we do UTF-8, we need to add \u2028
-  and \u2029 here. */
+blank [ \t,]
 newline [\n\r]
 notnewline [^\n\r]
 
@@ -46,50 +52,6 @@ notnewline [^\n\r]
   yyextra->loc.step();
 %}
 
-{blank}+ { yyextra->loc.step(); }
-{newline}+ { yyextra->loc.lines(yyleng); yyextra->loc.step(); }
-
-# {yyextra->loc.step(); BEGIN(LINE_COMMENT_STATE); }
-
-<LINE_COMMENT_STATE>{
-  {newline} { yyextra->loc.step(); BEGIN(INITIAL); }
-  {notnewline}+ /* eat comment character */
-}
-
-false   { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_FALSE; }
-fragment { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_FRAGMENT; }
-mutation { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_MUTATION; }
-null { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_NULL; }
-on { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_ON; }
-query { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_QUERY; }
-true { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_TRUE; }
-
-{INTEGER} { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_INTEGER; }
-{FLOAT} { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_FLOAT; }
-{IDENTIFIER} { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_IDENTIFIER; }
-{VARIABLE} { yylval->str = yytext + 1; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_VARIABLE; }
-
-"!" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_BANG; }
-"(" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_LPAREN; }
-")" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_RPAREN; }
-"..." { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_ELLIPSIS; }
-":" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_COLON; }
-"=" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_EQUAL; }
-"@" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_AT; }
-"[" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_LBRACKET; }
-"]" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_RBRACKET; }
-"{" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_LBRACE; }
-"|" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_PIPE; }
-"}" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_RBRACE; }
-
-
-<<EOF>> { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_EOF; }
-
-\"   {
-  BEGIN(STRING_STATE);
-  yyextra->str.clear();
-}
-
 <STRING_STATE>{
   \"    {
     BEGIN(INITIAL);
@@ -97,7 +59,15 @@ true { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImp
     return yy::GraphQLParserImpl::token::TOK_STRING;
   }
 
-  [^"\\]+  {
+  {newline} {
+    throw make_error(yyextra->loc, "Unterminated string");
+  }
+
+  <<EOF>> {
+    throw make_error(yyextra->loc, "Unterminated string at EOF");
+  }
+
+  {STRINGCHAR}+  {
     char *p = yytext;
     while (*p) {
       yyextra->loc.columns();
@@ -105,21 +75,118 @@ true { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImp
     }
   }
 
-  \\\" { yyextra->loc.columns(); yyextra->str.push_back('"'); }
-  \\\\ { yyextra->loc.columns(); yyextra->str.push_back('\\'); }
-  \\\/ { yyextra->loc.columns(); yyextra->str.push_back('/'); }
-  \\n { yyextra->loc.columns(); yyextra->str.push_back('\n'); }
-  \\t { yyextra->loc.columns(); yyextra->str.push_back('\t'); }
-  \\r { yyextra->loc.columns(); yyextra->str.push_back('\r'); }
-  \\b { yyextra->loc.columns(); yyextra->str.push_back('\b'); }
-  \\f { yyextra->loc.columns(); yyextra->str.push_back('\f'); }
+  \\\" { yyextra->str.push_back('"'); }
+  \\\\ { yyextra->str.push_back('\\'); }
+  \\\/ { yyextra->str.push_back('/'); }
+  \\n { yyextra->str.push_back('\n'); }
+  \\t { yyextra->str.push_back('\t'); }
+  \\r { yyextra->str.push_back('\r'); }
+  \\b { yyextra->str.push_back('\b'); }
+  \\f { yyextra->str.push_back('\f'); }
 
   \\u[0-9A-Fa-f]{4} {
-    yyextra->loc.columns(6);
     int ch;
     sscanf(yytext + 1, "%x", &ch);
     yyextra->str.push_back(ch);
   }
+
+  \\u { throw make_error(yyextra->loc, "bad Unicode escape sequence"); }
+  \\. { throw make_error(yyextra->loc, std::string("bad escape sequence \\") + yytext[1]); }
+
 }
 
-. {throw make_error(yyextra->loc, std::string("unrecognized character ") + yytext[0]); }
+<LINE_COMMENT_STATE>{
+  {CRLF} { yyextra->loc.step(); BEGIN(INITIAL); }
+  {newline} { yyextra->loc.step(); BEGIN(INITIAL); }
+  {notnewline}+ /* eat comment character */
+}
+
+<INITIAL>{
+  {blank}+ { yyextra->loc.step(); }
+  {BOM}+ { yyextra->loc.step(); yyextra->loc.step(); yyextra->loc.step(); }
+  {CRLF}+ { yyextra->loc.lines(yyleng / 2); yyextra->loc.step(); }
+  {newline}+ { yyextra->loc.lines(yyleng); yyextra->loc.step(); }
+
+  # {yyextra->loc.step(); BEGIN(LINE_COMMENT_STATE); }
+
+  false   { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_FALSE; }
+  fragment { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_FRAGMENT; }
+  mutation { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_MUTATION; }
+  null { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_NULL; }
+  on { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_ON; }
+  query { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_QUERY; }
+  true { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_TRUE; }
+
+  {INTEGER} { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_INTEGER; }
+  {FLOAT} { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_FLOAT; }
+  {IDENTIFIER} { yylval->str = yytext; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_IDENTIFIER; }
+  {VARIABLE} { yylval->str = yytext + 1; *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_VARIABLE; }
+
+  "!" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_BANG; }
+  "(" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_LPAREN; }
+  ")" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_RPAREN; }
+  "..." { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_ELLIPSIS; }
+  ":" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_COLON; }
+  "=" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_EQUAL; }
+  "@" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_AT; }
+  "[" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_LBRACKET; }
+  "]" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_RBRACKET; }
+  "{" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_LBRACE; }
+  "|" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_PIPE; }
+  "}" { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_RBRACE; }
+
+
+  <<EOF>> { *yylloc = yyextra->loc; return yy::GraphQLParserImpl::token::TOK_EOF; }
+
+  \"   {
+    BEGIN(STRING_STATE);
+    yyextra->str.clear();
+  }
+}
+
+<INITIAL,STRING_STATE,LINE_COMMENT_STATE>. {
+  char buf[6];
+  escape(yytext[0], buf);
+  throw make_error(
+    yyextra->loc,
+    std::string("unrecognized character ") + buf);
+}
+
+%%
+
+static void escape(char c, char *buf) {
+  if (std::isgraph(c)) {
+    *buf = c;
+    buf[1] = '\0';
+  } else {
+    buf[0] = '\\';
+    buf[2] = '\0';
+    switch (c) {
+    case '\a':
+      buf[1] = 'a';
+      break;
+    case '\b':
+      buf[1] = 'b';
+      break;
+    case '\f':
+      buf[1] = 'f';
+      break;
+    case '\n':
+      buf[1] = 'n';
+      break;
+    case '\r':
+      buf[1] = 'r';
+      break;
+    case '\t':
+      buf[1] = 't';
+      break;
+    case '\v':
+      buf[1] = 'v';
+      break;
+    default:
+      buf[1] = 'x';
+      std::snprintf(buf + 2, 3, "%x", ((int)c & 0xFF));
+      break;
+    }
+  }
+}

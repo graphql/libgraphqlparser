@@ -18,7 +18,7 @@ using namespace facebook::graphql::ast;
 
 
 static void expectError(const char *queryStr, const char *expectedError) {
-  const char *actualError;
+  const char *actualError = nullptr;
   auto ast = parseString(queryStr, &actualError);
 
   EXPECT_FALSE(ast);
@@ -32,7 +32,7 @@ static void expectSuccess(const char *queryStr) {
   auto ast = parseString(queryStr, &actualError);
 
   EXPECT_TRUE(ast != nullptr);
-  EXPECT_FALSE(actualError);
+  EXPECT_STREQ(nullptr, actualError);
 
   std::free((void *)actualError);
 }
@@ -46,6 +46,39 @@ TEST(ParserTests, RejectsUnrecognizedCharacter) {
   expectError("query myquery { field };",
               "1.24: unrecognized character ;");
 }
+
+TEST(ParserTests, RejectsControlCharacter) {
+  expectError("query myQuery { \a }",
+              "1.17: unrecognized character \\a");
+}
+
+TEST(ParserTests, AcceptsUnicodeBOM) {
+  expectSuccess("\xef\xbb\xbfquery myquery { field }");
+}
+
+TEST(ParserTests, ReportsErrorLocationAfterIgnoredBOM) {
+  expectError("\xef\xbb\xbfquery myquery { field };",
+              "1.27: unrecognized character ;");
+
+}
+
+TEST(ParserTests, RejectsPartialBOM) {
+  expectError("\xefquery myquery { field };",
+              "1.1: unrecognized character \\xef");
+}
+
+TEST(ParserTests, RejectsVerticalTab) {
+  expectError("\v", "1.1: unrecognized character \\v");
+}
+
+TEST(ParserTests, RejectsFormFeed) {
+  expectError("\f", "1.1: unrecognized character \\f");
+}
+
+TEST(ParserTests, RejectsNoBreakSpace) {
+  expectError("\xa0", "1.1: unrecognized character \\xa0");
+}
+
 
 TEST(ParserTests, LocationTracking) {
   SCOPED_TRACE("LocationTracking");
@@ -63,6 +96,43 @@ TEST(ParserTests, LocationTrackingResetsAcrossInputs) {
     checkSimpleError();
   }
 
+}
+
+TEST(ParserTests, LocationTrackingCollapsesCRLF) {
+  expectError("\r\n;", "2.1: unrecognized character ;");
+}
+
+TEST(ParserTests, AcceptsEmptyString) {
+  expectSuccess("{ field(arg:\"\") }");
+}
+
+TEST(ParserTests, UnterminatedString) {
+  expectError("\"", "1.1: Unterminated string at EOF");
+  expectError("\"\n\"", "1.1-2: Unterminated string");
+}
+
+TEST(ParserTests, RejectControlCharacterInString) {
+  expectError("{ field(arg:\"\b\") }", "1.13-14: unrecognized character \\b");
+}
+
+TEST(ParserTests, RejectsBadXEscapeSequence) {
+  expectError("{ field(arg:\"\\x\") }", "1.13-15: bad escape sequence \\x");
+}
+
+TEST(ParserTests, RejectsIncompleteUnicodeEscape) {
+  expectError("{ field(arg:\"\\u1\") }", "1.13-15: bad Unicode escape sequence");
+}
+
+TEST(ParserTests, RejectsUnicodeEscapeWithBadChars) {
+  expectError("{ field(arg:\"\\u0XX1\") }", "1.13-15: bad Unicode escape sequence");
+  expectError("{ field(arg:\"\\uXXXX\") }", "1.13-15: bad Unicode escape sequence");
+  expectError("{ field(arg:\"\\uFXXX\") }", "1.13-15: bad Unicode escape sequence");
+  expectError("{ field(arg:\"\\uXXXF\") }", "1.13-15: bad Unicode escape sequence");
+}
+
+TEST(ParserTests, TracksLocationAcrossStrings) {
+  expectError("{ field(arg:\"\\uFEFF\\n\") };",
+              "1.26: unrecognized character ;");
 }
 
 TEST(ParserTests, UsefulErrors) {
