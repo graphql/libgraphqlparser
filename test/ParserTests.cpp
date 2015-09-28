@@ -91,15 +91,6 @@ TEST(ParserTests, RejectsVariablesInConstantValues) {
               "1.37-40: syntax error, unexpected VARIABLE");
 }
 
-// TODO: pass this test. It requires a specific check when building
-// the AST.
-#if 0
-TEST(ParserTests, RejectsDuplicateKeysInObjectValue) {
-  expectError("{ field(arg: { a: 1, a: 2 }) }",
-              "TK");
-}
-#endif
-
 TEST(ParserTests, RejectsFragmentsNamedOn) {
   expectError("fragment on on on { on }",
               "1.10-11: syntax error, unexpected on");
