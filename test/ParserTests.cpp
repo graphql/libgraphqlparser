@@ -54,6 +54,7 @@ TEST(ParserTests, RejectsControlCharacter) {
 
 TEST(ParserTests, AcceptsUnicodeBOM) {
   expectSuccess("\xef\xbb\xbfquery myquery { field }");
+  expectSuccess("query myquery\xef\xbb\xbf{ field }");
 }
 
 TEST(ParserTests, ReportsErrorLocationAfterIgnoredBOM) {
