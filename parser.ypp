@@ -166,6 +166,7 @@ union yystype {                                         \
 %type <document> document
 %type <name> fragment_name
 %type <name> name
+%type <name> name_opt
 
 %type <definitionList> definition_list
 %type <definition> definition
@@ -240,6 +241,12 @@ fragment_name:  IDENTIFIER { $$ = new Name(@1, strdup($1)); }
 name: fragment_name
         |       ON { $$ = new Name(@1, strdup($1)); }
         ;
+
+name_opt:
+                %empty {$$ = nullptr;}
+        |       name
+        ;
+
 /* 8.3.1 Document */
 
 document:       definition_list { $$ = new Document(@$, $1); }
@@ -257,10 +264,10 @@ definition:     operation_definition { $$ = static_cast<Definition *>($1); }
 /* 8.3.2 Operations */
 operation_definition:
                 selection_set { $$ = new OperationDefinition(@$, strdup("query"), nullptr, nullptr, nullptr, $1); }
-        |       operation_type name selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, nullptr, $3); }
-        |       operation_type name variable_definitions selection_set { $$ = new OperationDefinition(@$, $1, $2, $3, nullptr, $4); }
-        |       operation_type name directives selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, $3, $4); }
-        |       operation_type name variable_definitions directives selection_set { $$ = new OperationDefinition(@$, $1, $2, $3, $4, $5); }
+        |       operation_type name_opt selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, nullptr, $3); }
+        |       operation_type name_opt variable_definitions selection_set { $$ = new OperationDefinition(@$, $1, $2, $3, nullptr, $4); }
+        |       operation_type name_opt directives selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, $3, $4); }
+        |       operation_type name_opt variable_definitions directives selection_set { $$ = new OperationDefinition(@$, $1, $2, $3, $4, $5); }
         ;
 
 operation_type: QUERY { $$ = strdup($1); }

@@ -177,6 +177,22 @@ TEST(ParserTests, RejectsNullValue) {
               "1.39-42: syntax error, unexpected null");
 }
 
+TEST(ParserTests, AcceptsSimpleQuery) {
+  expectSuccess("query MyQuery { myfield }");
+}
+
+TEST(ParserTests, AcceptsQueryShorthand) {
+  expectSuccess("{ myfield }");
+}
+
+TEST(ParserTests, AcceptsLonghandUnnamedQuery) {
+  expectSuccess("query { myfield }");
+}
+
+TEST(ParserTests, AcceptsLonghandUnnamedMutation) {
+  expectSuccess("mutation { myfield }");
+}
+
 TEST(ParserTests, AllowsNonKeywordsForNames) {
   const char *nonKeywords[] = {
     "on",

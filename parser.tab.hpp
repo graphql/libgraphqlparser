@@ -445,7 +445,7 @@ namespace yy {
   static const unsigned char yydefact_[];
 
   // YYPGOTO[NTERM-NUM].
-  static const short int yypgoto_[];
+  static const signed char yypgoto_[];
 
   // YYDEFGOTO[NTERM-NUM].
   static const short int yydefgoto_[];
@@ -575,8 +575,8 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 365,     ///< Last index in yytable_.
-      yynnts_ = 53,  ///< Number of nonterminal symbols.
+      yylast_ = 362,     ///< Last index in yytable_.
+      yynnts_ = 54,  ///< Number of nonterminal symbols.
       yyfinal_ = 30, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
