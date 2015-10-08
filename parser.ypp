@@ -220,6 +220,10 @@ union yystype {                                         \
 
 %type <str> operation_type
 
+%destructor { } <str>
+%destructor { } <document>  /* we steal it and put it in outAST, don't free! */
+%destructor { delete $$; } <*>
+
 %printer { yyoutput << $$; } <str>
 
 %%
