@@ -42,7 +42,9 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  puts(graphql_ast_to_json((const struct GraphQLAstNode *)AST.get()));
+  const char *json = graphql_ast_to_json((const struct GraphQLAstNode *)AST.get());
+  puts(json);
+  free((void *)json);
 
   return 0;
 }
