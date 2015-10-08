@@ -49,7 +49,7 @@
 
 #line 51 "parser.tab.cpp" // lalr1.cc:412
 // Unqualified %code blocks.
-#line 128 "parser.ypp" // lalr1.cc:413
+#line 129 "parser.ypp" // lalr1.cc:413
 
 #include "lexer.h"
 #include "syntaxdefs.h"
@@ -393,455 +393,455 @@ namespace yy {
     {
             case 3: // "false"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 399 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 4: // "fragment"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 406 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 5: // "mutation"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 413 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 6: // "null"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 420 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 7: // "query"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 427 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 8: // "on"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 434 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 9: // "true"
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 441 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 22: // VARIABLE
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 448 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 23: // INTEGER
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 455 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 24: // FLOAT
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 462 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 25: // STRING
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 469 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 26: // IDENTIFIER
 
-#line 223 "parser.ypp" // lalr1.cc:617
+#line 224 "parser.ypp" // lalr1.cc:617
         { }
 #line 476 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 28: // start
 
-#line 224 "parser.ypp" // lalr1.cc:617
+#line 226 "parser.ypp" // lalr1.cc:617
         { }
 #line 483 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 29: // fragment_name
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.name); }
 #line 490 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 30: // name
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.name); }
 #line 497 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 31: // name_opt
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.name); }
 #line 504 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 32: // document
 
-#line 224 "parser.ypp" // lalr1.cc:617
+#line 226 "parser.ypp" // lalr1.cc:617
         { }
 #line 511 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 33: // definition_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.definitionList); }
 #line 518 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 34: // definition
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.definition); }
 #line 525 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 35: // operation_definition
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.operationDefinition); }
 #line 532 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 36: // operation_type
 
-#line 223 "parser.ypp" // lalr1.cc:617
-        { }
+#line 225 "parser.ypp" // lalr1.cc:617
+        { free((void *)(yysym.value.heapStr)); }
 #line 539 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 37: // variable_definitions
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variableDefinitionList); }
 #line 546 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 38: // variable_definition_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variableDefinitionList); }
 #line 553 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 39: // variable
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variable); }
 #line 560 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 40: // variable_definition
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variableDefinition); }
 #line 567 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 41: // default_value_opt
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 574 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 42: // default_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 581 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 43: // selection_set
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selectionSet); }
 #line 588 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 44: // selection_set_opt
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selectionSet); }
 #line 595 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 45: // selection_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selectionList); }
 #line 602 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 46: // selection
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selection); }
 #line 609 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 47: // field
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.field); }
 #line 616 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 48: // arguments
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argumentList); }
 #line 623 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 49: // arguments_opt
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argumentList); }
 #line 630 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 50: // argument_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argumentList); }
 #line 637 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 51: // argument
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argument); }
 #line 644 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 52: // fragment_spread
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.fragmentSpread); }
 #line 651 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 53: // inline_fragment
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.inlineFragment); }
 #line 658 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 54: // fragment_definition
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.fragmentDefinition); }
 #line 665 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 55: // type_condition
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.namedType); }
 #line 672 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 56: // value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 679 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 57: // int_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.intValue); }
 #line 686 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 58: // float_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.floatValue); }
 #line 693 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 59: // string_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.stringValue); }
 #line 700 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 60: // value_const
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 707 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 61: // boolean_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.booleanValue); }
 #line 714 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 62: // enum_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.enumValue); }
 #line 721 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 63: // array_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.arrayValue); }
 #line 728 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 64: // value_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.valueList); }
 #line 735 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 65: // array_value_const
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.arrayValue); }
 #line 742 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 66: // value_const_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.valueList); }
 #line 749 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 67: // object_value
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectValue); }
 #line 756 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 68: // object_field_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectFieldList); }
 #line 763 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 69: // object_field
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectField); }
 #line 770 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 70: // object_value_const
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectValue); }
 #line 777 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 71: // object_field_const_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectFieldList); }
 #line 784 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 72: // object_field_const
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectField); }
 #line 791 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 73: // directives
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directiveList); }
 #line 798 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 74: // directives_opt
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directiveList); }
 #line 805 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 75: // directive_list
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directiveList); }
 #line 812 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 76: // directive
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directive); }
 #line 819 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 77: // type
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.type); }
 #line 826 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 78: // type_name
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.namedType); }
 #line 833 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 79: // list_type
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.listType); }
 #line 840 "parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 80: // non_null_type
 
-#line 225 "parser.ypp" // lalr1.cc:617
+#line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.nonNullType); }
 #line 847 "parser.tab.cpp" // lalr1.cc:617
         break;
@@ -872,93 +872,86 @@ namespace yy {
     {
             case 3: // "false"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 878 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 4: // "fragment"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 885 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 5: // "mutation"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 892 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 6: // "null"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 899 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 7: // "query"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 906 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 8: // "on"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 913 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 9: // "true"
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 920 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 22: // VARIABLE
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 927 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 23: // INTEGER
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 934 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 24: // FLOAT
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 941 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 25: // STRING
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 948 "parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 26: // IDENTIFIER
 
-#line 227 "parser.ypp" // lalr1.cc:636
+#line 229 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 955 "parser.tab.cpp" // lalr1.cc:636
-        break;
-
-      case 36: // operation_type
-
-#line 227 "parser.ypp" // lalr1.cc:636
-        { yyoutput << (yysym.value.str); }
-#line 962 "parser.tab.cpp" // lalr1.cc:636
         break;
 
 
@@ -1176,613 +1169,613 @@ namespace yy {
           switch (yyn)
             {
   case 2:
-#line 231 "parser.ypp" // lalr1.cc:859
+#line 233 "parser.ypp" // lalr1.cc:859
     { *outAST = (yystack_[0].value.document); }
-#line 1182 "parser.tab.cpp" // lalr1.cc:859
+#line 1175 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 3:
-#line 236 "parser.ypp" // lalr1.cc:859
+#line 238 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1188 "parser.tab.cpp" // lalr1.cc:859
+#line 1181 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 4:
-#line 237 "parser.ypp" // lalr1.cc:859
+#line 239 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1194 "parser.tab.cpp" // lalr1.cc:859
+#line 1187 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 5:
-#line 238 "parser.ypp" // lalr1.cc:859
+#line 240 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1200 "parser.tab.cpp" // lalr1.cc:859
+#line 1193 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 6:
-#line 239 "parser.ypp" // lalr1.cc:859
+#line 241 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1206 "parser.tab.cpp" // lalr1.cc:859
+#line 1199 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 7:
-#line 240 "parser.ypp" // lalr1.cc:859
+#line 242 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1212 "parser.tab.cpp" // lalr1.cc:859
+#line 1205 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 8:
-#line 241 "parser.ypp" // lalr1.cc:859
+#line 243 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1218 "parser.tab.cpp" // lalr1.cc:859
+#line 1211 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 9:
-#line 242 "parser.ypp" // lalr1.cc:859
+#line 244 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1224 "parser.tab.cpp" // lalr1.cc:859
+#line 1217 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 11:
-#line 246 "parser.ypp" // lalr1.cc:859
+#line 248 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
-#line 1230 "parser.tab.cpp" // lalr1.cc:859
+#line 1223 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 12:
-#line 250 "parser.ypp" // lalr1.cc:859
+#line 252 "parser.ypp" // lalr1.cc:859
     {(yylhs.value.name) = nullptr;}
-#line 1236 "parser.tab.cpp" // lalr1.cc:859
+#line 1229 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 14:
-#line 256 "parser.ypp" // lalr1.cc:859
+#line 258 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.document) = new Document(yylhs.location, (yystack_[0].value.definitionList)); }
-#line 1242 "parser.tab.cpp" // lalr1.cc:859
+#line 1235 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 15:
-#line 259 "parser.ypp" // lalr1.cc:859
+#line 261 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.definitionList) = new std::vector<std::unique_ptr<Definition>>(); (yylhs.value.definitionList)->emplace_back((yystack_[0].value.definition)); }
-#line 1248 "parser.tab.cpp" // lalr1.cc:859
+#line 1241 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 16:
-#line 260 "parser.ypp" // lalr1.cc:859
+#line 262 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.definitionList)->emplace_back((yystack_[0].value.definition)); (yylhs.value.definitionList) = (yystack_[1].value.definitionList); }
-#line 1254 "parser.tab.cpp" // lalr1.cc:859
+#line 1247 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 17:
-#line 263 "parser.ypp" // lalr1.cc:859
+#line 265 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.definition) = static_cast<Definition *>((yystack_[0].value.operationDefinition)); }
-#line 1260 "parser.tab.cpp" // lalr1.cc:859
+#line 1253 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 18:
-#line 264 "parser.ypp" // lalr1.cc:859
+#line 266 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.definition) = static_cast<Definition *>((yystack_[0].value.fragmentDefinition));}
-#line 1266 "parser.tab.cpp" // lalr1.cc:859
+#line 1259 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 19:
-#line 270 "parser.ypp" // lalr1.cc:859
+#line 272 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, strdup("query"), nullptr, nullptr, nullptr, (yystack_[0].value.selectionSet)); }
-#line 1272 "parser.tab.cpp" // lalr1.cc:859
+#line 1265 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 20:
-#line 271 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[2].value.str), (yystack_[1].value.name), nullptr, nullptr, (yystack_[0].value.selectionSet)); }
-#line 1278 "parser.tab.cpp" // lalr1.cc:859
+#line 273 "parser.ypp" // lalr1.cc:859
+    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[2].value.heapStr), (yystack_[1].value.name), nullptr, nullptr, (yystack_[0].value.selectionSet)); }
+#line 1271 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 21:
-#line 272 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[3].value.str), (yystack_[2].value.name), (yystack_[1].value.variableDefinitionList), nullptr, (yystack_[0].value.selectionSet)); }
-#line 1284 "parser.tab.cpp" // lalr1.cc:859
+#line 274 "parser.ypp" // lalr1.cc:859
+    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[3].value.heapStr), (yystack_[2].value.name), (yystack_[1].value.variableDefinitionList), nullptr, (yystack_[0].value.selectionSet)); }
+#line 1277 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 22:
-#line 273 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[3].value.str), (yystack_[2].value.name), nullptr, (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
-#line 1290 "parser.tab.cpp" // lalr1.cc:859
+#line 275 "parser.ypp" // lalr1.cc:859
+    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[3].value.heapStr), (yystack_[2].value.name), nullptr, (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
+#line 1283 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 23:
-#line 274 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[4].value.str), (yystack_[3].value.name), (yystack_[2].value.variableDefinitionList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
-#line 1296 "parser.tab.cpp" // lalr1.cc:859
+#line 276 "parser.ypp" // lalr1.cc:859
+    { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[4].value.heapStr), (yystack_[3].value.name), (yystack_[2].value.variableDefinitionList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
+#line 1289 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 24:
-#line 277 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.str) = strdup((yystack_[0].value.str)); }
-#line 1302 "parser.tab.cpp" // lalr1.cc:859
+#line 279 "parser.ypp" // lalr1.cc:859
+    { (yylhs.value.heapStr) = strdup((yystack_[0].value.str)); }
+#line 1295 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 25:
-#line 278 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.str) = strdup((yystack_[0].value.str)); }
-#line 1308 "parser.tab.cpp" // lalr1.cc:859
+#line 280 "parser.ypp" // lalr1.cc:859
+    { (yylhs.value.heapStr) = strdup((yystack_[0].value.str)); }
+#line 1301 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 26:
-#line 282 "parser.ypp" // lalr1.cc:859
+#line 284 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variableDefinitionList) = (yystack_[1].value.variableDefinitionList); }
-#line 1314 "parser.tab.cpp" // lalr1.cc:859
+#line 1307 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 27:
-#line 286 "parser.ypp" // lalr1.cc:859
+#line 288 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variableDefinitionList) = new std::vector<std::unique_ptr<VariableDefinition>>(); (yylhs.value.variableDefinitionList)->emplace_back((yystack_[0].value.variableDefinition)); }
-#line 1320 "parser.tab.cpp" // lalr1.cc:859
+#line 1313 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 28:
-#line 287 "parser.ypp" // lalr1.cc:859
+#line 289 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.variableDefinitionList)->emplace_back((yystack_[0].value.variableDefinition)); (yylhs.value.variableDefinitionList) = (yystack_[1].value.variableDefinitionList); }
-#line 1326 "parser.tab.cpp" // lalr1.cc:859
+#line 1319 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 29:
-#line 290 "parser.ypp" // lalr1.cc:859
+#line 292 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variable) = new Variable(yylhs.location, new Name(yystack_[0].location, strdup((yystack_[0].value.str)))); }
-#line 1332 "parser.tab.cpp" // lalr1.cc:859
+#line 1325 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 30:
-#line 294 "parser.ypp" // lalr1.cc:859
+#line 296 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variableDefinition) = new VariableDefinition(yylhs.location, (yystack_[3].value.variable), (yystack_[1].value.type), (yystack_[0].value.value)); }
-#line 1338 "parser.tab.cpp" // lalr1.cc:859
+#line 1331 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 31:
-#line 298 "parser.ypp" // lalr1.cc:859
+#line 300 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = nullptr; }
-#line 1344 "parser.tab.cpp" // lalr1.cc:859
+#line 1337 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 33:
-#line 302 "parser.ypp" // lalr1.cc:859
+#line 304 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = (yystack_[0].value.value); }
-#line 1350 "parser.tab.cpp" // lalr1.cc:859
+#line 1343 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 34:
-#line 306 "parser.ypp" // lalr1.cc:859
+#line 308 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selectionSet) = new SelectionSet(yylhs.location, (yystack_[1].value.selectionList)); }
-#line 1356 "parser.tab.cpp" // lalr1.cc:859
+#line 1349 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 35:
-#line 310 "parser.ypp" // lalr1.cc:859
+#line 312 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selectionSet) = nullptr; }
-#line 1362 "parser.tab.cpp" // lalr1.cc:859
+#line 1355 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 37:
-#line 313 "parser.ypp" // lalr1.cc:859
+#line 315 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selectionList) = new std::vector<std::unique_ptr<Selection>>(); (yylhs.value.selectionList)->emplace_back((yystack_[0].value.selection)); }
-#line 1368 "parser.tab.cpp" // lalr1.cc:859
+#line 1361 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 38:
-#line 314 "parser.ypp" // lalr1.cc:859
+#line 316 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.selectionList)->emplace_back((yystack_[0].value.selection)); (yylhs.value.selectionList) = (yystack_[1].value.selectionList); }
-#line 1374 "parser.tab.cpp" // lalr1.cc:859
+#line 1367 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 39:
-#line 317 "parser.ypp" // lalr1.cc:859
+#line 319 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selection) = static_cast<Selection *>((yystack_[0].value.field)); }
-#line 1380 "parser.tab.cpp" // lalr1.cc:859
+#line 1373 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 40:
-#line 318 "parser.ypp" // lalr1.cc:859
+#line 320 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selection) = static_cast<Selection *>((yystack_[0].value.fragmentSpread)); }
-#line 1386 "parser.tab.cpp" // lalr1.cc:859
+#line 1379 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 41:
-#line 319 "parser.ypp" // lalr1.cc:859
+#line 321 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selection) = static_cast<Selection *>((yystack_[0].value.inlineFragment)); }
-#line 1392 "parser.tab.cpp" // lalr1.cc:859
+#line 1385 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 42:
-#line 322 "parser.ypp" // lalr1.cc:859
+#line 324 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.field) = new Field(yylhs.location, nullptr, (yystack_[3].value.name), (yystack_[2].value.argumentList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
-#line 1398 "parser.tab.cpp" // lalr1.cc:859
+#line 1391 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 43:
-#line 323 "parser.ypp" // lalr1.cc:859
+#line 325 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.field) = new Field(yylhs.location, (yystack_[5].value.name), (yystack_[3].value.name), (yystack_[2].value.argumentList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
-#line 1404 "parser.tab.cpp" // lalr1.cc:859
+#line 1397 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 44:
-#line 326 "parser.ypp" // lalr1.cc:859
+#line 328 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = (yystack_[1].value.argumentList); }
-#line 1410 "parser.tab.cpp" // lalr1.cc:859
+#line 1403 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 45:
-#line 329 "parser.ypp" // lalr1.cc:859
+#line 331 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = nullptr; }
-#line 1416 "parser.tab.cpp" // lalr1.cc:859
+#line 1409 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 46:
-#line 330 "parser.ypp" // lalr1.cc:859
+#line 332 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = (yystack_[0].value.argumentList); }
-#line 1422 "parser.tab.cpp" // lalr1.cc:859
+#line 1415 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 47:
-#line 333 "parser.ypp" // lalr1.cc:859
+#line 335 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = new std::vector<std::unique_ptr<Argument>>(); (yylhs.value.argumentList)->emplace_back((yystack_[0].value.argument)); }
-#line 1428 "parser.tab.cpp" // lalr1.cc:859
+#line 1421 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 48:
-#line 334 "parser.ypp" // lalr1.cc:859
+#line 336 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.argumentList)->emplace_back((yystack_[0].value.argument)); (yylhs.value.argumentList) = (yystack_[1].value.argumentList); }
-#line 1434 "parser.tab.cpp" // lalr1.cc:859
+#line 1427 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 49:
-#line 337 "parser.ypp" // lalr1.cc:859
+#line 339 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argument) = new Argument(yylhs.location, (yystack_[2].value.name), (yystack_[0].value.value)); }
-#line 1440 "parser.tab.cpp" // lalr1.cc:859
+#line 1433 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 50:
-#line 342 "parser.ypp" // lalr1.cc:859
+#line 344 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.fragmentSpread) = new FragmentSpread(yylhs.location, (yystack_[1].value.name), (yystack_[0].value.directiveList)); }
-#line 1446 "parser.tab.cpp" // lalr1.cc:859
+#line 1439 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 51:
-#line 346 "parser.ypp" // lalr1.cc:859
+#line 348 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.inlineFragment) = new InlineFragment(yylhs.location, (yystack_[2].value.namedType), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
-#line 1452 "parser.tab.cpp" // lalr1.cc:859
+#line 1445 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 52:
-#line 350 "parser.ypp" // lalr1.cc:859
+#line 352 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.fragmentDefinition) = new FragmentDefinition(yylhs.location, (yystack_[4].value.name), (yystack_[2].value.namedType), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
-#line 1458 "parser.tab.cpp" // lalr1.cc:859
+#line 1451 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 54:
-#line 357 "parser.ypp" // lalr1.cc:859
+#line 359 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.variable)); }
-#line 1464 "parser.tab.cpp" // lalr1.cc:859
+#line 1457 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 55:
-#line 358 "parser.ypp" // lalr1.cc:859
+#line 360 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.intValue)); }
-#line 1470 "parser.tab.cpp" // lalr1.cc:859
+#line 1463 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 56:
-#line 359 "parser.ypp" // lalr1.cc:859
+#line 361 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.floatValue)); }
-#line 1476 "parser.tab.cpp" // lalr1.cc:859
+#line 1469 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 57:
-#line 360 "parser.ypp" // lalr1.cc:859
+#line 362 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.stringValue)); }
-#line 1482 "parser.tab.cpp" // lalr1.cc:859
+#line 1475 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 58:
-#line 361 "parser.ypp" // lalr1.cc:859
+#line 363 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.booleanValue)); }
-#line 1488 "parser.tab.cpp" // lalr1.cc:859
+#line 1481 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 59:
-#line 362 "parser.ypp" // lalr1.cc:859
+#line 364 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.enumValue)); }
-#line 1494 "parser.tab.cpp" // lalr1.cc:859
+#line 1487 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 60:
-#line 363 "parser.ypp" // lalr1.cc:859
+#line 365 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.arrayValue)); }
-#line 1500 "parser.tab.cpp" // lalr1.cc:859
+#line 1493 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 61:
-#line 364 "parser.ypp" // lalr1.cc:859
+#line 366 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.objectValue)); }
-#line 1506 "parser.tab.cpp" // lalr1.cc:859
+#line 1499 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 62:
-#line 367 "parser.ypp" // lalr1.cc:859
+#line 369 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.intValue) = new IntValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1512 "parser.tab.cpp" // lalr1.cc:859
+#line 1505 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 63:
-#line 370 "parser.ypp" // lalr1.cc:859
+#line 372 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.floatValue) = new FloatValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1518 "parser.tab.cpp" // lalr1.cc:859
+#line 1511 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 64:
-#line 373 "parser.ypp" // lalr1.cc:859
+#line 375 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.stringValue) = new StringValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1524 "parser.tab.cpp" // lalr1.cc:859
+#line 1517 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 65:
-#line 376 "parser.ypp" // lalr1.cc:859
+#line 378 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.intValue)); }
-#line 1530 "parser.tab.cpp" // lalr1.cc:859
+#line 1523 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 66:
-#line 377 "parser.ypp" // lalr1.cc:859
+#line 379 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.floatValue)); }
-#line 1536 "parser.tab.cpp" // lalr1.cc:859
+#line 1529 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 67:
-#line 378 "parser.ypp" // lalr1.cc:859
+#line 380 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.stringValue)); }
-#line 1542 "parser.tab.cpp" // lalr1.cc:859
+#line 1535 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 68:
-#line 379 "parser.ypp" // lalr1.cc:859
+#line 381 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.booleanValue)); }
-#line 1548 "parser.tab.cpp" // lalr1.cc:859
+#line 1541 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 69:
-#line 380 "parser.ypp" // lalr1.cc:859
+#line 382 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.enumValue)); }
-#line 1554 "parser.tab.cpp" // lalr1.cc:859
+#line 1547 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 70:
-#line 381 "parser.ypp" // lalr1.cc:859
+#line 383 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.arrayValue)); }
-#line 1560 "parser.tab.cpp" // lalr1.cc:859
+#line 1553 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 71:
-#line 382 "parser.ypp" // lalr1.cc:859
+#line 384 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.objectValue)); }
-#line 1566 "parser.tab.cpp" // lalr1.cc:859
+#line 1559 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 72:
-#line 385 "parser.ypp" // lalr1.cc:859
+#line 387 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.booleanValue) = new BooleanValue(yylhs.location, true); }
-#line 1572 "parser.tab.cpp" // lalr1.cc:859
+#line 1565 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 73:
-#line 386 "parser.ypp" // lalr1.cc:859
+#line 388 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.booleanValue) = new BooleanValue(yylhs.location, false); }
-#line 1578 "parser.tab.cpp" // lalr1.cc:859
+#line 1571 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 74:
-#line 389 "parser.ypp" // lalr1.cc:859
+#line 391 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1584 "parser.tab.cpp" // lalr1.cc:859
+#line 1577 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 75:
-#line 390 "parser.ypp" // lalr1.cc:859
+#line 392 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1590 "parser.tab.cpp" // lalr1.cc:859
+#line 1583 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 76:
-#line 391 "parser.ypp" // lalr1.cc:859
+#line 393 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1596 "parser.tab.cpp" // lalr1.cc:859
+#line 1589 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 77:
-#line 392 "parser.ypp" // lalr1.cc:859
+#line 394 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1602 "parser.tab.cpp" // lalr1.cc:859
+#line 1595 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 78:
-#line 393 "parser.ypp" // lalr1.cc:859
+#line 395 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
-#line 1608 "parser.tab.cpp" // lalr1.cc:859
+#line 1601 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 79:
-#line 400 "parser.ypp" // lalr1.cc:859
+#line 402 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
-#line 1614 "parser.tab.cpp" // lalr1.cc:859
+#line 1607 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 80:
-#line 401 "parser.ypp" // lalr1.cc:859
+#line 403 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, (yystack_[1].value.valueList)); }
-#line 1620 "parser.tab.cpp" // lalr1.cc:859
+#line 1613 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 81:
-#line 404 "parser.ypp" // lalr1.cc:859
+#line 406 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.valueList) = new std::vector<std::unique_ptr<Value>>(); (yylhs.value.valueList)->emplace_back((yystack_[0].value.value)); }
-#line 1626 "parser.tab.cpp" // lalr1.cc:859
+#line 1619 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 82:
-#line 405 "parser.ypp" // lalr1.cc:859
+#line 407 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.valueList)->emplace_back((yystack_[0].value.value)); (yylhs.value.valueList) = (yystack_[1].value.valueList); }
-#line 1632 "parser.tab.cpp" // lalr1.cc:859
+#line 1625 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 83:
-#line 409 "parser.ypp" // lalr1.cc:859
+#line 411 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
-#line 1638 "parser.tab.cpp" // lalr1.cc:859
+#line 1631 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 84:
-#line 410 "parser.ypp" // lalr1.cc:859
+#line 412 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, (yystack_[1].value.valueList)); }
-#line 1644 "parser.tab.cpp" // lalr1.cc:859
+#line 1637 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 85:
-#line 414 "parser.ypp" // lalr1.cc:859
+#line 416 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.valueList) = new std::vector<std::unique_ptr<Value>>(); (yylhs.value.valueList)->emplace_back((yystack_[0].value.value)); }
-#line 1650 "parser.tab.cpp" // lalr1.cc:859
+#line 1643 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 86:
-#line 415 "parser.ypp" // lalr1.cc:859
+#line 417 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.valueList)->emplace_back((yystack_[0].value.value)); (yylhs.value.valueList) = (yystack_[1].value.valueList); }
-#line 1656 "parser.tab.cpp" // lalr1.cc:859
+#line 1649 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 87:
-#line 420 "parser.ypp" // lalr1.cc:859
+#line 422 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, new std::vector<std::unique_ptr<ObjectField>>()); }
-#line 1662 "parser.tab.cpp" // lalr1.cc:859
+#line 1655 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 88:
-#line 421 "parser.ypp" // lalr1.cc:859
+#line 423 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, (yystack_[1].value.objectFieldList)); }
-#line 1668 "parser.tab.cpp" // lalr1.cc:859
+#line 1661 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 89:
-#line 425 "parser.ypp" // lalr1.cc:859
+#line 427 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectFieldList) = new std::vector<std::unique_ptr<ObjectField>>(); (yylhs.value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); }
-#line 1674 "parser.tab.cpp" // lalr1.cc:859
+#line 1667 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 90:
-#line 426 "parser.ypp" // lalr1.cc:859
+#line 428 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); (yylhs.value.objectFieldList) = (yystack_[1].value.objectFieldList); }
-#line 1680 "parser.tab.cpp" // lalr1.cc:859
+#line 1673 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 91:
-#line 429 "parser.ypp" // lalr1.cc:859
+#line 431 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectField) = new ObjectField(yylhs.location, (yystack_[2].value.name), (yystack_[0].value.value)); }
-#line 1686 "parser.tab.cpp" // lalr1.cc:859
+#line 1679 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 92:
-#line 433 "parser.ypp" // lalr1.cc:859
+#line 435 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, new std::vector<std::unique_ptr<ObjectField>>()); }
-#line 1692 "parser.tab.cpp" // lalr1.cc:859
+#line 1685 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 93:
-#line 434 "parser.ypp" // lalr1.cc:859
+#line 436 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, (yystack_[1].value.objectFieldList)); }
-#line 1698 "parser.tab.cpp" // lalr1.cc:859
+#line 1691 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 94:
-#line 438 "parser.ypp" // lalr1.cc:859
+#line 440 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectFieldList) = new std::vector<std::unique_ptr<ObjectField>>(); (yylhs.value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); }
-#line 1704 "parser.tab.cpp" // lalr1.cc:859
+#line 1697 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 95:
-#line 439 "parser.ypp" // lalr1.cc:859
+#line 441 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); (yylhs.value.objectFieldList) = (yystack_[1].value.objectFieldList); }
-#line 1710 "parser.tab.cpp" // lalr1.cc:859
+#line 1703 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 96:
-#line 442 "parser.ypp" // lalr1.cc:859
+#line 444 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectField) = new ObjectField(yylhs.location, (yystack_[2].value.name), (yystack_[0].value.value)); }
-#line 1716 "parser.tab.cpp" // lalr1.cc:859
+#line 1709 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 98:
-#line 450 "parser.ypp" // lalr1.cc:859
+#line 452 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.directiveList) = nullptr; }
-#line 1722 "parser.tab.cpp" // lalr1.cc:859
+#line 1715 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 100:
-#line 454 "parser.ypp" // lalr1.cc:859
+#line 456 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.directiveList) = new std::vector<std::unique_ptr<Directive>>(); (yylhs.value.directiveList)->emplace_back((yystack_[0].value.directive)); }
-#line 1728 "parser.tab.cpp" // lalr1.cc:859
+#line 1721 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 101:
-#line 455 "parser.ypp" // lalr1.cc:859
+#line 457 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.directiveList)->emplace_back((yystack_[0].value.directive)); (yylhs.value.directiveList) = (yystack_[1].value.directiveList); }
-#line 1734 "parser.tab.cpp" // lalr1.cc:859
+#line 1727 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 102:
-#line 458 "parser.ypp" // lalr1.cc:859
+#line 460 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.directive) = new Directive(yylhs.location, (yystack_[1].value.name), (yystack_[0].value.argumentList)); }
-#line 1740 "parser.tab.cpp" // lalr1.cc:859
+#line 1733 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 103:
-#line 463 "parser.ypp" // lalr1.cc:859
+#line 465 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.type) = static_cast<Type *>((yystack_[0].value.namedType)); }
-#line 1746 "parser.tab.cpp" // lalr1.cc:859
+#line 1739 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 104:
-#line 464 "parser.ypp" // lalr1.cc:859
+#line 466 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.type) = static_cast<Type *>((yystack_[0].value.listType)); }
-#line 1752 "parser.tab.cpp" // lalr1.cc:859
+#line 1745 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 105:
-#line 465 "parser.ypp" // lalr1.cc:859
+#line 467 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.type) = static_cast<Type *>((yystack_[0].value.nonNullType)); }
-#line 1758 "parser.tab.cpp" // lalr1.cc:859
+#line 1751 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 106:
-#line 468 "parser.ypp" // lalr1.cc:859
+#line 470 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.namedType) = new NamedType(yylhs.location, (yystack_[0].value.name)); }
-#line 1764 "parser.tab.cpp" // lalr1.cc:859
+#line 1757 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 107:
-#line 471 "parser.ypp" // lalr1.cc:859
+#line 473 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.listType) = new ListType(yylhs.location, (yystack_[1].value.type)); }
-#line 1770 "parser.tab.cpp" // lalr1.cc:859
+#line 1763 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 108:
-#line 474 "parser.ypp" // lalr1.cc:859
+#line 476 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.nonNullType) = new NonNullType(yylhs.location, (yystack_[1].value.namedType)); }
-#line 1776 "parser.tab.cpp" // lalr1.cc:859
+#line 1769 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 109:
-#line 475 "parser.ypp" // lalr1.cc:859
+#line 477 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.nonNullType) = new NonNullType(yylhs.location, (yystack_[1].value.listType)); }
-#line 1782 "parser.tab.cpp" // lalr1.cc:859
+#line 1775 "parser.tab.cpp" // lalr1.cc:859
     break;
 
 
-#line 1786 "parser.tab.cpp" // lalr1.cc:859
+#line 1779 "parser.tab.cpp" // lalr1.cc:859
             default:
               break;
             }
@@ -2273,17 +2266,17 @@ namespace yy {
   const unsigned short int
   GraphQLParserImpl::yyrline_[] =
   {
-       0,   231,   231,   236,   237,   238,   239,   240,   241,   242,
-     245,   246,   250,   251,   256,   259,   260,   263,   264,   270,
-     271,   272,   273,   274,   277,   278,   282,   286,   287,   290,
-     294,   298,   299,   302,   306,   310,   311,   313,   314,   317,
-     318,   319,   322,   323,   326,   329,   330,   333,   334,   337,
-     342,   346,   350,   353,   357,   358,   359,   360,   361,   362,
-     363,   364,   367,   370,   373,   376,   377,   378,   379,   380,
-     381,   382,   385,   386,   389,   390,   391,   392,   393,   400,
-     401,   404,   405,   409,   410,   414,   415,   420,   421,   425,
-     426,   429,   433,   434,   438,   439,   442,   447,   450,   451,
-     454,   455,   458,   463,   464,   465,   468,   471,   474,   475
+       0,   233,   233,   238,   239,   240,   241,   242,   243,   244,
+     247,   248,   252,   253,   258,   261,   262,   265,   266,   272,
+     273,   274,   275,   276,   279,   280,   284,   288,   289,   292,
+     296,   300,   301,   304,   308,   312,   313,   315,   316,   319,
+     320,   321,   324,   325,   328,   331,   332,   335,   336,   339,
+     344,   348,   352,   355,   359,   360,   361,   362,   363,   364,
+     365,   366,   369,   372,   375,   378,   379,   380,   381,   382,
+     383,   384,   387,   388,   391,   392,   393,   394,   395,   402,
+     403,   406,   407,   411,   412,   416,   417,   422,   423,   427,
+     428,   431,   435,   436,   440,   441,   444,   449,   452,   453,
+     456,   457,   460,   465,   466,   467,   470,   473,   476,   477
   };
 
   // Print the state stack on the debug stream.
@@ -2367,8 +2360,8 @@ namespace yy {
 
 
 } // yy
-#line 2371 "parser.tab.cpp" // lalr1.cc:1167
-#line 477 "parser.ypp" // lalr1.cc:1168
+#line 2364 "parser.tab.cpp" // lalr1.cc:1167
+#line 479 "parser.ypp" // lalr1.cc:1168
 
 void yy::GraphQLParserImpl::error(const yy::location &loc, const std::string &str) {
   std::ostringstream out;

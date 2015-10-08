@@ -59,6 +59,7 @@ using facebook::graphql::ast::NonNullType;
 
 union yystype {                                         \
     const char *str;                                    \
+    const char *heapStr;                                \
     Name *name;                                         \
     Definition *definition;                             \
     Document *document;                                 \
@@ -218,9 +219,10 @@ union yystype {                                         \
 %type <listType> list_type
 %type <nonNullType> non_null_type
 
-%type <str> operation_type
+%type <heapStr> operation_type
 
 %destructor { } <str>
+%destructor { free((void *)$$); } <heapStr>
 %destructor { } <document>  /* we steal it and put it in outAST, don't free! */
 %destructor { delete $$; } <*>
 
