@@ -9,7 +9,7 @@
 package main
 
 /*
-#cgo CFLAGS: -I ../c
+#cgo CFLAGS: -I ../c -I ..
 #cgo LDFLAGS: -L .. -lgraphqlparser
 #include "GraphQLAst.h"
 #include "GraphQLAstNode.h"
