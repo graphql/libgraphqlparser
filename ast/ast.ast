@@ -51,7 +51,7 @@ S Name name
 P? Directive directives
 
 T InlineFragment
-S NamedType typeCondition
+S? NamedType typeCondition
 P? Directive directives
 S SelectionSet selectionSet
 

@@ -346,6 +346,7 @@ fragment_spread:
 
 inline_fragment:
                 "..." "on" type_condition directives_opt selection_set { $$ = new InlineFragment(@$, $3, $4, $5); }
+        |       "..." directives_opt selection_set { $$ = new InlineFragment(@$, nullptr, $2, $3); }
         ;
 
 fragment_definition:

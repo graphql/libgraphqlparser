@@ -81,7 +81,7 @@ using facebook::graphql::ast::NonNullType;
 
 union yystype {                                         \
     const char *str;                                    \
-    const char *heapStr;                                \                               
+    const char *heapStr;                                \
     Name *name;                                         \
     Definition *definition;                             \
     Document *document;                                 \
@@ -576,7 +576,7 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 362,     ///< Last index in yytable_.
+      yylast_ = 381,     ///< Last index in yytable_.
       yynnts_ = 54,  ///< Number of nonterminal symbols.
       yyfinal_ = 30, ///< Termination state number.
       yyterror_ = 1,
