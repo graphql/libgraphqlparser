@@ -33,6 +33,20 @@ sufficiently-recent version of [Flex](http://flex.sourceforge.net/) and [Bison](
 system, it will use them; otherwise, it will rely on the checked-in
 `parser.tab.{c,h}pp` and `lexer.{h,cpp}`.
 
+To build libgraphqlparser from source:
+
+```
+$ # inside the project root:
+$ cmake .
+$ make
+```
+
+Then, to install it on your system:
+
+```
+$ make install
+```
+
 ## How libgraphqlparser works
 
 libgraphqlparser uses flex and bison to generate a C++ parser for
