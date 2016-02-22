@@ -261,10 +261,10 @@ void JsonVisitor::endVisitInlineFragment(const InlineFragment &inlineFragment) {
 
   auto nextChild = children.begin();
   if (inlineFragment.getTypeCondition() != nullptr) {
-    out_ << "\"typeCondition\":" << *nextChild++;
+    out_ << "\"typeCondition\":" << *nextChild++ << ',';
   }
 
-  out_ << ",\"directives\":";
+  out_ << "\"directives\":";
   const auto *directives = inlineFragment.getDirectives();
   if (directives != nullptr) {
     printChildArray(nextChild, directives->size());
