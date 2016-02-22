@@ -75,3 +75,4 @@ libgraphqlparser is BSD-licensed. We also provide an additional patent grant.
 
 - [graphql-parser (Ruby interface)](https://github.com/Shopify/graphql-parser)
 - [py-graphqlparser (Python interface)](https://github.com/elastic-coders/py-graphqlparser)
+- [graphql_parser (Elixir interface)](https://github.com/aarvay/graphql_parser)
