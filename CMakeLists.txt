@@ -82,7 +82,9 @@ INSTALL(DIRECTORY c ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/c DE
   PATTERN "build" EXCLUDE)
 
 INSTALL(FILES
+  Ast.h
   AstNode.h
+  AstVisitor.h
   GraphQLParser.h
   JsonVisitor.h
   lexer.h
