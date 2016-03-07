@@ -720,7 +720,7 @@ namespace yy {
 #line 721 "parser.tab.cpp" // lalr1.cc:617
         break;
 
-      case 63: // array_value
+      case 63: // list_value
 
 #line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.arrayValue); }
@@ -734,7 +734,7 @@ namespace yy {
 #line 735 "parser.tab.cpp" // lalr1.cc:617
         break;
 
-      case 65: // array_value_const
+      case 65: // list_value_const
 
 #line 227 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.arrayValue); }
@@ -1608,13 +1608,13 @@ namespace yy {
 
   case 80:
 #line 403 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
+    { (yylhs.value.arrayValue) = new ListValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
 #line 1613 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 81:
 #line 404 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, (yystack_[1].value.valueList)); }
+    { (yylhs.value.arrayValue) = new ListValue(yylhs.location, (yystack_[1].value.valueList)); }
 #line 1619 "parser.tab.cpp" // lalr1.cc:859
     break;
 
@@ -1632,13 +1632,13 @@ namespace yy {
 
   case 84:
 #line 412 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
+    { (yylhs.value.arrayValue) = new ListValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
 #line 1637 "parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 85:
 #line 413 "parser.ypp" // lalr1.cc:859
-    { (yylhs.value.arrayValue) = new ArrayValue(yylhs.location, (yystack_[1].value.valueList)); }
+    { (yylhs.value.arrayValue) = new ListValue(yylhs.location, (yystack_[1].value.valueList)); }
 #line 1643 "parser.tab.cpp" // lalr1.cc:859
     break;
 
@@ -2266,8 +2266,8 @@ namespace yy {
   "field", "arguments", "arguments_opt", "argument_list", "argument",
   "fragment_spread", "inline_fragment", "fragment_definition",
   "type_condition", "value", "int_value", "float_value", "string_value",
-  "value_const", "boolean_value", "enum_value", "array_value",
-  "value_list", "array_value_const", "value_const_list", "object_value",
+  "value_const", "boolean_value", "enum_value", "list_value", "value_list",
+  "list_value_const", "value_const_list", "object_value",
   "object_field_list", "object_field", "object_value_const",
   "object_field_const_list", "object_field_const", "directives",
   "directives_opt", "directive_list", "directive", "type", "type_name",

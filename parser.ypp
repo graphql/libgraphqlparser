@@ -48,7 +48,7 @@ using facebook::graphql::ast::FloatValue;
 using facebook::graphql::ast::StringValue;
 using facebook::graphql::ast::BooleanValue;
 using facebook::graphql::ast::EnumValue;
-using facebook::graphql::ast::ArrayValue;
+using facebook::graphql::ast::ListValue;
 using facebook::graphql::ast::ObjectValue;
 using facebook::graphql::ast::ObjectField;
 using facebook::graphql::ast::Directive;
@@ -79,7 +79,7 @@ union yystype {                                         \
     StringValue *stringValue;                       \
     BooleanValue *booleanValue;                     \
     EnumValue *enumValue;                           \
-    ArrayValue *arrayValue;                         \
+    ListValue *arrayValue;                         \
     ObjectValue *objectValue;                       \
     ObjectField *objectField;                       \
     Directive *directive;                           \
@@ -107,7 +107,7 @@ union yystype {                                         \
     std::vector<std::unique_ptr<StringValue>> *stringValueList;     \
     std::vector<std::unique_ptr<BooleanValue>> *booleanValueList;   \
     std::vector<std::unique_ptr<EnumValue>> *enumValueList;         \
-    std::vector<std::unique_ptr<ArrayValue>> *arrayValueList;       \
+    std::vector<std::unique_ptr<ListValue>> *arrayValueList;       \
     std::vector<std::unique_ptr<ObjectValue>> *objectValueList;     \
     std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
     std::vector<std::unique_ptr<Directive>> *directiveList;         \
@@ -197,8 +197,8 @@ union yystype {                                         \
 %type <value> value_const
 %type <booleanValue> boolean_value
 %type <enumValue> enum_value
-%type <arrayValue> array_value
-%type <arrayValue> array_value_const
+%type <arrayValue> list_value
+%type <arrayValue> list_value_const
 %type <valueList> value_list
 %type <valueList> value_const_list
 %type <objectValue> object_value
@@ -253,7 +253,7 @@ name_opt:
         |       name
         ;
 
-/* 8.3.1 Document */
+/* 2.2 Document */
 
 document:       definition_list { $$ = new Document(@$, $1); }
         ;
@@ -267,7 +267,7 @@ definition:     operation_definition { $$ = static_cast<Definition *>($1); }
         ;
 
 
-/* 8.3.2 Operations */
+/* 2.2.1 Operations */
 operation_definition:
                 selection_set { $$ = new OperationDefinition(@$, strdup("query"), nullptr, nullptr, nullptr, $1); }
         |       operation_type name_opt selection_set { $$ = new OperationDefinition(@$, $1, $2, nullptr, nullptr, $3); }
@@ -339,7 +339,7 @@ argument_list:  argument { $$ = new std::vector<std::unique_ptr<Argument>>(); $$
 argument:       name ":" value { $$ = new Argument(@$, $1, $3); }
         ;
 
-/* 8.3.3 Fragments */
+/* 2.2.6 Fragments */
 fragment_spread:
                 "..." fragment_name directives_opt { $$ = new FragmentSpread(@$, $2, $3); }
         ;
@@ -356,14 +356,14 @@ fragment_definition:
 type_condition: type_name
         ;
 
-/* 8.3.4 Values */
+/* 2.2.7 Input Values */
 value:          variable { $$ = static_cast<Value *>($1); }
         |       int_value { $$ = static_cast<Value *>($1); }
         |       float_value { $$ = static_cast<Value *>($1); }
         |       string_value { $$ = static_cast<Value *>($1); }
         |       boolean_value { $$ = static_cast<Value *>($1); }
         |       enum_value { $$ = static_cast<Value *>($1); }
-        |       array_value { $$ = static_cast<Value *>($1); }
+        |       list_value { $$ = static_cast<Value *>($1); }
         |       object_value { $$ = static_cast<Value *>($1); }
         ;
 
@@ -381,7 +381,7 @@ value_const:    int_value { $$ = static_cast<Value *>($1); }
         |       string_value { $$ = static_cast<Value *>($1); }
         |       boolean_value { $$ = static_cast<Value *>($1); }
         |       enum_value { $$ = static_cast<Value *>($1); }
-        |       array_value_const { $$ = static_cast<Value *>($1); }
+        |       list_value_const { $$ = static_cast<Value *>($1); }
         |       object_value_const { $$ = static_cast<Value *>($1); }
         ;
 
@@ -396,21 +396,21 @@ enum_value:     IDENTIFIER { $$ = new EnumValue(@$, strdup($1)); }
         |       QUERY { $$ = new EnumValue(@$, strdup($1)); }
         ;
 
-/* 8.3.4.1 Array Value */
+/* 2.2.7.6 List Value */
 
 /* REVIEW: the empty case is inefficient; consider implementing
-   ArrayValue manually. Don't forget to also do array_value_const. */
-array_value:    "[" "]" { $$ = new ArrayValue(@$, new std::vector<std::unique_ptr<Value>>()); }
-        |       "[" value_list "]" { $$ = new ArrayValue(@$, $2); }
+   ListValue manually. Don't forget to also do list_value_const. */
+list_value:    "[" "]" { $$ = new ListValue(@$, new std::vector<std::unique_ptr<Value>>()); }
+        |       "[" value_list "]" { $$ = new ListValue(@$, $2); }
         ;
 
 value_list:     value { $$ = new std::vector<std::unique_ptr<Value>>(); $$->emplace_back($1); }
         |       value_list value { $1->emplace_back($2); $$ = $1; }
         ;
 
-array_value_const:
-                "[" "]" { $$ = new ArrayValue(@$, new std::vector<std::unique_ptr<Value>>()); }
-        |       "[" value_const_list "]" { $$ = new ArrayValue(@$, $2); }
+list_value_const:
+                "[" "]" { $$ = new ListValue(@$, new std::vector<std::unique_ptr<Value>>()); }
+        |       "[" value_const_list "]" { $$ = new ListValue(@$, $2); }
         ;
 
 value_const_list:
@@ -418,8 +418,8 @@ value_const_list:
         |       value_const_list value_const { $1->emplace_back($2); $$ = $1; }
         ;
 
-/* 8.3.4.2 Object Value */
-/* REVIEW: Inefficient, like ArrayValue. */
+/* 2.2.7.7 Object Value */
+/* REVIEW: Inefficient, like ListValue. */
 object_value:   "{" "}" { $$ = new ObjectValue(@$, new std::vector<std::unique_ptr<ObjectField>>()); }
         |       "{" object_field_list "}" { $$ = new ObjectValue(@$, $2); }
         ;
@@ -445,7 +445,7 @@ object_field_const_list:
 object_field_const: name ":" value_const { $$ = new ObjectField(@$, $1, $3); }
         ;
 
-/* 8.3.5 Directives */
+/* 2.2.10 Directives */
 
 directives:     directive_list
         ;
@@ -461,7 +461,7 @@ directive_list: directive { $$ = new std::vector<std::unique_ptr<Directive>>(); 
 directive:      "@" name arguments_opt { $$ = new Directive(@$, $2, $3); }
         ;
 
-/* 8.3.6 Types */
+/* 2.2.9 Types */
 
 type:           type_name { $$ = static_cast<Type *>($1); }
         |       list_type { $$ = static_cast<Type *>($1); }

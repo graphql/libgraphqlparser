@@ -68,7 +68,7 @@ O FloatValue
 O StringValue
 O BooleanValue
 O EnumValue
-O ArrayValue
+O ListValue
 O ObjectValue
 
 T Variable
@@ -89,7 +89,7 @@ S boolean value
 T EnumValue
 S string value
 
-T ArrayValue
+T ListValue
 P Value values
 
 T ObjectValue

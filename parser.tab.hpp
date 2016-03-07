@@ -70,7 +70,7 @@ using facebook::graphql::ast::FloatValue;
 using facebook::graphql::ast::StringValue;
 using facebook::graphql::ast::BooleanValue;
 using facebook::graphql::ast::EnumValue;
-using facebook::graphql::ast::ArrayValue;
+using facebook::graphql::ast::ListValue;
 using facebook::graphql::ast::ObjectValue;
 using facebook::graphql::ast::ObjectField;
 using facebook::graphql::ast::Directive;
@@ -101,7 +101,7 @@ union yystype {                                         \
     StringValue *stringValue;                       \
     BooleanValue *booleanValue;                     \
     EnumValue *enumValue;                           \
-    ArrayValue *arrayValue;                         \
+    ListValue *arrayValue;                         \
     ObjectValue *objectValue;                       \
     ObjectField *objectField;                       \
     Directive *directive;                           \
@@ -129,7 +129,7 @@ union yystype {                                         \
     std::vector<std::unique_ptr<StringValue>> *stringValueList;     \
     std::vector<std::unique_ptr<BooleanValue>> *booleanValueList;   \
     std::vector<std::unique_ptr<EnumValue>> *enumValueList;         \
-    std::vector<std::unique_ptr<ArrayValue>> *arrayValueList;       \
+    std::vector<std::unique_ptr<ListValue>> *arrayValueList;       \
     std::vector<std::unique_ptr<ObjectValue>> *objectValueList;     \
     std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
     std::vector<std::unique_ptr<Directive>> *directiveList;         \

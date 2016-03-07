@@ -48,7 +48,7 @@ class JsonVisitor : public AstVisitor {
 
   // Prints a non-null array of n children from the given
   // iterator. Does not update the iterator.
-  void printChildArray(
+  void printChildList(
     const std::vector<std::string>::const_iterator &childIterator,
     size_t numChildren);
 
@@ -105,8 +105,8 @@ public:
 
   void endVisitEnumValue(const EnumValue &enumValue) override;
 
-  bool visitArrayValue(const ArrayValue &arrayValue) override;
-  void endVisitArrayValue(const ArrayValue &arrayValue) override;
+  bool visitListValue(const ListValue &arrayValue) override;
+  void endVisitListValue(const ListValue &arrayValue) override;
 
   bool visitObjectValue(const ObjectValue &objectValue) override;
   void endVisitObjectValue(const ObjectValue &objectValue) override;

@@ -34,7 +34,7 @@ void JsonVisitor::startPrintingNode(const char *kind, const yy::location &locati
   return;
 }
 
-void JsonVisitor::printChildArray(
+void JsonVisitor::printChildList(
     const std::vector<std::string>::const_iterator &childIterator,
     size_t numChildren) {
   out_ << '[';
@@ -66,7 +66,7 @@ void JsonVisitor::endVisitDocument(const Document &document) {
   out_ << "\"definitions\":";
 
   const auto &children = printed_.back();
-  printChildArray(children.begin(), children.size());
+  printChildList(children.begin(), children.size());
   out_ << '}';
   printed_.pop_back();
   assert(printed_.empty());
@@ -93,7 +93,7 @@ void JsonVisitor::endVisitOperationDefinition(const OperationDefinition &operati
   out_ << ",\"variableDefinitions\":";
   const auto *variableDefinitions = operationDefinition.getVariableDefinitions();
   if (variableDefinitions != nullptr) {
-    printChildArray(nextChild, variableDefinitions->size());
+    printChildList(nextChild, variableDefinitions->size());
     nextChild += variableDefinitions->size();
   } else {
     out_ << "null";
@@ -102,7 +102,7 @@ void JsonVisitor::endVisitOperationDefinition(const OperationDefinition &operati
   out_ << ",\"directives\":";
   const auto *directives = operationDefinition.getDirectives();
   if (directives != nullptr) {
-    printChildArray(nextChild, directives->size());
+    printChildList(nextChild, directives->size());
     nextChild += directives->size();
   } else {
     out_ << "null";
@@ -152,7 +152,7 @@ void JsonVisitor::endVisitSelectionSet(const SelectionSet &selectionSet) {
   out_ << "\"selections\":";
 
   const auto &children = printed_.back();
-  printChildArray(children.begin(), children.size());
+  printChildList(children.begin(), children.size());
 
   out_ << '}';
 
@@ -182,7 +182,7 @@ void JsonVisitor::endVisitField(const Field &field) {
   out_ << ",\"arguments\":";
   const auto *arguments = field.getArguments();
   if (arguments != nullptr) {
-    printChildArray(nextChild, arguments->size());
+    printChildList(nextChild, arguments->size());
     nextChild += arguments->size();
   } else {
     out_ << "null";
@@ -191,7 +191,7 @@ void JsonVisitor::endVisitField(const Field &field) {
   out_ << ",\"directives\":";
   const auto *directives = field.getDirectives();
   if (directives != nullptr) {
-    printChildArray(nextChild, directives->size());
+    printChildList(nextChild, directives->size());
     nextChild += directives->size();
   } else {
     out_ << "null";
@@ -239,7 +239,7 @@ void JsonVisitor::endVisitFragmentSpread(const FragmentSpread &fragmentSpread) {
   out_ << ",\"directives\":";
   const auto *directives = fragmentSpread.getDirectives();
   if (directives != nullptr) {
-    printChildArray(children.begin() + 1, directives->size());
+    printChildList(children.begin() + 1, directives->size());
   } else {
     out_ << "null";
   }
@@ -267,7 +267,7 @@ void JsonVisitor::endVisitInlineFragment(const InlineFragment &inlineFragment) {
   out_ << "\"directives\":";
   const auto *directives = inlineFragment.getDirectives();
   if (directives != nullptr) {
-    printChildArray(nextChild, directives->size());
+    printChildList(nextChild, directives->size());
     nextChild += directives->size();
   } else {
     out_ << "null";
@@ -298,7 +298,7 @@ void JsonVisitor::endVisitFragmentDefinition(const FragmentDefinition &fragmentD
   out_ << ",\"directives\":";
   const auto *directives = fragmentDefinition.getDirectives();
   if (directives != nullptr) {
-    printChildArray(nextChild, directives->size());
+    printChildList(nextChild, directives->size());
     nextChild += directives->size();
   } else {
     out_ << "null";
@@ -355,16 +355,16 @@ void JsonVisitor::endVisitBooleanValue(const BooleanValue &booleanValue) {
   printed_.back().emplace_back(out_.str());
 }
 
-bool JsonVisitor::visitArrayValue(const ArrayValue &arrayValue) {
+bool JsonVisitor::visitListValue(const ListValue &arrayValue) {
   visitNode();
   return true;
 }
 
-void JsonVisitor::endVisitArrayValue(const ArrayValue &arrayValue) {
-  startPrintingNode("ArrayValue", arrayValue.getLocation());
+void JsonVisitor::endVisitListValue(const ListValue &arrayValue) {
+  startPrintingNode("ListValue", arrayValue.getLocation());
 
   out_ << "\"values\":";
-  printChildArray(printed_.back().begin(), arrayValue.getValues().size());
+  printChildList(printed_.back().begin(), arrayValue.getValues().size());
 
   out_ << '}';
 
@@ -380,7 +380,7 @@ void JsonVisitor::endVisitObjectValue(const ObjectValue &objectValue) {
   startPrintingNode("ObjectValue", objectValue.getLocation());
 
   out_ << "\"fields\":";
-  printChildArray(printed_.back().begin(), objectValue.getFields().size());
+  printChildList(printed_.back().begin(), objectValue.getFields().size());
 
   out_ << '}';
 
@@ -419,7 +419,7 @@ void JsonVisitor::endVisitDirective(const Directive &directive) {
   out_ << ",\"arguments\":";
   const auto *arguments = directive.getArguments();
   if (arguments != nullptr) {
-    printChildArray(nextChild, arguments->size());
+    printChildList(nextChild, arguments->size());
   } else {
     out_ << "null";
   }
