@@ -3,7 +3,7 @@ PROJECT(libgraphqlparser C CXX)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
-FIND_PACKAGE(PythonInterp)
+FIND_PACKAGE(PythonInterp 2 REQUIRED)
 IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
   MESSAGE(FATAL_ERROR "Python 2 is required.")
 ENDIF()
