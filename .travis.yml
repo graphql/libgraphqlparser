@@ -19,4 +19,4 @@ before_install:
       && cd ..
       && rm gtest-1.7.0.zip
 
-script: mkdir build && cd build && cmake .. -Dtest=ON && make && test/runTests
+script: mkdir build && cd build && cmake .. -Dtest=ON && make && test/runTests && make memcheck
