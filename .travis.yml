@@ -4,6 +4,12 @@ compiler:
   - clang
   - gcc
 
+
+addons:
+  apt:
+    packages:
+      - valgrind
+
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get update -qq
