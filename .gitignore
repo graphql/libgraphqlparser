@@ -17,3 +17,4 @@ cmake_install.cmake
 *.so
 GraphQLParser.py
 install_manifest.txt
+build/
