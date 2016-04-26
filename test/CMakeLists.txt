@@ -4,6 +4,8 @@ ENABLE_TESTING()
 
 INCLUDE_DIRECTORIES(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
+FILE(COPY valgrind.supp DESTINATION .)
+
 ADD_EXECUTABLE(runTests ParserTests.cpp)
 
 TARGET_LINK_LIBRARIES(runTests gtest gtest_main)
