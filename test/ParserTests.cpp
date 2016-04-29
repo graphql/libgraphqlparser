@@ -145,12 +145,10 @@ TEST(ParserTests, UsefulErrors) {
 
   expectError(
     "notanoperation Foo { field }",
-    "1.1-14: syntax error, unexpected IDENTIFIER, expecting fragment or "
-    "mutation or query or {");
+    "1.1-14: syntax error, unexpected IDENTIFIER");
 
   expectError("...",
-              "1.1-3: syntax error, unexpected ..., expecting fragment or "
-              "mutation or query or {");
+              "1.1-3: syntax error, unexpected ...");
 }
 
 TEST(ParserTests, AcceptsVariableInlineValues) {
@@ -181,6 +179,14 @@ TEST(ParserTests, AcceptsSimpleQuery) {
   expectSuccess("query MyQuery { myfield }");
 }
 
+TEST(ParserTests, AcceptsSimpleMutation) {
+  expectSuccess("mutation MyMut { myfield }");
+}
+
+TEST(ParserTests, AcceptsSimpleSubscription) {
+  expectSuccess("subscription MySub { myfield }");
+}
+
 TEST(ParserTests, AcceptsQueryShorthand) {
   expectSuccess("{ myfield }");
 }
@@ -193,12 +199,17 @@ TEST(ParserTests, AcceptsLonghandUnnamedMutation) {
   expectSuccess("mutation { myfield }");
 }
 
+TEST(ParserTests, AcceptsLonghandUnnamedSubscription) {
+  expectSuccess("subscription { myfield }");
+}
+
 TEST(ParserTests, AllowsNonKeywordsForNames) {
   const char *nonKeywords[] = {
     "on",
     "fragment",
     "query",
     "mutation",
+    "subscription",
     "true",
     "false"
   };

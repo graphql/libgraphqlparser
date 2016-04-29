@@ -31,14 +31,14 @@
 // version 2.2 of Bison.
 
 /**
- ** \file parser.tab.hpp
+ ** \file /Users/swolchok/libgraphqlparser/parser.tab.hpp
  ** Define the yy::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_PARSER_TAB_HPP_INCLUDED
-# define YY_YY_PARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_PARSER_TAB_HPP_INCLUDED
+# define YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_PARSER_TAB_HPP_INCLUDED
 // //                    "%code requires" blocks.
 #line 22 "parser.ypp" // lalr1.cc:392
 
@@ -141,7 +141,7 @@ union yystype {                                         \
 #define YYSTYPE union yystype
 #define YYLTYPE yy::location
 
-#line 145 "parser.tab.hpp" // lalr1.cc:392
+#line 145 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 # include <cstdlib> // std::abort
@@ -213,7 +213,7 @@ union yystype {                                         \
 
 
 namespace yy {
-#line 217 "parser.tab.hpp" // lalr1.cc:392
+#line 217 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 
@@ -251,24 +251,25 @@ namespace yy {
         TOK_NULL = 261,
         TOK_QUERY = 262,
         TOK_ON = 263,
-        TOK_TRUE = 264,
-        TOK_BANG = 265,
-        TOK_LPAREN = 266,
-        TOK_RPAREN = 267,
-        TOK_ELLIPSIS = 268,
-        TOK_COLON = 269,
-        TOK_EQUAL = 270,
-        TOK_AT = 271,
-        TOK_LBRACKET = 272,
-        TOK_RBRACKET = 273,
-        TOK_LBRACE = 274,
-        TOK_PIPE = 275,
-        TOK_RBRACE = 276,
-        TOK_VARIABLE = 277,
-        TOK_INTEGER = 278,
-        TOK_FLOAT = 279,
-        TOK_STRING = 280,
-        TOK_IDENTIFIER = 281
+        TOK_SUBSCRIPTION = 264,
+        TOK_TRUE = 265,
+        TOK_BANG = 266,
+        TOK_LPAREN = 267,
+        TOK_RPAREN = 268,
+        TOK_ELLIPSIS = 269,
+        TOK_COLON = 270,
+        TOK_EQUAL = 271,
+        TOK_AT = 272,
+        TOK_LBRACKET = 273,
+        TOK_RBRACKET = 274,
+        TOK_LBRACE = 275,
+        TOK_PIPE = 276,
+        TOK_RBRACE = 277,
+        TOK_VARIABLE = 278,
+        TOK_INTEGER = 279,
+        TOK_FLOAT = 280,
+        TOK_STRING = 281,
+        TOK_IDENTIFIER = 282
       };
     };
 
@@ -576,12 +577,12 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 381,     ///< Last index in yytable_.
+      yylast_ = 404,     ///< Last index in yytable_.
       yynnts_ = 54,  ///< Number of nonterminal symbols.
-      yyfinal_ = 30, ///< Termination state number.
+      yyfinal_ = 32, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 27  ///< Number of tokens.
+      yyntokens_ = 28  ///< Number of tokens.
     };
 
 
@@ -594,9 +595,9 @@ namespace yy {
 
 
 } // yy
-#line 598 "parser.tab.hpp" // lalr1.cc:392
+#line 599 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 
 
-#endif // !YY_YY_PARSER_TAB_HPP_INCLUDED
+#endif // !YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_PARSER_TAB_HPP_INCLUDED

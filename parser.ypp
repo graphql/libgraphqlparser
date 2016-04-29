@@ -138,6 +138,7 @@ union yystype {                                         \
 %token <str> NULL "null"
 %token <str> QUERY "query"
 %token <str> ON "on"
+%token <str> SUBSCRIPTION "subscription"
 %token <str> TRUE "true"
 %token BANG "!"
 %token LPAREN "("
@@ -241,6 +242,7 @@ fragment_name:  IDENTIFIER { $$ = new Name(@1, strdup($1)); }
         |       MUTATION { $$ = new Name(@1, strdup($1)); }
         |       NULL { $$ = new Name(@1, strdup($1)); }
         |       QUERY { $$ = new Name(@1, strdup($1)); }
+        |       SUBSCRIPTION { $$ = new Name(@1, strdup($1)); }
         |       TRUE { $$ = new Name(@1, strdup($1)); }
         ;
 
@@ -278,6 +280,7 @@ operation_definition:
 
 operation_type: QUERY { $$ = strdup($1); }
         |       MUTATION { $$ = strdup($1); }
+        |       SUBSCRIPTION { $$ = strdup($1); }
         ;
 
 variable_definitions:
@@ -394,6 +397,7 @@ enum_value:     IDENTIFIER { $$ = new EnumValue(@$, strdup($1)); }
         |       MUTATION { $$ = new EnumValue(@$, strdup($1)); }
         |       ON { $$ = new EnumValue(@$, strdup($1)); }
         |       QUERY { $$ = new EnumValue(@$, strdup($1)); }
+        |       SUBSCRIPTION { $$ = new EnumValue(@$, strdup($1)); }
         ;
 
 /* 2.2.7.6 List Value */
