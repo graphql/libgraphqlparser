@@ -99,4 +99,12 @@ INSTALL(TARGETS graphqlparser
 
 IF (test)
   ADD_SUBDIRECTORY(test)
+
+  if(UNIX)
+    # setup valgrind
+    ADD_CUSTOM_TARGET(memcheck
+      valgrind --leak-check=full --suppressions=./test/valgrind.supp --dsymutil=yes --error-exitcode=1 ./test/runTests  >/dev/null
+    )
+  endif()
+
 ENDIF()
