@@ -1,6 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(libgraphqlparser C CXX)
 
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
+
+INCLUDE(version)
+
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
 FIND_PACKAGE(PythonInterp 2 REQUIRED)
@@ -96,6 +100,17 @@ INSTALL(FILES
   DESTINATION include/graphqlparser)
 INSTALL(TARGETS graphqlparser
   LIBRARY DESTINATION lib)
+
+if (UNIX)
+  # generate pkgconfig file
+  include(FindPkgConfig QUIET)
+  if(PKG_CONFIG_FOUND)
+    # generate .pc and install
+    configure_file("libgraphqlparser.pc.in" "libgraphqlparser.pc" @ONLY)
+    install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libgraphqlparser.pc"
+            DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
+  endif()
+endif()
 
 IF (test)
   ADD_SUBDIRECTORY(test)

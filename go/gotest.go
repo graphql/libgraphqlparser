@@ -9,12 +9,12 @@
 package main
 
 /*
-#cgo CFLAGS: -I ../c -I ..
-#cgo LDFLAGS: -L .. -lgraphqlparser
-#include "GraphQLAst.h"
-#include "GraphQLAstNode.h"
-#include "GraphQLAstVisitor.h"
-#include "GraphQLParser.h"
+#cgo pkg-config: libgraphqlparser
+
+#include "c/GraphQLAst.h"
+#include "c/GraphQLAstNode.h"
+#include "c/GraphQLAstVisitor.h"
+#include "c/GraphQLParser.h"
 #include <stdlib.h>
 
 int printField_cgo(struct GraphQLAstField *field, void *unused);
