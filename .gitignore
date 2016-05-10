@@ -18,3 +18,4 @@ cmake_install.cmake
 GraphQLParser.py
 install_manifest.txt
 build/
+libgraphqlparser.pc
