@@ -28,6 +28,8 @@ static void escape(char c, char *buf);
 %option noyywrap batch noinput nounput
 %option reentrant
 %option extra-type="struct LexerExtra *"
+%option nounistd
+%option never-interactive
 
 %x STRING_STATE
 %x C_COMMENT_STATE

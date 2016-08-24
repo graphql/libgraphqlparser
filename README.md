@@ -20,7 +20,7 @@ pure C API.
 ## Requirements
 
 libgraphqlparser requires a C++ compiler that supports C++11. It
-also requires Mac OS X or Linux.
+also requires Mac OS X, Linux, or Windows.
 
 To run tests, please download googletest from
 https://googletest.googlecode.com/files/gtest-1.7.0.zip and unzip it
