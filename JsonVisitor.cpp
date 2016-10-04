@@ -38,7 +38,7 @@ void JsonVisitor::printChildList(
     const std::vector<std::string>::const_iterator &childIterator,
     size_t numChildren) {
   out_ << '[';
-  for (int ii = 0; ii < numChildren; ++ii) {
+  for (size_t ii = 0; ii < numChildren; ++ii) {
     if (ii != 0) {
       out_ << ',';
     }
