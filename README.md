@@ -23,8 +23,8 @@ libgraphqlparser requires a C++ compiler that supports C++11. It
 also requires Mac OS X or Linux.
 
 To run tests, please download googletest from
-https://googletest.googlecode.com/files/gtest-1.7.0.zip and unzip it
-in the `test` subdirectory.
+https://github.com/google/googletest/archive/release-1.8.0.zip
+and unzip it in the `test` subdirectory.
 
 ## Building libgraphqlparser
 

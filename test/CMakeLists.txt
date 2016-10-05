@@ -1,4 +1,4 @@
-ADD_SUBDIRECTORY(gtest-1.7.0)
+ADD_SUBDIRECTORY(googletest-release-1.8.0/googletest)
 
 ENABLE_TESTING()
 
