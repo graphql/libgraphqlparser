@@ -69,6 +69,7 @@ using facebook::graphql::ast::IntValue;
 using facebook::graphql::ast::FloatValue;
 using facebook::graphql::ast::StringValue;
 using facebook::graphql::ast::BooleanValue;
+using facebook::graphql::ast::NullValue;
 using facebook::graphql::ast::EnumValue;
 using facebook::graphql::ast::ListValue;
 using facebook::graphql::ast::ObjectValue;
@@ -100,8 +101,9 @@ union yystype {                                         \
     FloatValue *floatValue;                         \
     StringValue *stringValue;                       \
     BooleanValue *booleanValue;                     \
+    NullValue *nullValue;                           \
     EnumValue *enumValue;                           \
-    ListValue *arrayValue;                         \
+    ListValue *arrayValue;                          \
     ObjectValue *objectValue;                       \
     ObjectField *objectField;                       \
     Directive *directive;                           \
@@ -128,8 +130,9 @@ union yystype {                                         \
     std::vector<std::unique_ptr<FloatValue>> *floatValueList;       \
     std::vector<std::unique_ptr<StringValue>> *stringValueList;     \
     std::vector<std::unique_ptr<BooleanValue>> *booleanValueList;   \
+    std::vector<std::unique_ptr<NullValue>> *nullValueList;         \
     std::vector<std::unique_ptr<EnumValue>> *enumValueList;         \
-    std::vector<std::unique_ptr<ListValue>> *arrayValueList;       \
+    std::vector<std::unique_ptr<ListValue>> *arrayValueList;        \
     std::vector<std::unique_ptr<ObjectValue>> *objectValueList;     \
     std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
     std::vector<std::unique_ptr<Directive>> *directiveList;         \
@@ -141,7 +144,7 @@ union yystype {                                         \
 #define YYSTYPE union yystype
 #define YYLTYPE yy::location
 
-#line 145 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 148 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 # include <cstdlib> // std::abort
@@ -213,7 +216,7 @@ union yystype {                                         \
 
 
 namespace yy {
-#line 217 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 220 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 
@@ -577,8 +580,8 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 404,     ///< Last index in yytable_.
-      yynnts_ = 54,  ///< Number of nonterminal symbols.
+      yylast_ = 430,     ///< Last index in yytable_.
+      yynnts_ = 55,  ///< Number of nonterminal symbols.
       yyfinal_ = 32, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
@@ -595,7 +598,7 @@ namespace yy {
 
 
 } // yy
-#line 599 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 602 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 

@@ -47,6 +47,7 @@ using facebook::graphql::ast::IntValue;
 using facebook::graphql::ast::FloatValue;
 using facebook::graphql::ast::StringValue;
 using facebook::graphql::ast::BooleanValue;
+using facebook::graphql::ast::NullValue;
 using facebook::graphql::ast::EnumValue;
 using facebook::graphql::ast::ListValue;
 using facebook::graphql::ast::ObjectValue;
@@ -78,8 +79,9 @@ union yystype {                                         \
     FloatValue *floatValue;                         \
     StringValue *stringValue;                       \
     BooleanValue *booleanValue;                     \
+    NullValue *nullValue;                           \
     EnumValue *enumValue;                           \
-    ListValue *arrayValue;                         \
+    ListValue *arrayValue;                          \
     ObjectValue *objectValue;                       \
     ObjectField *objectField;                       \
     Directive *directive;                           \
@@ -106,8 +108,9 @@ union yystype {                                         \
     std::vector<std::unique_ptr<FloatValue>> *floatValueList;       \
     std::vector<std::unique_ptr<StringValue>> *stringValueList;     \
     std::vector<std::unique_ptr<BooleanValue>> *booleanValueList;   \
+    std::vector<std::unique_ptr<NullValue>> *nullValueList;         \
     std::vector<std::unique_ptr<EnumValue>> *enumValueList;         \
-    std::vector<std::unique_ptr<ListValue>> *arrayValueList;       \
+    std::vector<std::unique_ptr<ListValue>> *arrayValueList;        \
     std::vector<std::unique_ptr<ObjectValue>> *objectValueList;     \
     std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
     std::vector<std::unique_ptr<Directive>> *directiveList;         \
@@ -197,6 +200,7 @@ union yystype {                                         \
 %type <value> value
 %type <value> value_const
 %type <booleanValue> boolean_value
+%type <nullValue> null_value
 %type <enumValue> enum_value
 %type <arrayValue> list_value
 %type <arrayValue> list_value_const
@@ -365,6 +369,7 @@ value:          variable { $$ = static_cast<Value *>($1); }
         |       float_value { $$ = static_cast<Value *>($1); }
         |       string_value { $$ = static_cast<Value *>($1); }
         |       boolean_value { $$ = static_cast<Value *>($1); }
+        |       null_value { $$ = static_cast<Value *>($1); }
         |       enum_value { $$ = static_cast<Value *>($1); }
         |       list_value { $$ = static_cast<Value *>($1); }
         |       object_value { $$ = static_cast<Value *>($1); }
@@ -383,6 +388,7 @@ value_const:    int_value { $$ = static_cast<Value *>($1); }
         |       float_value { $$ = static_cast<Value *>($1); }
         |       string_value { $$ = static_cast<Value *>($1); }
         |       boolean_value { $$ = static_cast<Value *>($1); }
+        |       null_value { $$ = static_cast<Value *>($1); }
         |       enum_value { $$ = static_cast<Value *>($1); }
         |       list_value_const { $$ = static_cast<Value *>($1); }
         |       object_value_const { $$ = static_cast<Value *>($1); }
@@ -390,6 +396,9 @@ value_const:    int_value { $$ = static_cast<Value *>($1); }
 
 boolean_value:  TRUE { $$ = new BooleanValue(@$, true); }
         |       FALSE { $$ = new BooleanValue(@$, false); }
+        ;
+
+null_value:     NULL { $$ = new NullValue(@$); }
         ;
 
 enum_value:     IDENTIFIER { $$ = new EnumValue(@$, strdup($1)); }

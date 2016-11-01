@@ -103,6 +103,8 @@ public:
 
   void endVisitBooleanValue(const BooleanValue &booleanValue) override;
 
+  void endVisitNullValue(const NullValue &nullValue) override;
+
   void endVisitEnumValue(const EnumValue &enumValue) override;
 
   bool visitListValue(const ListValue &arrayValue) override;

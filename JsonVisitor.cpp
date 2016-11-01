@@ -348,6 +348,12 @@ void JsonVisitor::endVisitEnumValue(const EnumValue &enumValue) {
   endVisitValueRepresentedAsString("EnumValue", enumValue);
 }
 
+void JsonVisitor::endVisitNullValue(const NullValue &nullValue) {
+  startPrintingNode("NullValue", nullValue.getLocation());
+  out_ << '}';
+  printed_.back().emplace_back(out_.str());
+}
+
 void JsonVisitor::endVisitBooleanValue(const BooleanValue &booleanValue) {
   startPrintingNode("BooleanValue", booleanValue.getLocation());
 

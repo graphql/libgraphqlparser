@@ -67,6 +67,7 @@ O IntValue
 O FloatValue
 O StringValue
 O BooleanValue
+O NullValue
 O EnumValue
 O ListValue
 O ObjectValue
@@ -85,6 +86,8 @@ S string value
 
 T BooleanValue
 S boolean value
+
+T NullValue
 
 T EnumValue
 S string value

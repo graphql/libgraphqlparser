@@ -170,9 +170,8 @@ TEST(ParserTests, RejectsFragmentSpreadOfOn) {
               "1.9: syntax error, unexpected }");
 };
 
-TEST(ParserTests, RejectsNullValue) {
-  expectError("{ fieldWithNullableStringInput(input: null) }",
-              "1.39-42: syntax error, unexpected null");
+TEST(ParserTests, AcceptsNullValue) {
+  expectSuccess("{ fieldWithNullableStringInput(input: null) }");
 }
 
 TEST(ParserTests, AcceptsSimpleQuery) {
