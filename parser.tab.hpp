@@ -112,39 +112,20 @@ union yystype {                                         \
     ListType *listType;                             \
     NonNullType *nonNullType;                       \
     \
-    std::vector<std::unique_ptr<Name>> *nameList;                   \
     std::vector<std::unique_ptr<Definition>> *definitionList;       \
-    std::vector<std::unique_ptr<Document>> *documentList;           \
-    std::vector<std::unique_ptr<OperationDefinition>> *operationDefinitionList; \
     std::vector<std::unique_ptr<VariableDefinition>> *variableDefinitionList; \
-    std::vector<std::unique_ptr<Variable>> *variableList;           \
-    std::vector<std::unique_ptr<SelectionSet>> *selectionSetList;   \
     std::vector<std::unique_ptr<Selection>> *selectionList;         \
     std::vector<std::unique_ptr<Field>> *fieldList;                 \
     std::vector<std::unique_ptr<Argument>> *argumentList;           \
-    std::vector<std::unique_ptr<FragmentSpread>> *fragmentSpreadList; \
-    std::vector<std::unique_ptr<InlineFragment>> *inlineFragmentList; \
-    std::vector<std::unique_ptr<FragmentDefinition>> *fragmentDefinitionList; \
     std::vector<std::unique_ptr<Value>> *valueList;                 \
-    std::vector<std::unique_ptr<IntValue>> *intValueList;           \
-    std::vector<std::unique_ptr<FloatValue>> *floatValueList;       \
-    std::vector<std::unique_ptr<StringValue>> *stringValueList;     \
-    std::vector<std::unique_ptr<BooleanValue>> *booleanValueList;   \
-    std::vector<std::unique_ptr<NullValue>> *nullValueList;         \
-    std::vector<std::unique_ptr<EnumValue>> *enumValueList;         \
-    std::vector<std::unique_ptr<ListValue>> *arrayValueList;        \
-    std::vector<std::unique_ptr<ObjectValue>> *objectValueList;     \
     std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
     std::vector<std::unique_ptr<Directive>> *directiveList;         \
-    std::vector<std::unique_ptr<Type>> *typeList;                   \
-    std::vector<std::unique_ptr<ListType>> *listTypeList;           \
-    std::vector<std::unique_ptr<NonNullType>> *nonNullTypeList;     \
 };
 
 #define YYSTYPE union yystype
 #define YYLTYPE yy::location
 
-#line 148 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 129 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 # include <cstdlib> // std::abort
@@ -216,7 +197,7 @@ union yystype {                                         \
 
 
 namespace yy {
-#line 220 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 201 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 
@@ -598,7 +579,7 @@ namespace yy {
 
 
 } // yy
-#line 602 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 583 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
 
 
 

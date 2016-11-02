@@ -49,7 +49,7 @@
 
 #line 51 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:412
 // Unqualified %code blocks.
-#line 132 "parser.ypp" // lalr1.cc:413
+#line 113 "parser.ypp" // lalr1.cc:413
 
 #include "lexer.h"
 #include "syntaxdefs.h"
@@ -393,469 +393,469 @@ namespace yy {
     {
             case 3: // "false"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 399 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 4: // "fragment"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 406 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 5: // "mutation"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 413 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 6: // "null"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 420 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 7: // "query"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 427 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 8: // "on"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 434 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 9: // "subscription"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 441 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 10: // "true"
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 448 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 23: // VARIABLE
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 455 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 24: // INTEGER
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 462 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 25: // FLOAT
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 469 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 26: // STRING
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 476 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 27: // IDENTIFIER
 
-#line 229 "parser.ypp" // lalr1.cc:617
+#line 210 "parser.ypp" // lalr1.cc:617
         { }
 #line 483 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 29: // start
 
-#line 231 "parser.ypp" // lalr1.cc:617
+#line 212 "parser.ypp" // lalr1.cc:617
         { }
 #line 490 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 30: // fragment_name
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.name); }
 #line 497 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 31: // name
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.name); }
 #line 504 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 32: // name_opt
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.name); }
 #line 511 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 33: // document
 
-#line 231 "parser.ypp" // lalr1.cc:617
+#line 212 "parser.ypp" // lalr1.cc:617
         { }
 #line 518 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 34: // definition_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.definitionList); }
 #line 525 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 35: // definition
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.definition); }
 #line 532 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 36: // operation_definition
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.operationDefinition); }
 #line 539 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 37: // operation_type
 
-#line 230 "parser.ypp" // lalr1.cc:617
+#line 211 "parser.ypp" // lalr1.cc:617
         { free((void *)(yysym.value.heapStr)); }
 #line 546 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 38: // variable_definitions
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variableDefinitionList); }
 #line 553 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 39: // variable_definition_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variableDefinitionList); }
 #line 560 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 40: // variable
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variable); }
 #line 567 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 41: // variable_definition
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.variableDefinition); }
 #line 574 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 42: // default_value_opt
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 581 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 43: // default_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 588 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 44: // selection_set
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selectionSet); }
 #line 595 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 45: // selection_set_opt
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selectionSet); }
 #line 602 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 46: // selection_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selectionList); }
 #line 609 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 47: // selection
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.selection); }
 #line 616 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 48: // field
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.field); }
 #line 623 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 49: // arguments
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argumentList); }
 #line 630 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 50: // arguments_opt
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argumentList); }
 #line 637 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 51: // argument_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argumentList); }
 #line 644 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 52: // argument
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.argument); }
 #line 651 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 53: // fragment_spread
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.fragmentSpread); }
 #line 658 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 54: // inline_fragment
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.inlineFragment); }
 #line 665 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 55: // fragment_definition
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.fragmentDefinition); }
 #line 672 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 56: // type_condition
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.namedType); }
 #line 679 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 57: // value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 686 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 58: // int_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.intValue); }
 #line 693 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 59: // float_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.floatValue); }
 #line 700 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 60: // string_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.stringValue); }
 #line 707 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 61: // value_const
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.value); }
 #line 714 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 62: // boolean_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.booleanValue); }
 #line 721 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 63: // null_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.nullValue); }
 #line 728 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 64: // enum_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.enumValue); }
 #line 735 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 65: // list_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.arrayValue); }
 #line 742 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 66: // value_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.valueList); }
 #line 749 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 67: // list_value_const
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.arrayValue); }
 #line 756 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 68: // value_const_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.valueList); }
 #line 763 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 69: // object_value
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectValue); }
 #line 770 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 70: // object_field_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectFieldList); }
 #line 777 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 71: // object_field
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectField); }
 #line 784 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 72: // object_value_const
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectValue); }
 #line 791 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 73: // object_field_const_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectFieldList); }
 #line 798 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 74: // object_field_const
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.objectField); }
 #line 805 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 75: // directives
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directiveList); }
 #line 812 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 76: // directives_opt
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directiveList); }
 #line 819 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 77: // directive_list
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directiveList); }
 #line 826 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 78: // directive
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.directive); }
 #line 833 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 79: // type
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.type); }
 #line 840 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 80: // type_name
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.namedType); }
 #line 847 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 81: // list_type
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.listType); }
 #line 854 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
 
       case 82: // non_null_type
 
-#line 232 "parser.ypp" // lalr1.cc:617
+#line 213 "parser.ypp" // lalr1.cc:617
         { delete (yysym.value.nonNullType); }
 #line 861 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:617
         break;
@@ -886,91 +886,91 @@ namespace yy {
     {
             case 3: // "false"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 892 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 4: // "fragment"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 899 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 5: // "mutation"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 906 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 6: // "null"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 913 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 7: // "query"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 920 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 8: // "on"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 927 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 9: // "subscription"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 934 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 10: // "true"
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 941 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 23: // VARIABLE
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 948 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 24: // INTEGER
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 955 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 25: // FLOAT
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 962 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 26: // STRING
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 969 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
 
       case 27: // IDENTIFIER
 
-#line 234 "parser.ypp" // lalr1.cc:636
+#line 215 "parser.ypp" // lalr1.cc:636
         { yyoutput << (yysym.value.str); }
 #line 976 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:636
         break;
@@ -1190,649 +1190,649 @@ namespace yy {
           switch (yyn)
             {
   case 2:
-#line 238 "parser.ypp" // lalr1.cc:859
+#line 219 "parser.ypp" // lalr1.cc:859
     { *outAST = (yystack_[0].value.document); }
 #line 1196 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 3:
-#line 243 "parser.ypp" // lalr1.cc:859
+#line 224 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1202 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 4:
-#line 244 "parser.ypp" // lalr1.cc:859
+#line 225 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1208 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 5:
-#line 245 "parser.ypp" // lalr1.cc:859
+#line 226 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1214 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 6:
-#line 246 "parser.ypp" // lalr1.cc:859
+#line 227 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1220 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 7:
-#line 247 "parser.ypp" // lalr1.cc:859
+#line 228 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1226 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 8:
-#line 248 "parser.ypp" // lalr1.cc:859
+#line 229 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1232 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 9:
-#line 249 "parser.ypp" // lalr1.cc:859
+#line 230 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1238 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 10:
-#line 250 "parser.ypp" // lalr1.cc:859
+#line 231 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1244 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 12:
-#line 254 "parser.ypp" // lalr1.cc:859
+#line 235 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.name) = new Name(yystack_[0].location, strdup((yystack_[0].value.str))); }
 #line 1250 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 13:
-#line 258 "parser.ypp" // lalr1.cc:859
+#line 239 "parser.ypp" // lalr1.cc:859
     {(yylhs.value.name) = nullptr;}
 #line 1256 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 15:
-#line 264 "parser.ypp" // lalr1.cc:859
+#line 245 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.document) = new Document(yylhs.location, (yystack_[0].value.definitionList)); }
 #line 1262 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 16:
-#line 267 "parser.ypp" // lalr1.cc:859
+#line 248 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.definitionList) = new std::vector<std::unique_ptr<Definition>>(); (yylhs.value.definitionList)->emplace_back((yystack_[0].value.definition)); }
 #line 1268 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 17:
-#line 268 "parser.ypp" // lalr1.cc:859
+#line 249 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.definitionList)->emplace_back((yystack_[0].value.definition)); (yylhs.value.definitionList) = (yystack_[1].value.definitionList); }
 #line 1274 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 18:
-#line 271 "parser.ypp" // lalr1.cc:859
+#line 252 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.definition) = static_cast<Definition *>((yystack_[0].value.operationDefinition)); }
 #line 1280 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 19:
-#line 272 "parser.ypp" // lalr1.cc:859
+#line 253 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.definition) = static_cast<Definition *>((yystack_[0].value.fragmentDefinition));}
 #line 1286 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 20:
-#line 278 "parser.ypp" // lalr1.cc:859
+#line 259 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, strdup("query"), nullptr, nullptr, nullptr, (yystack_[0].value.selectionSet)); }
 #line 1292 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 21:
-#line 279 "parser.ypp" // lalr1.cc:859
+#line 260 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[2].value.heapStr), (yystack_[1].value.name), nullptr, nullptr, (yystack_[0].value.selectionSet)); }
 #line 1298 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 22:
-#line 280 "parser.ypp" // lalr1.cc:859
+#line 261 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[3].value.heapStr), (yystack_[2].value.name), (yystack_[1].value.variableDefinitionList), nullptr, (yystack_[0].value.selectionSet)); }
 #line 1304 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 23:
-#line 281 "parser.ypp" // lalr1.cc:859
+#line 262 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[3].value.heapStr), (yystack_[2].value.name), nullptr, (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1310 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 24:
-#line 282 "parser.ypp" // lalr1.cc:859
+#line 263 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.operationDefinition) = new OperationDefinition(yylhs.location, (yystack_[4].value.heapStr), (yystack_[3].value.name), (yystack_[2].value.variableDefinitionList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1316 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 25:
-#line 285 "parser.ypp" // lalr1.cc:859
+#line 266 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.heapStr) = strdup((yystack_[0].value.str)); }
 #line 1322 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 26:
-#line 286 "parser.ypp" // lalr1.cc:859
+#line 267 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.heapStr) = strdup((yystack_[0].value.str)); }
 #line 1328 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 27:
-#line 287 "parser.ypp" // lalr1.cc:859
+#line 268 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.heapStr) = strdup((yystack_[0].value.str)); }
 #line 1334 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 28:
-#line 291 "parser.ypp" // lalr1.cc:859
+#line 272 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variableDefinitionList) = (yystack_[1].value.variableDefinitionList); }
 #line 1340 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 29:
-#line 295 "parser.ypp" // lalr1.cc:859
+#line 276 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variableDefinitionList) = new std::vector<std::unique_ptr<VariableDefinition>>(); (yylhs.value.variableDefinitionList)->emplace_back((yystack_[0].value.variableDefinition)); }
 #line 1346 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 30:
-#line 296 "parser.ypp" // lalr1.cc:859
+#line 277 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.variableDefinitionList)->emplace_back((yystack_[0].value.variableDefinition)); (yylhs.value.variableDefinitionList) = (yystack_[1].value.variableDefinitionList); }
 #line 1352 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 31:
-#line 299 "parser.ypp" // lalr1.cc:859
+#line 280 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variable) = new Variable(yylhs.location, new Name(yystack_[0].location, strdup((yystack_[0].value.str)))); }
 #line 1358 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 32:
-#line 303 "parser.ypp" // lalr1.cc:859
+#line 284 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.variableDefinition) = new VariableDefinition(yylhs.location, (yystack_[3].value.variable), (yystack_[1].value.type), (yystack_[0].value.value)); }
 #line 1364 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 33:
-#line 307 "parser.ypp" // lalr1.cc:859
+#line 288 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = nullptr; }
 #line 1370 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 35:
-#line 311 "parser.ypp" // lalr1.cc:859
+#line 292 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = (yystack_[0].value.value); }
 #line 1376 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 36:
-#line 315 "parser.ypp" // lalr1.cc:859
+#line 296 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selectionSet) = new SelectionSet(yylhs.location, (yystack_[1].value.selectionList)); }
 #line 1382 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 37:
-#line 319 "parser.ypp" // lalr1.cc:859
+#line 300 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selectionSet) = nullptr; }
 #line 1388 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 39:
-#line 322 "parser.ypp" // lalr1.cc:859
+#line 303 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selectionList) = new std::vector<std::unique_ptr<Selection>>(); (yylhs.value.selectionList)->emplace_back((yystack_[0].value.selection)); }
 #line 1394 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 40:
-#line 323 "parser.ypp" // lalr1.cc:859
+#line 304 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.selectionList)->emplace_back((yystack_[0].value.selection)); (yylhs.value.selectionList) = (yystack_[1].value.selectionList); }
 #line 1400 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 41:
-#line 326 "parser.ypp" // lalr1.cc:859
+#line 307 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selection) = static_cast<Selection *>((yystack_[0].value.field)); }
 #line 1406 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 42:
-#line 327 "parser.ypp" // lalr1.cc:859
+#line 308 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selection) = static_cast<Selection *>((yystack_[0].value.fragmentSpread)); }
 #line 1412 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 43:
-#line 328 "parser.ypp" // lalr1.cc:859
+#line 309 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.selection) = static_cast<Selection *>((yystack_[0].value.inlineFragment)); }
 #line 1418 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 44:
-#line 331 "parser.ypp" // lalr1.cc:859
+#line 312 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.field) = new Field(yylhs.location, nullptr, (yystack_[3].value.name), (yystack_[2].value.argumentList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1424 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 45:
-#line 332 "parser.ypp" // lalr1.cc:859
+#line 313 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.field) = new Field(yylhs.location, (yystack_[5].value.name), (yystack_[3].value.name), (yystack_[2].value.argumentList), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1430 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 46:
-#line 335 "parser.ypp" // lalr1.cc:859
+#line 316 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = (yystack_[1].value.argumentList); }
 #line 1436 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 47:
-#line 338 "parser.ypp" // lalr1.cc:859
+#line 319 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = nullptr; }
 #line 1442 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 48:
-#line 339 "parser.ypp" // lalr1.cc:859
+#line 320 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = (yystack_[0].value.argumentList); }
 #line 1448 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 49:
-#line 342 "parser.ypp" // lalr1.cc:859
+#line 323 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argumentList) = new std::vector<std::unique_ptr<Argument>>(); (yylhs.value.argumentList)->emplace_back((yystack_[0].value.argument)); }
 #line 1454 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 50:
-#line 343 "parser.ypp" // lalr1.cc:859
+#line 324 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.argumentList)->emplace_back((yystack_[0].value.argument)); (yylhs.value.argumentList) = (yystack_[1].value.argumentList); }
 #line 1460 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 51:
-#line 346 "parser.ypp" // lalr1.cc:859
+#line 327 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.argument) = new Argument(yylhs.location, (yystack_[2].value.name), (yystack_[0].value.value)); }
 #line 1466 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 52:
-#line 351 "parser.ypp" // lalr1.cc:859
+#line 332 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.fragmentSpread) = new FragmentSpread(yylhs.location, (yystack_[1].value.name), (yystack_[0].value.directiveList)); }
 #line 1472 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 53:
-#line 355 "parser.ypp" // lalr1.cc:859
+#line 336 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.inlineFragment) = new InlineFragment(yylhs.location, (yystack_[2].value.namedType), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1478 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 54:
-#line 356 "parser.ypp" // lalr1.cc:859
+#line 337 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.inlineFragment) = new InlineFragment(yylhs.location, nullptr, (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1484 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 55:
-#line 360 "parser.ypp" // lalr1.cc:859
+#line 341 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.fragmentDefinition) = new FragmentDefinition(yylhs.location, (yystack_[4].value.name), (yystack_[2].value.namedType), (yystack_[1].value.directiveList), (yystack_[0].value.selectionSet)); }
 #line 1490 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 57:
-#line 367 "parser.ypp" // lalr1.cc:859
+#line 348 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.variable)); }
 #line 1496 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 58:
-#line 368 "parser.ypp" // lalr1.cc:859
+#line 349 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.intValue)); }
 #line 1502 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 59:
-#line 369 "parser.ypp" // lalr1.cc:859
+#line 350 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.floatValue)); }
 #line 1508 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 60:
-#line 370 "parser.ypp" // lalr1.cc:859
+#line 351 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.stringValue)); }
 #line 1514 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 61:
-#line 371 "parser.ypp" // lalr1.cc:859
+#line 352 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.booleanValue)); }
 #line 1520 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 62:
-#line 372 "parser.ypp" // lalr1.cc:859
+#line 353 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.nullValue)); }
 #line 1526 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 63:
-#line 373 "parser.ypp" // lalr1.cc:859
+#line 354 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.enumValue)); }
 #line 1532 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 64:
-#line 374 "parser.ypp" // lalr1.cc:859
+#line 355 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.arrayValue)); }
 #line 1538 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 65:
-#line 375 "parser.ypp" // lalr1.cc:859
+#line 356 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.objectValue)); }
 #line 1544 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 66:
-#line 378 "parser.ypp" // lalr1.cc:859
+#line 359 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.intValue) = new IntValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1550 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 67:
-#line 381 "parser.ypp" // lalr1.cc:859
+#line 362 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.floatValue) = new FloatValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1556 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 68:
-#line 384 "parser.ypp" // lalr1.cc:859
+#line 365 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.stringValue) = new StringValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1562 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 69:
-#line 387 "parser.ypp" // lalr1.cc:859
+#line 368 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.intValue)); }
 #line 1568 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 70:
-#line 388 "parser.ypp" // lalr1.cc:859
+#line 369 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.floatValue)); }
 #line 1574 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 71:
-#line 389 "parser.ypp" // lalr1.cc:859
+#line 370 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.stringValue)); }
 #line 1580 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 72:
-#line 390 "parser.ypp" // lalr1.cc:859
+#line 371 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.booleanValue)); }
 #line 1586 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 73:
-#line 391 "parser.ypp" // lalr1.cc:859
+#line 372 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.nullValue)); }
 #line 1592 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 74:
-#line 392 "parser.ypp" // lalr1.cc:859
+#line 373 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.enumValue)); }
 #line 1598 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 75:
-#line 393 "parser.ypp" // lalr1.cc:859
+#line 374 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.arrayValue)); }
 #line 1604 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 76:
-#line 394 "parser.ypp" // lalr1.cc:859
+#line 375 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.value) = static_cast<Value *>((yystack_[0].value.objectValue)); }
 #line 1610 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 77:
-#line 397 "parser.ypp" // lalr1.cc:859
+#line 378 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.booleanValue) = new BooleanValue(yylhs.location, true); }
 #line 1616 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 78:
-#line 398 "parser.ypp" // lalr1.cc:859
+#line 379 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.booleanValue) = new BooleanValue(yylhs.location, false); }
 #line 1622 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 79:
-#line 401 "parser.ypp" // lalr1.cc:859
+#line 382 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.nullValue) = new NullValue(yylhs.location); }
 #line 1628 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 80:
-#line 404 "parser.ypp" // lalr1.cc:859
+#line 385 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1634 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 81:
-#line 405 "parser.ypp" // lalr1.cc:859
+#line 386 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1640 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 82:
-#line 406 "parser.ypp" // lalr1.cc:859
+#line 387 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1646 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 83:
-#line 407 "parser.ypp" // lalr1.cc:859
+#line 388 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1652 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 84:
-#line 408 "parser.ypp" // lalr1.cc:859
+#line 389 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1658 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 85:
-#line 409 "parser.ypp" // lalr1.cc:859
+#line 390 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.enumValue) = new EnumValue(yylhs.location, strdup((yystack_[0].value.str))); }
 #line 1664 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 86:
-#line 416 "parser.ypp" // lalr1.cc:859
+#line 397 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ListValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
 #line 1670 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 87:
-#line 417 "parser.ypp" // lalr1.cc:859
+#line 398 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ListValue(yylhs.location, (yystack_[1].value.valueList)); }
 #line 1676 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 88:
-#line 420 "parser.ypp" // lalr1.cc:859
+#line 401 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.valueList) = new std::vector<std::unique_ptr<Value>>(); (yylhs.value.valueList)->emplace_back((yystack_[0].value.value)); }
 #line 1682 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 89:
-#line 421 "parser.ypp" // lalr1.cc:859
+#line 402 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.valueList)->emplace_back((yystack_[0].value.value)); (yylhs.value.valueList) = (yystack_[1].value.valueList); }
 #line 1688 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 90:
-#line 425 "parser.ypp" // lalr1.cc:859
+#line 406 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ListValue(yylhs.location, new std::vector<std::unique_ptr<Value>>()); }
 #line 1694 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 91:
-#line 426 "parser.ypp" // lalr1.cc:859
+#line 407 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.arrayValue) = new ListValue(yylhs.location, (yystack_[1].value.valueList)); }
 #line 1700 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 92:
-#line 430 "parser.ypp" // lalr1.cc:859
+#line 411 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.valueList) = new std::vector<std::unique_ptr<Value>>(); (yylhs.value.valueList)->emplace_back((yystack_[0].value.value)); }
 #line 1706 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 93:
-#line 431 "parser.ypp" // lalr1.cc:859
+#line 412 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.valueList)->emplace_back((yystack_[0].value.value)); (yylhs.value.valueList) = (yystack_[1].value.valueList); }
 #line 1712 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 94:
-#line 436 "parser.ypp" // lalr1.cc:859
+#line 417 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, new std::vector<std::unique_ptr<ObjectField>>()); }
 #line 1718 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 95:
-#line 437 "parser.ypp" // lalr1.cc:859
+#line 418 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, (yystack_[1].value.objectFieldList)); }
 #line 1724 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 96:
-#line 441 "parser.ypp" // lalr1.cc:859
+#line 422 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectFieldList) = new std::vector<std::unique_ptr<ObjectField>>(); (yylhs.value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); }
 #line 1730 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 97:
-#line 442 "parser.ypp" // lalr1.cc:859
+#line 423 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); (yylhs.value.objectFieldList) = (yystack_[1].value.objectFieldList); }
 #line 1736 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 98:
-#line 445 "parser.ypp" // lalr1.cc:859
+#line 426 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectField) = new ObjectField(yylhs.location, (yystack_[2].value.name), (yystack_[0].value.value)); }
 #line 1742 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 99:
-#line 449 "parser.ypp" // lalr1.cc:859
+#line 430 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, new std::vector<std::unique_ptr<ObjectField>>()); }
 #line 1748 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 100:
-#line 450 "parser.ypp" // lalr1.cc:859
+#line 431 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectValue) = new ObjectValue(yylhs.location, (yystack_[1].value.objectFieldList)); }
 #line 1754 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 101:
-#line 454 "parser.ypp" // lalr1.cc:859
+#line 435 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectFieldList) = new std::vector<std::unique_ptr<ObjectField>>(); (yylhs.value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); }
 #line 1760 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 102:
-#line 455 "parser.ypp" // lalr1.cc:859
+#line 436 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.objectFieldList)->emplace_back((yystack_[0].value.objectField)); (yylhs.value.objectFieldList) = (yystack_[1].value.objectFieldList); }
 #line 1766 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 103:
-#line 458 "parser.ypp" // lalr1.cc:859
+#line 439 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.objectField) = new ObjectField(yylhs.location, (yystack_[2].value.name), (yystack_[0].value.value)); }
 #line 1772 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 105:
-#line 466 "parser.ypp" // lalr1.cc:859
+#line 447 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.directiveList) = nullptr; }
 #line 1778 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 107:
-#line 470 "parser.ypp" // lalr1.cc:859
+#line 451 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.directiveList) = new std::vector<std::unique_ptr<Directive>>(); (yylhs.value.directiveList)->emplace_back((yystack_[0].value.directive)); }
 #line 1784 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 108:
-#line 471 "parser.ypp" // lalr1.cc:859
+#line 452 "parser.ypp" // lalr1.cc:859
     { (yystack_[1].value.directiveList)->emplace_back((yystack_[0].value.directive)); (yylhs.value.directiveList) = (yystack_[1].value.directiveList); }
 #line 1790 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 109:
-#line 474 "parser.ypp" // lalr1.cc:859
+#line 455 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.directive) = new Directive(yylhs.location, (yystack_[1].value.name), (yystack_[0].value.argumentList)); }
 #line 1796 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 110:
-#line 479 "parser.ypp" // lalr1.cc:859
+#line 460 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.type) = static_cast<Type *>((yystack_[0].value.namedType)); }
 #line 1802 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 111:
-#line 480 "parser.ypp" // lalr1.cc:859
+#line 461 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.type) = static_cast<Type *>((yystack_[0].value.listType)); }
 #line 1808 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 112:
-#line 481 "parser.ypp" // lalr1.cc:859
+#line 462 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.type) = static_cast<Type *>((yystack_[0].value.nonNullType)); }
 #line 1814 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 113:
-#line 484 "parser.ypp" // lalr1.cc:859
+#line 465 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.namedType) = new NamedType(yylhs.location, (yystack_[0].value.name)); }
 #line 1820 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 114:
-#line 487 "parser.ypp" // lalr1.cc:859
+#line 468 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.listType) = new ListType(yylhs.location, (yystack_[1].value.type)); }
 #line 1826 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 115:
-#line 490 "parser.ypp" // lalr1.cc:859
+#line 471 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.nonNullType) = new NonNullType(yylhs.location, (yystack_[1].value.namedType)); }
 #line 1832 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
 
   case 116:
-#line 491 "parser.ypp" // lalr1.cc:859
+#line 472 "parser.ypp" // lalr1.cc:859
     { (yylhs.value.nonNullType) = new NonNullType(yylhs.location, (yystack_[1].value.listType)); }
 #line 1838 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:859
     break;
@@ -2349,18 +2349,18 @@ namespace yy {
   const unsigned short int
   GraphQLParserImpl::yyrline_[] =
   {
-       0,   238,   238,   243,   244,   245,   246,   247,   248,   249,
-     250,   253,   254,   258,   259,   264,   267,   268,   271,   272,
-     278,   279,   280,   281,   282,   285,   286,   287,   291,   295,
-     296,   299,   303,   307,   308,   311,   315,   319,   320,   322,
-     323,   326,   327,   328,   331,   332,   335,   338,   339,   342,
-     343,   346,   351,   355,   356,   360,   363,   367,   368,   369,
-     370,   371,   372,   373,   374,   375,   378,   381,   384,   387,
-     388,   389,   390,   391,   392,   393,   394,   397,   398,   401,
-     404,   405,   406,   407,   408,   409,   416,   417,   420,   421,
-     425,   426,   430,   431,   436,   437,   441,   442,   445,   449,
-     450,   454,   455,   458,   463,   466,   467,   470,   471,   474,
-     479,   480,   481,   484,   487,   490,   491
+       0,   219,   219,   224,   225,   226,   227,   228,   229,   230,
+     231,   234,   235,   239,   240,   245,   248,   249,   252,   253,
+     259,   260,   261,   262,   263,   266,   267,   268,   272,   276,
+     277,   280,   284,   288,   289,   292,   296,   300,   301,   303,
+     304,   307,   308,   309,   312,   313,   316,   319,   320,   323,
+     324,   327,   332,   336,   337,   341,   344,   348,   349,   350,
+     351,   352,   353,   354,   355,   356,   359,   362,   365,   368,
+     369,   370,   371,   372,   373,   374,   375,   378,   379,   382,
+     385,   386,   387,   388,   389,   390,   397,   398,   401,   402,
+     406,   407,   411,   412,   417,   418,   422,   423,   426,   430,
+     431,   435,   436,   439,   444,   447,   448,   451,   452,   455,
+     460,   461,   462,   465,   468,   471,   472
   };
 
   // Print the state stack on the debug stream.
@@ -2445,7 +2445,7 @@ namespace yy {
 
 } // yy
 #line 2448 "/Users/swolchok/libgraphqlparser/parser.tab.cpp" // lalr1.cc:1167
-#line 493 "parser.ypp" // lalr1.cc:1168
+#line 474 "parser.ypp" // lalr1.cc:1168
 
 void yy::GraphQLParserImpl::error(const yy::location &loc, const std::string &str) {
   std::ostringstream out;
