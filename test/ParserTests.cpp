@@ -131,6 +131,36 @@ TEST(ParserTests, RejectsUnicodeEscapeWithBadChars) {
   expectError("{ field(arg:\"\\uXXXF\") }", "1.13-15: bad Unicode escape sequence");
 }
 
+TEST(ParserTests, AcceptsValidUnicodeEscape) {
+  const char *actualError = nullptr;
+  auto ast = parseString("{ field(arg:\"\\u0009Hello\") }", &actualError);
+
+  EXPECT_TRUE(ast != nullptr);
+  EXPECT_STREQ(nullptr, actualError);
+  std::free((void *)actualError);
+
+  auto doc = dynamic_cast<Document *>(ast.get());
+  ASSERT_TRUE(doc != nullptr);
+
+  const auto& defs = doc->getDefinitions();
+  ASSERT_EQ(1, defs.size());
+
+  auto opDef = dynamic_cast<OperationDefinition *>(defs[0].get());
+  ASSERT_TRUE(opDef != nullptr);
+
+  ASSERT_EQ(1, opDef->getSelectionSet().getSelections().size());
+
+  auto field = dynamic_cast<Field *>(opDef->getSelectionSet().getSelections()[0].get());
+  ASSERT_TRUE(field != nullptr);
+
+  auto *args = field->getArguments();
+  ASSERT_NE(nullptr, args);
+  ASSERT_EQ(1, args->size());
+  auto *val = dynamic_cast<const StringValue *>(&(*args)[0]->getValue());
+  ASSERT_NE(nullptr, val);
+  EXPECT_STREQ("\tHello", val->getValue());
+}
+
 TEST(ParserTests, TracksLocationAcrossStrings) {
   expectError("{ field(arg:\"\\uFEFF\\n\") };",
               "1.26: unrecognized character ;");
