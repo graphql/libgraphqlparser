@@ -86,7 +86,7 @@ notnewline [^\n\r]
 
   \\u[0-9A-Fa-f]{4} {
     int ch;
-    sscanf(yytext + 1, "%x", &ch);
+    sscanf(yytext + 2, "%x", &ch);
     yyextra->str.push_back(ch);
   }
 
