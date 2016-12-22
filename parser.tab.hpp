@@ -31,14 +31,14 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /Users/swolchok/libgraphqlparser/parser.tab.hpp
+ ** \file parser.tab.hpp
  ** Define the yy::parser class.
  */
 
 // C++ LALR(1) parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_PARSER_TAB_HPP_INCLUDED
-# define YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_PARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_PARSER_TAB_HPP_INCLUDED
+# define YY_YY_PARSER_TAB_HPP_INCLUDED
 // //                    "%code requires" blocks.
 #line 22 "parser.ypp" // lalr1.cc:392
 
@@ -125,7 +125,7 @@ union yystype {                                         \
 #define YYSTYPE union yystype
 #define YYLTYPE yy::location
 
-#line 129 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 129 "parser.tab.hpp" // lalr1.cc:392
 
 
 # include <cstdlib> // std::abort
@@ -197,7 +197,7 @@ union yystype {                                         \
 
 
 namespace yy {
-#line 201 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 201 "parser.tab.hpp" // lalr1.cc:392
 
 
 
@@ -579,9 +579,9 @@ namespace yy {
 
 
 } // yy
-#line 583 "/Users/swolchok/libgraphqlparser/parser.tab.hpp" // lalr1.cc:392
+#line 583 "parser.tab.hpp" // lalr1.cc:392
 
 
 
 
-#endif // !YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_PARSER_TAB_HPP_INCLUDED
+#endif // !YY_YY_PARSER_TAB_HPP_INCLUDED

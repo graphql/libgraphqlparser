@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /Users/swolchok/libgraphqlparser/position.hh
+ ** \file position.hh
  ** Define the yy::position class.
  */
 
-#ifndef YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_POSITION_HH_INCLUDED
-# define YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_POSITION_HH_INCLUDED
+#ifndef YY_YY_POSITION_HH_INCLUDED
+# define YY_YY_POSITION_HH_INCLUDED
 
 # include <algorithm> // std::max
 # include <iostream>
@@ -52,7 +52,7 @@
 
 
 namespace yy {
-#line 56 "/Users/swolchok/libgraphqlparser/position.hh" // location.cc:337
+#line 56 "position.hh" // location.cc:337
   /// Abstract a position.
   class position
   {
@@ -176,5 +176,5 @@ namespace yy {
 
 
 } // yy
-#line 180 "/Users/swolchok/libgraphqlparser/position.hh" // location.cc:337
-#endif // !YY_YY_USERS_SWOLCHOK_LIBGRAPHQLPARSER_POSITION_HH_INCLUDED
+#line 180 "position.hh" // location.cc:337
+#endif // !YY_YY_POSITION_HH_INCLUDED
