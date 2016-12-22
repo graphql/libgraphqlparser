@@ -34,6 +34,10 @@ class JsonVisitor : public AstVisitor {
 
   // Print the opening of a new JSON dictionary, the node kind, and
   // the node location.
+  void startPrintingNodeWithoutTrailingComma(const char *kind, const yy::location &location);
+
+  // Like startPrintingNodeWithoutTrailingComma, but adds a trailing
+  // comma for convenience.
   void startPrintingNode(const char *kind, const yy::location &location);
 
   void printLocation(const yy::location &location);

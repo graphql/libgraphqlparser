@@ -6,7 +6,7 @@ INCLUDE_DIRECTORIES(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 FILE(COPY valgrind.supp DESTINATION .)
 
-ADD_EXECUTABLE(runTests ParserTests.cpp BuildCAPI.c)
+ADD_EXECUTABLE(runTests ParserTests.cpp JsonVisitorTests.cpp BuildCAPI.c)
 
 TARGET_LINK_LIBRARIES(runTests gtest gtest_main)
 
