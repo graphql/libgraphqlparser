@@ -25,4 +25,6 @@ TEST(JsonVisitorTests, NullValueEmitsValidJSONWithoutTrailingComma) {
   EXPECT_STREQ(
     json,
     "{\"kind\":\"Document\",\"loc\":{\"start\":1,\"end\":19},\"definitions\":[{\"kind\":\"OperationDefinition\",\"loc\":{\"start\":1,\"end\":19},\"operation\":\"query\",\"name\": null,\"variableDefinitions\":null,\"directives\":null,\"selectionSet\":{\"kind\":\"SelectionSet\",\"loc\":{\"start\":1,\"end\":19},\"selections\":[{\"kind\":\"Field\",\"loc\":{\"start\":2,\"end\":18},\"alias\":null,\"name\":{\"kind\":\"Name\",\"loc\":{\"start\":2,\"end\":7},\"value\":\"field\"},\"arguments\":[{\"kind\":\"Argument\",\"loc\":{\"start\":8,\"end\":17},\"name\":{\"kind\":\"Name\",\"loc\":{\"start\":8,\"end\":11},\"value\":\"arg\"},\"value\":{\"kind\":\"NullValue\",\"loc\":{\"start\":13,\"end\":17}}}],\"directives\":null,\"selectionSet\":null}]}}]}");
+
+  free((void *)json);
 }
