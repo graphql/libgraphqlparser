@@ -7,10 +7,23 @@
 # O for option in a union.
 # Scalar type ontology: string, boolean
 
-# Location tracking for Identifier is probably useful for error messages.
+# Definitions other than OperationDefinition and FragmentDefinition
+# are experimental additions for schema parsing. (We don't support
+# nested unions in the AST mini-language, so I've flattened and elided
+# TypeSystemDefinition and TypeDefinition.)
 U Definition
 O OperationDefinition
 O FragmentDefinition
+O SchemaDefinition
+O ScalarTypeDefinition
+O ObjectTypeDefinition
+O InterfaceTypeDefinition
+O UnionTypeDefinition
+O EnumTypeDefinition
+O InputObjectTypeDefinition
+O TypeExtensionDefinition
+O DirectiveDefinition
+
 
 T Document
 P Definition definitions
@@ -124,3 +137,65 @@ S Type type
 
 T Name
 S string value
+
+T SchemaDefinition
+P? Directive directives
+P OperationTypeDefinition operationTypes
+
+T OperationTypeDefinition
+S OperationKind operation
+S NamedType type
+
+T ScalarTypeDefinition
+S Name name
+P? Directive directives
+
+T ObjectTypeDefinition
+S Name name
+P? NamedType interfaces
+P? Directive directives
+P FieldDefinition fields
+
+T FieldDefinition
+S Name name
+P? InputValueDefinition arguments
+S Type type
+P? Directive directives
+
+T InputValueDefinition
+S Name name
+S Type type
+S? Value defaultValue
+P? Directive directives
+
+T InterfaceTypeDefinition
+S Name name
+P? Directive directives
+P FieldDefinition fields
+
+T UnionTypeDefinition
+S Name name
+P? Directive directives
+P NamedType types
+
+T EnumTypeDefinition
+S Name name
+P? Directive directives
+P EnumValueDefinition values
+
+T EnumValueDefinition
+S Name name
+P? Directive directives
+
+T InputObjectTypeDefinition
+S Name name
+P? Directive directives
+P InputValueDefinition fields
+
+T TypeExtensionDefinition
+S ObjectTypeDefinition definition
+
+T DirectiveDefinition
+S Name name
+P? InputValueDefinition arguments
+P Name locations
