@@ -25,19 +25,29 @@ static void expectError(const char *queryStr, const char *expectedError) {
   auto ast = parseString(queryStr, &actualError);
 
   EXPECT_FALSE(ast);
-  EXPECT_STREQ(expectedError, actualError);
+  EXPECT_STREQ(actualError, expectedError);
 
   std::free((void *)actualError);
 }
 
-static void expectSuccess(const char *queryStr) {
+static void expectSuccessImpl(const char *queryStr, bool enableSchema) {
   const char *actualError = nullptr;
-  auto ast = parseString(queryStr, &actualError);
+  auto ast = enableSchema
+    ? parseStringWithExperimentalSchemaSupport(queryStr, &actualError)
+    : parseString(queryStr, &actualError);
 
   EXPECT_TRUE(ast != nullptr);
   EXPECT_STREQ(nullptr, actualError);
 
   std::free((void *)actualError);
+}
+
+static void expectSuccess(const char *queryStr) {
+  expectSuccessImpl(queryStr, false);
+}
+
+static void expectSchemaSuccess(const char *queryStr) {
+  expectSuccessImpl(queryStr, true);
 }
 
 static void checkSimpleError() {
@@ -282,4 +292,37 @@ TEST(ParserTests, ProducesCorrectOutputForKitchenSink) {
     json,
     ss.str().c_str());
   free((void *)json);
+}
+
+static void expectSchemaParsing(const char *queryStr) {
+  char buf[strlen("1.1-XXX: schema support disabled") + 1];
+  ASSERT_LT(strlen(queryStr), 999);
+  snprintf(
+    buf,
+    sizeof(buf),
+    "1.1-%lu: schema support disabled",
+    strlen(queryStr));
+  expectError(queryStr, buf);
+  expectSchemaSuccess(queryStr);
+}
+
+#define DIRECTIVES "@d1(a: 1) @d2(a: 2)"
+
+TEST(SchemaParserTests, SimpleSchema) {
+  expectSchemaParsing(
+    "schema " DIRECTIVES " { query: QueryType, mutation: MutType }");
+  expectSchemaParsing("scalar SomeScalar " DIRECTIVES);
+  expectSchemaParsing("type SomeObject implements SomeInterface " DIRECTIVES
+                      " { someField : SomeType }");
+  expectSchemaParsing("interface SomeInterface " DIRECTIVES
+                      " { someField : SomeType }");
+  expectSchemaParsing("union SomeUnion " DIRECTIVES
+                      " = SomeType | SomeOtherType");
+  expectSchemaParsing("enum SomeEnum " DIRECTIVES " { VALUE, OTHER_VALUE }");
+  expectSchemaParsing("input SomeInput " DIRECTIVES "{ someField: SomeType, "
+                      "otherField: otherType }");
+  expectSchemaParsing("extend type SomeType " DIRECTIVES
+                      "{ anotherField : AnotherType }");
+  expectSchemaParsing("directive @somedirective(a1 : t1 = 1 " DIRECTIVES
+                      ", a2 : t2) on foo | bar");
 }
