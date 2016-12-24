@@ -28,8 +28,11 @@ struct GraphQLAstNode;
  * error message is placed in error and must be freed with
  * graphql_error_free().
  */
-struct GraphQLAstNode *graphql_parse_string(const char *text,
-                                            const char **error);
+struct GraphQLAstNode *graphql_parse_string(
+    const char *text, const char **error);
+
+struct GraphQLAstNode *graphql_parse_string_with_experimental_schema_support(
+    const char *text, const char **error);
 
 /**
  * Read and parse GraphQL source from the given file, returning an
@@ -39,6 +42,9 @@ struct GraphQLAstNode *graphql_parse_string(const char *text,
  * graphql_error_free().
  */
 struct GraphQLAstNode *graphql_parse_file(FILE *file, const char **error);
+
+struct GraphQLAstNode *graphql_parse_file_with_experimental_schema_support(
+    FILE *file, const char **error);
 
 /**
  * Frees an error.
