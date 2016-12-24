@@ -22,7 +22,7 @@ namespace graphql {
 // result.
 static std::unique_ptr<ast::Node> doParse(const char **outError, yyscan_t scanner) {
   Node *outAST;
-  yy::GraphQLParserImpl parser(&outAST, outError, scanner);
+  yy::GraphQLParserImpl parser(false, &outAST, outError, scanner);
   int failure = parser.parse();
   return !failure ? std::unique_ptr<ast::Node>(outAST) : nullptr;
 }

@@ -80,6 +80,30 @@ using facebook::graphql::ast::NamedType;
 using facebook::graphql::ast::ListType;
 using facebook::graphql::ast::NonNullType;
 
+// Experimental schema support.
+using facebook::graphql::ast::SchemaDefinition;
+using facebook::graphql::ast::ScalarTypeDefinition;
+using facebook::graphql::ast::ObjectTypeDefinition;
+using facebook::graphql::ast::InterfaceTypeDefinition;
+using facebook::graphql::ast::UnionTypeDefinition;
+using facebook::graphql::ast::EnumTypeDefinition;
+using facebook::graphql::ast::InputObjectTypeDefinition;
+using facebook::graphql::ast::TypeExtensionDefinition;
+using facebook::graphql::ast::DirectiveDefinition;
+using facebook::graphql::ast::SchemaDefinition;
+using facebook::graphql::ast::OperationTypeDefinition;
+using facebook::graphql::ast::ScalarTypeDefinition;
+using facebook::graphql::ast::ObjectTypeDefinition;
+using facebook::graphql::ast::FieldDefinition;
+using facebook::graphql::ast::InputValueDefinition;
+using facebook::graphql::ast::InterfaceTypeDefinition;
+using facebook::graphql::ast::UnionTypeDefinition;
+using facebook::graphql::ast::EnumTypeDefinition;
+using facebook::graphql::ast::EnumValueDefinition;
+using facebook::graphql::ast::InputObjectTypeDefinition;
+using facebook::graphql::ast::TypeExtensionDefinition;
+using facebook::graphql::ast::DirectiveDefinition;
+
 union yystype {                                         \
     const char *str;                                    \
     const char *heapStr;                                \
@@ -120,12 +144,34 @@ union yystype {                                         \
     std::vector<std::unique_ptr<Value>> *valueList;                 \
     std::vector<std::unique_ptr<ObjectField>> *objectFieldList;     \
     std::vector<std::unique_ptr<Directive>> *directiveList;         \
+                                                                    \
+    SchemaDefinition *schemaDefinition;                             \
+    ScalarTypeDefinition *scalarTypeDefinition;                     \
+    ObjectTypeDefinition *objectTypeDefinition;                     \
+    InterfaceTypeDefinition *interfaceTypeDefinition;               \
+    UnionTypeDefinition *unionTypeDefinition;                       \
+    EnumTypeDefinition *enumTypeDefinition;                         \
+    InputObjectTypeDefinition *inputObjectTypeDefinition;           \
+    TypeExtensionDefinition *typeExtensionDefinition;               \
+    DirectiveDefinition *directiveDefinition;                       \
+    OperationTypeDefinition *operationTypeDefinition;               \
+    InputValueDefinition *inputValueDefinition;                     \
+    FieldDefinition *fieldDefinition;                               \
+    EnumValueDefinition *enumValueDefinition;                       \
+    \
+    std::vector<std::unique_ptr<OperationTypeDefinition>> *operationTypeDefinitionList; \
+    std::vector<std::unique_ptr<NamedType>> *typeNameList;          \
+    std::vector<std::unique_ptr<InputValueDefinition>> *inputValueDefinitionList; \
+    std::vector<std::unique_ptr<FieldDefinition>> *fieldDefinitionList; \
+    std::vector<std::unique_ptr<Name>> *nameList;          \
+    std::vector<std::unique_ptr<EnumValueDefinition>> *enumValueDefinitionList; \
 };
 
 #define YYSTYPE union yystype
 #define YYLTYPE yy::location
 
-#line 129 "parser.tab.hpp" // lalr1.cc:392
+
+#line 175 "parser.tab.hpp" // lalr1.cc:392
 
 
 # include <cstdlib> // std::abort
@@ -197,7 +243,7 @@ union yystype {                                         \
 
 
 namespace yy {
-#line 201 "parser.tab.hpp" // lalr1.cc:392
+#line 247 "parser.tab.hpp" // lalr1.cc:392
 
 
 
@@ -229,31 +275,41 @@ namespace yy {
       enum yytokentype
       {
         TOK_EOF = 0,
-        TOK_FALSE = 258,
-        TOK_FRAGMENT = 259,
-        TOK_MUTATION = 260,
-        TOK_NULL = 261,
-        TOK_QUERY = 262,
-        TOK_ON = 263,
-        TOK_SUBSCRIPTION = 264,
-        TOK_TRUE = 265,
-        TOK_BANG = 266,
-        TOK_LPAREN = 267,
-        TOK_RPAREN = 268,
-        TOK_ELLIPSIS = 269,
-        TOK_COLON = 270,
-        TOK_EQUAL = 271,
-        TOK_AT = 272,
-        TOK_LBRACKET = 273,
-        TOK_RBRACKET = 274,
-        TOK_LBRACE = 275,
-        TOK_PIPE = 276,
-        TOK_RBRACE = 277,
-        TOK_VARIABLE = 278,
-        TOK_INTEGER = 279,
-        TOK_FLOAT = 280,
-        TOK_STRING = 281,
-        TOK_IDENTIFIER = 282
+        TOK_DIRECTIVE = 258,
+        TOK_ENUM = 259,
+        TOK_EXTEND = 260,
+        TOK_FALSE = 261,
+        TOK_FRAGMENT = 262,
+        TOK_IMPLEMENTS = 263,
+        TOK_INPUT = 264,
+        TOK_INTERFACE = 265,
+        TOK_MUTATION = 266,
+        TOK_NULL = 267,
+        TOK_QUERY = 268,
+        TOK_ON = 269,
+        TOK_SCALAR = 270,
+        TOK_SCHEMA = 271,
+        TOK_SUBSCRIPTION = 272,
+        TOK_TRUE = 273,
+        TOK_TYPE = 274,
+        TOK_UNION = 275,
+        TOK_BANG = 276,
+        TOK_LPAREN = 277,
+        TOK_RPAREN = 278,
+        TOK_ELLIPSIS = 279,
+        TOK_COLON = 280,
+        TOK_EQUAL = 281,
+        TOK_AT = 282,
+        TOK_LBRACKET = 283,
+        TOK_RBRACKET = 284,
+        TOK_LBRACE = 285,
+        TOK_PIPE = 286,
+        TOK_RBRACE = 287,
+        TOK_VARIABLE = 288,
+        TOK_INTEGER = 289,
+        TOK_FLOAT = 290,
+        TOK_STRING = 291,
+        TOK_IDENTIFIER = 292
       };
     };
 
@@ -358,7 +414,7 @@ namespace yy {
 
 
     /// Build a parser object.
-    GraphQLParserImpl (Node **outAST_yyarg, const char **outError_yyarg, void *scanner_yyarg);
+    GraphQLParserImpl (bool enableSchema_yyarg, Node **outAST_yyarg, const char **outError_yyarg, void *scanner_yyarg);
     virtual ~GraphQLParserImpl ();
 
     /// Parse.
@@ -414,7 +470,7 @@ namespace yy {
     /// \param yyvalue   the value to check
     static bool yy_table_value_is_error_ (int yyvalue);
 
-    static const signed char yypact_ninf_;
+    static const short int yypact_ninf_;
     static const signed char yytable_ninf_;
 
     /// Convert a scanner token number \a t to a symbol number.
@@ -431,7 +487,7 @@ namespace yy {
   static const unsigned char yydefact_[];
 
   // YYPGOTO[NTERM-NUM].
-  static const signed char yypgoto_[];
+  static const short int yypgoto_[];
 
   // YYDEFGOTO[NTERM-NUM].
   static const short int yydefgoto_[];
@@ -439,7 +495,7 @@ namespace yy {
   // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
   // positive, shift that token.  If negative, reduce the rule whose
   // number is the opposite.  If YYTABLE_NINF, syntax error.
-  static const unsigned char yytable_[];
+  static const unsigned short int yytable_[];
 
   static const short int yycheck_[];
 
@@ -561,16 +617,17 @@ namespace yy {
     enum
     {
       yyeof_ = 0,
-      yylast_ = 430,     ///< Last index in yytable_.
-      yynnts_ = 55,  ///< Number of nonterminal symbols.
-      yyfinal_ = 32, ///< Termination state number.
+      yylast_ = 955,     ///< Last index in yytable_.
+      yynnts_ = 79,  ///< Number of nonterminal symbols.
+      yyfinal_ = 74, ///< Termination state number.
       yyterror_ = 1,
       yyerrcode_ = 256,
-      yyntokens_ = 28  ///< Number of tokens.
+      yyntokens_ = 38  ///< Number of tokens.
     };
 
 
     // User arguments.
+    bool enableSchema;
     Node **outAST;
     const char **outError;
     void *scanner;
@@ -579,7 +636,7 @@ namespace yy {
 
 
 } // yy
-#line 583 "parser.tab.hpp" // lalr1.cc:392
+#line 640 "parser.tab.hpp" // lalr1.cc:392
 
 
 
