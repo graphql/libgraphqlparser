@@ -9,9 +9,12 @@
 
 #include <gtest/gtest.h>
 #include <cstdlib>
+#include <fstream>
+#include <sstream>
 
 #include "Ast.h"
 #include "GraphQLParser.h"
+#include "c/GraphQLAstToJSON.h"
 
 using namespace facebook::graphql;
 using namespace facebook::graphql::ast;
@@ -258,4 +261,25 @@ TEST(ParserTests, AllowsNonKeywordsForNames) {
         << "}\n";
     expectSuccess(str.str().c_str());
   }
+}
+
+TEST(ParserTests, ProducesCorrectOutputForKitchenSink) {
+  // Make sure we produce correct saved output for
+  // kitchen-sink.graphql from graphql-js.
+  FILE *fp = fopen("test/kitchen-sink.graphql", "r");
+  ASSERT_NE(nullptr, fp);
+  const char *error = nullptr;
+  auto ast = parseFile(fp, &error);
+  ASSERT_TRUE(ast);
+  ASSERT_FALSE(error);
+  fclose(fp);
+
+  const char *json = graphql_ast_to_json((const struct GraphQLAstNode *)ast.get());
+  std::ifstream ifs("test/kitchen-sink.json");
+  std::stringstream ss;
+  ss << ifs.rdbuf();
+  EXPECT_STREQ(
+    json,
+    ss.str().c_str());
+  free((void *)json);
 }
