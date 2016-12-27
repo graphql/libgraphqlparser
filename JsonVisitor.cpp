@@ -19,44 +19,105 @@ namespace ast {
 namespace visitor {
 
 
-// Method invariant: printed_ contains strings for this node's children.
-void JsonVisitor::printLocation(const yy::location &location)
+JsonVisitor::NodeFieldPrinter::NodeFieldPrinter(
+    JsonVisitor &visitor,
+    const char *nodeKind,
+    const Node &node)
+    : visitor_(visitor)
 {
-  out_ << "{\"start\":" << location.begin.column
-       << ",\"end\":" << location.end.column  << '}';
+  if (!visitor_.printed_.empty()) {
+    nextChild_ = visitor_.printed_.back().begin();
+  }
+  out_ << "{\"kind\":\"" << nodeKind << "\",\"loc\":";
+  printLocation(out_, node.getLocation());
 }
 
-void JsonVisitor::startPrintingNodeWithoutTrailingComma(const char *kind, const yy::location &location) {
+std::string JsonVisitor::NodeFieldPrinter::finishPrinting() {
+  assert(!out_.str().empty());
+  out_ << '}';
+  auto result(out_.str());
+#ifndef NDEBUG
   out_.str("");
-  out_ << "{\"kind\":\"" << kind << "\",\"loc\":";
-  printLocation(location);
+#endif
+  return result;
+
 }
 
-void JsonVisitor::startPrintingNode(const char *kind, const yy::location &location) {
-  startPrintingNodeWithoutTrailingComma(kind, location);
+void JsonVisitor::NodeFieldPrinter::printFieldSeparator()
+{
   out_ << ',';
 }
 
-void JsonVisitor::printChildList(
+void JsonVisitor::NodeFieldPrinter::printSingularPrimitiveField(
+    const char *fieldName,
+    const char *value) {
+  printFieldSeparator();
+  out_ << '"' << fieldName << "\":";
+  out_ << '"' << value << '"';
+}
+
+void JsonVisitor::NodeFieldPrinter::printSingularBooleanField(
+    const char *fieldName,
+    bool value) {
+  printFieldSeparator();
+  out_ << '"' << fieldName << "\":";
+  out_ << (value ? "true" : "false");
+}
+
+void JsonVisitor::NodeFieldPrinter::printSingularObjectField(const char *fieldName) {
+  printFieldSeparator();
+  out_ << '"' << fieldName << "\":";
+  assert(!visitor_.printed_.empty());
+  out_ << *nextChild_++;
+}
+
+void JsonVisitor::NodeFieldPrinter::printNullableSingularObjectField(
+    const char *fieldName,
+    const void *value) {
+  printFieldSeparator();
+  out_ << '"' << fieldName << "\":";
+  if (value != nullptr) {
+    assert(!visitor_.printed_.empty());
+    out_ << *nextChild_++;
+  } else {
+    out_ << "null";
+  }
+}
+
+// Method invariant: printed_ contains strings for this node's children.
+void JsonVisitor::NodeFieldPrinter::printLocation(
+    std::ostringstream &out,
+    const yy::location &location)
+{
+  out << "{\"start\":" << location.begin.column
+       << ",\"end\":" << location.end.column  << '}';
+}
+
+void JsonVisitor::NodeFieldPrinter::printChildList(
+    std::ostringstream &out,
     const std::vector<std::string>::const_iterator &childIterator,
     size_t numChildren) {
-  out_ << '[';
+  out << '[';
   for (size_t ii = 0; ii < numChildren; ++ii) {
     if (ii != 0) {
-      out_ << ',';
+      out << ',';
     }
-    out_ << *(childIterator + ii);
+    out << *(childIterator + ii);
   }
-  out_ << ']';
+  out << ']';
+}
+
+JsonVisitor::JsonVisitor() {
+  printed_.emplace_back();
 }
 
 void JsonVisitor::visitNode() {
   printed_.emplace_back();
 }
 
-void JsonVisitor::endVisitNode() {
+void JsonVisitor::endVisitNode(std::string &&str) {
   printed_.pop_back();
-  printed_.back().emplace_back(out_.str());
+  printed_.back().emplace_back(std::move(str));
 }
 
 bool JsonVisitor::visitDocument(const Document &document) {
@@ -65,14 +126,10 @@ bool JsonVisitor::visitDocument(const Document &document) {
 }
 
 void JsonVisitor::endVisitDocument(const Document &document) {
-  startPrintingNode("Document", document.getLocation());
-  out_ << "\"definitions\":";
-
-  const auto &children = printed_.back();
-  printChildList(children.begin(), children.size());
-  out_ << '}';
-  printed_.pop_back();
-  assert(printed_.empty());
+  NodeFieldPrinter fields(*this, "Document", document);
+  fields.printPluralField("definitions", document.getDefinitions());
+  endVisitNode(fields.finishPrinting());
+  assert(printed_.size() == 1);
 }
 
 bool JsonVisitor::visitOperationDefinition(const OperationDefinition &operationDefinition) {
@@ -81,42 +138,22 @@ bool JsonVisitor::visitOperationDefinition(const OperationDefinition &operationD
 }
 
 void JsonVisitor::endVisitOperationDefinition(const OperationDefinition &operationDefinition) {
-  startPrintingNode("OperationDefinition", operationDefinition.getLocation());
+  NodeFieldPrinter fields(*this, "OperationDefinition", operationDefinition);
 
-  out_ << "\"operation\":\"" << operationDefinition.getOperation()
-       << '\"';
+  fields.printSingularPrimitiveField("operation", operationDefinition.getOperation());
+  fields.printNullableSingularObjectField("name", operationDefinition.getName());
 
-  const auto &children = printed_.back();
+  fields.printNullablePluralField(
+    "variableDefinitions",
+    operationDefinition.getVariableDefinitions());
 
-  auto nextChild = children.begin();
+  fields.printNullablePluralField(
+    "directives",
+    operationDefinition.getDirectives());
 
-  out_ << ",\"name\": "
-       << (operationDefinition.getName() ? *nextChild++ : "null");
+  fields.printSingularObjectField("selectionSet");
 
-  out_ << ",\"variableDefinitions\":";
-  const auto *variableDefinitions = operationDefinition.getVariableDefinitions();
-  if (variableDefinitions != nullptr) {
-    printChildList(nextChild, variableDefinitions->size());
-    nextChild += variableDefinitions->size();
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"directives\":";
-  const auto *directives = operationDefinition.getDirectives();
-  if (directives != nullptr) {
-    printChildList(nextChild, directives->size());
-    nextChild += directives->size();
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"selectionSet\":" << *nextChild++;
-
-  assert(nextChild == children.end());
-  out_ << "}";
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitVariableDefinition(const VariableDefinition &variableDefinition) {
@@ -125,23 +162,15 @@ bool JsonVisitor::visitVariableDefinition(const VariableDefinition &variableDefi
 }
 
 void JsonVisitor::endVisitVariableDefinition(const VariableDefinition &variableDefinition) {
-  startPrintingNode("VariableDefinition", variableDefinition.getLocation());
+  NodeFieldPrinter fields(*this, "VariableDefinition", variableDefinition);
+  fields.printSingularObjectField("variable");
+  fields.printSingularObjectField("type");
+  fields.printNullableSingularObjectField(
+    "defaultValue",
+    variableDefinition.getDefaultValue());
 
-  const auto &children = printed_.back();
-  out_ << "\"variable\":" << children[0];
-  out_ << ",\"type\":" << children[1];
-  out_ << ",\"defaultValue\":";
-  if (children.size() > 2) {
-    assert(children.size() == 3);
-    out_ << children[2];
-  } else {
-    assert(children.size() == 2);
-    out_ << "null";
-  }
 
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitSelectionSet(const SelectionSet &selectionSet) {
@@ -150,16 +179,10 @@ bool JsonVisitor::visitSelectionSet(const SelectionSet &selectionSet) {
 }
 
 void JsonVisitor::endVisitSelectionSet(const SelectionSet &selectionSet) {
-  startPrintingNode("SelectionSet", selectionSet.getLocation());
+  NodeFieldPrinter fields(*this, "SelectionSet", selectionSet);
+  fields.printPluralField("selections", selectionSet.getSelections());
 
-  out_ << "\"selections\":";
-
-  const auto &children = printed_.back();
-  printChildList(children.begin(), children.size());
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitField(const Field &field) {
@@ -168,48 +191,14 @@ bool JsonVisitor::visitField(const Field &field) {
 }
 
 void JsonVisitor::endVisitField(const Field &field) {
-  startPrintingNode("Field", field.getLocation());
+  NodeFieldPrinter fields(*this, "Field", field);
+  fields.printNullableSingularObjectField("alias", field.getAlias());
+  fields.printSingularObjectField("name");
+  fields.printNullablePluralField("arguments", field.getArguments());
+  fields.printNullablePluralField("directives", field.getDirectives());
+  fields.printNullableSingularObjectField("selectionSet", field.getSelectionSet());
 
-  const auto &children = printed_.back();
-  auto nextChild = children.begin();
-
-  out_ << "\"alias\":";
-  if (field.getAlias() != nullptr) {
-    out_ << *nextChild++;
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"name\":" << *nextChild++;
-
-  out_ << ",\"arguments\":";
-  const auto *arguments = field.getArguments();
-  if (arguments != nullptr) {
-    printChildList(nextChild, arguments->size());
-    nextChild += arguments->size();
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"directives\":";
-  const auto *directives = field.getDirectives();
-  if (directives != nullptr) {
-    printChildList(nextChild, directives->size());
-    nextChild += directives->size();
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"selectionSet\":";
-  if (field.getSelectionSet() != nullptr) {
-    out_ << *nextChild++;
-  } else {
-    out_ << "null";
-  }
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitArgument(const Argument &argument) {
@@ -218,14 +207,11 @@ bool JsonVisitor::visitArgument(const Argument &argument) {
 }
 
 void JsonVisitor::endVisitArgument(const Argument &argument) {
-  startPrintingNode("Argument", argument.getLocation());
+  NodeFieldPrinter fields(*this, "Argument", argument);
+  fields.printSingularObjectField("name");
+  fields.printSingularObjectField("value");
 
-  const auto &children = printed_.back();
-  out_ << "\"name\":" << children[0] << ",\"value\":" << children[1];
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitFragmentSpread(const FragmentSpread &fragmentSpread) {
@@ -234,22 +220,11 @@ bool JsonVisitor::visitFragmentSpread(const FragmentSpread &fragmentSpread) {
 }
 
 void JsonVisitor::endVisitFragmentSpread(const FragmentSpread &fragmentSpread) {
-  startPrintingNode("FragmentSpread", fragmentSpread.getLocation());
+  NodeFieldPrinter fields(*this, "FragmentSpread", fragmentSpread);
+  fields.printSingularObjectField("name");
+  fields.printNullablePluralField("directives", fragmentSpread.getDirectives());
 
-  const auto &children = printed_.back();
-  out_ << "\"name\":" << children[0];
-
-  out_ << ",\"directives\":";
-  const auto *directives = fragmentSpread.getDirectives();
-  if (directives != nullptr) {
-    printChildList(children.begin() + 1, directives->size());
-  } else {
-    out_ << "null";
-  }
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitInlineFragment(const InlineFragment &inlineFragment) {
@@ -258,29 +233,12 @@ bool JsonVisitor::visitInlineFragment(const InlineFragment &inlineFragment) {
 }
 
 void JsonVisitor::endVisitInlineFragment(const InlineFragment &inlineFragment) {
-  startPrintingNode("InlineFragment", inlineFragment.getLocation());
+  NodeFieldPrinter fields(*this, "InlineFragment", inlineFragment);
+  fields.printNullableSingularObjectField("typeCondition", inlineFragment.getTypeCondition());
+  fields.printNullablePluralField("directives", inlineFragment.getDirectives());
+  fields.printSingularObjectField("selectionSet");
 
-  const auto &children = printed_.back();
-
-  auto nextChild = children.begin();
-  if (inlineFragment.getTypeCondition() != nullptr) {
-    out_ << "\"typeCondition\":" << *nextChild++ << ',';
-  }
-
-  out_ << "\"directives\":";
-  const auto *directives = inlineFragment.getDirectives();
-  if (directives != nullptr) {
-    printChildList(nextChild, directives->size());
-    nextChild += directives->size();
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"selectionSet\":" << *nextChild++;
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitFragmentDefinition(const FragmentDefinition &fragmentDefinition) {
@@ -289,29 +247,14 @@ bool JsonVisitor::visitFragmentDefinition(const FragmentDefinition &fragmentDefi
 }
 
 void JsonVisitor::endVisitFragmentDefinition(const FragmentDefinition &fragmentDefinition) {
-  startPrintingNode("FragmentDefinition", fragmentDefinition.getLocation());
+  NodeFieldPrinter fields(*this, "FragmentDefinition", fragmentDefinition);
 
-  const auto &children = printed_.back();
+  fields.printSingularObjectField("name");
+  fields.printSingularObjectField("typeCondition");
+  fields.printNullablePluralField("directives", fragmentDefinition.getDirectives());
+  fields.printSingularObjectField("selectionSet");
 
-  out_ << "\"name\":" << children[0];
-  out_ << ",\"typeCondition\":" << children[1];
-
-  auto nextChild = children.begin() + 2;
-
-  out_ << ",\"directives\":";
-  const auto *directives = fragmentDefinition.getDirectives();
-  if (directives != nullptr) {
-    printChildList(nextChild, directives->size());
-    nextChild += directives->size();
-  } else {
-    out_ << "null";
-  }
-
-  out_ << ",\"selectionSet\":" << *nextChild++;
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitVariable(const Variable &variable) {
@@ -320,19 +263,18 @@ bool JsonVisitor::visitVariable(const Variable &variable) {
 }
 
 void JsonVisitor::endVisitVariable(const Variable &variable) {
-  startPrintingNode("Variable", variable.getLocation());
+  NodeFieldPrinter fields(*this, "Variable", variable);
+  fields.printSingularObjectField("name");
 
-  out_ << "\"name\":" << printed_.back()[0] << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
-template <typename ValueType>
-void JsonVisitor::endVisitValueRepresentedAsString(const char *valueKind, const ValueType &value) {
-  startPrintingNode(valueKind, value.getLocation());
+template <typename ValueNode>
+void JsonVisitor::endVisitValueRepresentedAsString(const char *valueKind, const ValueNode &value) {
+  NodeFieldPrinter fields(*this, valueKind, value);
+  fields.printSingularPrimitiveField("value", value.getValue());
 
-  out_ << "\"value\":\"" << value.getValue() << "\"}";
-  printed_.back().emplace_back(out_.str());
+  printed_.back().emplace_back(fields.finishPrinting());
 }
 
 void JsonVisitor::endVisitIntValue(const IntValue &intValue) {
@@ -352,16 +294,18 @@ void JsonVisitor::endVisitEnumValue(const EnumValue &enumValue) {
 }
 
 void JsonVisitor::endVisitNullValue(const NullValue &nullValue) {
-  startPrintingNodeWithoutTrailingComma("NullValue", nullValue.getLocation());
-  out_ << '}';
-  printed_.back().emplace_back(out_.str());
+  NodeFieldPrinter fields(*this, "NullValue", nullValue);
+
+  printed_.back().emplace_back(fields.finishPrinting());
 }
 
 void JsonVisitor::endVisitBooleanValue(const BooleanValue &booleanValue) {
-  startPrintingNode("BooleanValue", booleanValue.getLocation());
+  NodeFieldPrinter fields(*this, "BooleanValue", booleanValue);
+  fields.printSingularBooleanField(
+    "value",
+    booleanValue.getValue());
 
-  out_ << "\"value\":" << (booleanValue.getValue() ? "true" : "false") << '}';
-  printed_.back().emplace_back(out_.str());
+  printed_.back().emplace_back(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitListValue(const ListValue &arrayValue) {
@@ -370,14 +314,10 @@ bool JsonVisitor::visitListValue(const ListValue &arrayValue) {
 }
 
 void JsonVisitor::endVisitListValue(const ListValue &arrayValue) {
-  startPrintingNode("ListValue", arrayValue.getLocation());
+  NodeFieldPrinter fields(*this, "ListValue", arrayValue);
+  fields.printPluralField("values", arrayValue.getValues());
 
-  out_ << "\"values\":";
-  printChildList(printed_.back().begin(), arrayValue.getValues().size());
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitObjectValue(const ObjectValue &objectValue) {
@@ -386,14 +326,10 @@ bool JsonVisitor::visitObjectValue(const ObjectValue &objectValue) {
 }
 
 void JsonVisitor::endVisitObjectValue(const ObjectValue &objectValue) {
-  startPrintingNode("ObjectValue", objectValue.getLocation());
+  NodeFieldPrinter fields(*this, "ObjectValue", objectValue);
+  fields.printPluralField("fields", objectValue.getFields());
 
-  out_ << "\"fields\":";
-  printChildList(printed_.back().begin(), objectValue.getFields().size());
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitObjectField(const ObjectField &objectField) {
@@ -402,15 +338,11 @@ bool JsonVisitor::visitObjectField(const ObjectField &objectField) {
 }
 
 void JsonVisitor::endVisitObjectField(const ObjectField &objectField) {
-  startPrintingNode("ObjectField", objectField.getLocation());
+  NodeFieldPrinter fields(*this, "ObjectField", objectField);
+  fields.printSingularObjectField("name");
+  fields.printSingularObjectField("value");
 
-  const auto &children = printed_.back();
-
-  out_ << "\"name\":" << children[0] << ",\"value\":" << children[1];
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitDirective(const Directive &directive) {
@@ -419,23 +351,11 @@ bool JsonVisitor::visitDirective(const Directive &directive) {
 }
 
 void JsonVisitor::endVisitDirective(const Directive &directive) {
-  startPrintingNode("Directive", directive.getLocation());
+  NodeFieldPrinter fields(*this, "Directive", directive);
+  fields.printSingularObjectField("name");
+  fields.printNullablePluralField("arguments", directive.getArguments());
 
-  const auto &children = printed_.back();
-  out_ << "\"name\":" << children[0];
-
-  auto nextChild = children.begin() + 1;
-  out_ << ",\"arguments\":";
-  const auto *arguments = directive.getArguments();
-  if (arguments != nullptr) {
-    printChildList(nextChild, arguments->size());
-  } else {
-    out_ << "null";
-  }
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 void JsonVisitor::endVisitName(const Name &name) {
@@ -448,13 +368,10 @@ bool JsonVisitor::visitNamedType(const NamedType &namedType) {
 }
 
 void JsonVisitor::endVisitNamedType(const NamedType &namedType) {
-  startPrintingNode("NamedType", namedType.getLocation());
+  NodeFieldPrinter fields(*this, "NamedType", namedType);
+  fields.printSingularObjectField("name");
 
-  out_ << "\"name\":" << printed_.back()[0];
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitListType(const ListType &listType) {
@@ -463,13 +380,10 @@ bool JsonVisitor::visitListType(const ListType &listType) {
 }
 
 void JsonVisitor::endVisitListType(const ListType &listType) {
-  startPrintingNode("ListType", listType.getLocation());
+  NodeFieldPrinter fields(*this, "ListType", listType);
+  fields.printSingularObjectField("type");
 
-  out_ << "\"type\":" << printed_.back()[0];
-
-  out_ << '}';
-
-  endVisitNode();
+  endVisitNode(fields.finishPrinting());
 }
 
 bool JsonVisitor::visitNonNullType(const NonNullType &nonNullType) {
@@ -478,13 +392,16 @@ bool JsonVisitor::visitNonNullType(const NonNullType &nonNullType) {
 }
 
 void JsonVisitor::endVisitNonNullType(const NonNullType &nonNullType) {
-  startPrintingNode("NonNullType", nonNullType.getLocation());
+  NodeFieldPrinter fields(*this, "NonNullType", nonNullType);
+  fields.printSingularObjectField("type");
 
-  out_ << "\"type\":" << printed_.back()[0];
+  endVisitNode(fields.finishPrinting());
+}
 
-  out_ << '}';
-
-  endVisitNode();
+std::string JsonVisitor::getResult() const {
+  assert(printed_.size() == 1);
+  assert(printed_[0].size() == 1);
+  return printed_[0][0];
 }
 
 }
