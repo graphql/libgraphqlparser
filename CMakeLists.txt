@@ -39,6 +39,8 @@ ADD_LIBRARY(graphqlparser SHARED
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAst.h
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAst.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAstForEachConcreteType.h
+  ${CMAKE_CURRENT_BINARY_DIR}/JsonVisitor.h.inc
+  ${CMAKE_CURRENT_BINARY_DIR}/JsonVisitor.cpp.inc
   c/GraphQLAstNode.cpp
   c/GraphQLAstToJSON.cpp
   c/GraphQLAstVisitor.h
@@ -62,7 +64,7 @@ FUNCTION(GENERATE_AST_FILE FILE_TYPE FILE_RELATIVE_PATH)
   ADD_CUSTOM_COMMAND(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${FILE_RELATIVE_PATH}
     COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py ${FILE_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast > ${CMAKE_CURRENT_BINARY_DIR}/${FILE_RELATIVE_PATH}
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py)
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py ${CMAKE_CURRENT_SOURCE_DIR}/ast/${FILE_TYPE}.py)
 ENDFUNCTION(GENERATE_AST_FILE)
 
 GENERATE_AST_FILE(cxx Ast.h)
@@ -76,6 +78,10 @@ GENERATE_AST_FILE(c c/GraphQLAst.h)
 GENERATE_AST_FILE(c_impl c/GraphQLAst.cpp)
 
 GENERATE_AST_FILE(c_visitor_impl c/GraphQLAstForEachConcreteType.h)
+
+GENERATE_AST_FILE(cxx_json_visitor_header JsonVisitor.h.inc)
+
+GENERATE_AST_FILE(cxx_json_visitor_impl JsonVisitor.cpp.inc)
 
 ADD_SUBDIRECTORY(python)
 
