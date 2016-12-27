@@ -33,7 +33,7 @@ namespace ast {
 ''' % (name, name)
 
   def field(self, type, name, nullable, plural):
-    if type in ['OperationKind', 'string', 'double', 'boolean']:
+    if type in ['OperationKind', 'string', 'boolean']:
       return
   
     if plural:

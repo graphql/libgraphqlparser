@@ -19,3 +19,5 @@ GraphQLParser.py
 install_manifest.txt
 build/
 libgraphqlparser.pc
+JsonVisitor.cpp.inc
+JsonVisitor.h.inc
