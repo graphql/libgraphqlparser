@@ -10,6 +10,10 @@ FILE(COPY kitchen-sink.graphql DESTINATION .)
 
 FILE(COPY kitchen-sink.json DESTINATION .)
 
+FILE(COPY schema-kitchen-sink.graphql DESTINATION .)
+
+FILE(COPY schema-kitchen-sink.json DESTINATION .)
+
 ADD_EXECUTABLE(runTests ParserTests.cpp JsonVisitorTests.cpp BuildCAPI.c)
 
 TARGET_LINK_LIBRARIES(runTests gtest gtest_main)

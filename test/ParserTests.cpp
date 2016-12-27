@@ -273,25 +273,47 @@ TEST(ParserTests, AllowsNonKeywordsForNames) {
   }
 }
 
-TEST(ParserTests, ProducesCorrectOutputForKitchenSink) {
-  // Make sure we produce correct saved output for
-  // kitchen-sink.graphql from graphql-js.
-  FILE *fp = fopen("test/kitchen-sink.graphql", "r");
+static void testCorrectOutputForStockFile(
+    const char *inputFileName,
+    const char *outputFileName,
+    bool withSchemaParsing) {
+  FILE *fp = fopen(inputFileName, "r");
   ASSERT_NE(nullptr, fp);
   const char *error = nullptr;
-  auto ast = parseFile(fp, &error);
+  std::unique_ptr<Node> ast;
+  if (withSchemaParsing) {
+    ast = parseFileWithExperimentalSchemaSupport(fp, &error);
+  } else {
+    ast = parseFile(fp, &error);
+  }
   ASSERT_TRUE(ast);
   ASSERT_FALSE(error);
   fclose(fp);
 
   const char *json = graphql_ast_to_json((const struct GraphQLAstNode *)ast.get());
-  std::ifstream ifs("test/kitchen-sink.json");
+  std::ifstream ifs(outputFileName);
   std::stringstream ss;
   ss << ifs.rdbuf();
   EXPECT_STREQ(
     json,
     ss.str().c_str());
   free((void *)json);
+}
+
+TEST(ParserTests, ProducesCorrectOutputForKitchenSink) {
+  SCOPED_TRACE("KitchenSink");
+  testCorrectOutputForStockFile(
+    "test/kitchen-sink.graphql",
+    "test/kitchen-sink.json",
+    false);
+}
+
+TEST(ParserTests, ProducesCorrectOutputForSchemaKitchenSink) {
+  SCOPED_TRACE("SchemaKitchenSink");
+  testCorrectOutputForStockFile(
+    "test/schema-kitchen-sink.graphql",
+    "test/schema-kitchen-sink.json",
+    true);
 }
 
 static void expectSchemaParsing(const char *queryStr) {
