@@ -33,11 +33,25 @@ namespace ast {
 std::unique_ptr<ast::Node> parseString(const char *text, const char **error);
 
 /**
+ * Like parseString, but enables support for the experimental type
+ * definition syntax from https://github.com/facebook/graphql/pull/90 .
+ */
+std::unique_ptr<ast::Node> parseStringWithExperimentalSchemaSupport(
+  const char *text, const char **error);
+
+/**
  * Read and parse GraphQL source from the given file, returning an
  * AST. Returns nullptr on error and, if error is not null, places an
  * error string in error that must be freed with free(3).
  */
 std::unique_ptr<ast::Node> parseFile(FILE *file, const char **error);
+
+/**
+ * Like parseFile, but enables support for the experimental type
+ * definition syntax from https://github.com/facebook/graphql/pull/90 .
+ */
+std::unique_ptr<ast::Node> parseFileWithExperimentalSchemaSupport(
+  FILE *file, const char **error);
 
 }
 }
