@@ -296,7 +296,8 @@ static void testCorrectOutputForStockFile(
   ss << ifs.rdbuf();
   EXPECT_STREQ(
     json,
-    ss.str().c_str());
+    ss.str().c_str()
+  );
   free((void *)json);
 }
 

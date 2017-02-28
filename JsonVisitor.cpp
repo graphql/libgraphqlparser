@@ -89,8 +89,11 @@ void JsonVisitor::NodeFieldPrinter::printLocation(
     std::ostringstream &out,
     const yy::location &location)
 {
-  out << "{\"start\":" << location.begin.column
-       << ",\"end\":" << location.end.column  << '}';
+  out << "{\"start\": {\"line\": " << location.begin.line
+       << ",\"column\":" << location.begin.column
+       << "}, \"end\": {\"line\":" << location.end.line
+       << ",\"column\":" << location.end.column
+       << "}}";
 }
 
 void JsonVisitor::NodeFieldPrinter::printChildList(
