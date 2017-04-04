@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
   } else {
     in = stdin;
   }
-  auto AST = facebook::graphql::parseFile(in, &error);
+  auto AST = facebook::graphql::parseFileWithExperimentalSchemaSupport(in, &error);
   if (argc > 1) {
     fclose(in);
   }
