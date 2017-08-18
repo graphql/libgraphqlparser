@@ -924,30 +924,30 @@ YY_RULE_SETUP
 {
     BEGIN(INITIAL);
     yylval->str = yyextra->str.c_str();
+    *yylloc = yyextra->loc;
     return yy::GraphQLParserImpl::token::TOK_STRING;
   }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 63 "lexer.lpp"
+#line 64 "lexer.lpp"
 {
     throw make_error(yyextra->loc, "Unterminated string");
   }
 	YY_BREAK
 case YY_STATE_EOF(STRING_STATE):
-#line 67 "lexer.lpp"
+#line 68 "lexer.lpp"
 {
     throw make_error(yyextra->loc, "Unterminated string at EOF");
   }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 71 "lexer.lpp"
+#line 72 "lexer.lpp"
 {
     char *p = yytext;
     while (*p) {
-      yyextra->loc.columns();
       yyextra->str.push_back(*p++);
     }
   }
@@ -1017,13 +1017,13 @@ case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
 #line 100 "lexer.lpp"
-{ yyextra->loc.step(); BEGIN(INITIAL); }
+{ yyextra->loc.lines(yyleng / 2); yyextra->loc.step(); BEGIN(INITIAL); }
 	YY_BREAK
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
 #line 101 "lexer.lpp"
-{ yyextra->loc.step(); BEGIN(INITIAL); }
+{ yyextra->loc.lines(yyleng); yyextra->loc.step(); BEGIN(INITIAL); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
