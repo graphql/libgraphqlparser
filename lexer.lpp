@@ -56,6 +56,7 @@ notnewline [^\n\r]
   \"    {
     BEGIN(INITIAL);
     yylval->str = yyextra->str.c_str();
+    *yylloc = yyextra->loc;
     return yy::GraphQLParserImpl::token::TOK_STRING;
   }
 
@@ -70,7 +71,6 @@ notnewline [^\n\r]
   {STRINGCHAR}+  {
     char *p = yytext;
     while (*p) {
-      yyextra->loc.columns();
       yyextra->str.push_back(*p++);
     }
   }
@@ -96,8 +96,8 @@ notnewline [^\n\r]
 }
 
 <LINE_COMMENT_STATE>{
-  {CRLF} { yyextra->loc.step(); BEGIN(INITIAL); }
-  {newline} { yyextra->loc.step(); BEGIN(INITIAL); }
+  {CRLF} { yyextra->loc.lines(yyleng / 2); yyextra->loc.step(); BEGIN(INITIAL); }
+  {newline} { yyextra->loc.lines(yyleng); yyextra->loc.step(); BEGIN(INITIAL); }
   {notnewline}+ /* eat comment character */
 }
 
