@@ -30,7 +30,7 @@ public:
   const yy::location &getLocation() const
   { return location_; }
 
-  virtual void accept(visitor::AstVisitor *visitor) = 0;
+  virtual void accept(visitor::AstVisitor *visitor) const = 0;
 };
 
 }

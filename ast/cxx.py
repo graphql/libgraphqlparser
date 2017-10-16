@@ -77,7 +77,7 @@ struct CDeleter {
     self._print_noncopyable()
     print >> self._deferredOutput
     self._print_getters()
-    print >> self._deferredOutput, '  void accept(visitor::AstVisitor *visitor) override;'
+    print >> self._deferredOutput, '  void accept(visitor::AstVisitor *visitor) const override;'
     print >> self._deferredOutput, '};'
     print >> self._deferredOutput
     print >> self._deferredOutput

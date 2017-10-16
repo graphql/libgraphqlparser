@@ -28,7 +28,7 @@ namespace ast {
     print '}'
 
   def start_type(self, name):
-    print '''void %s::accept(visitor::AstVisitor *visitor) {
+    print '''void %s::accept(visitor::AstVisitor *visitor) const {
   if (visitor->visit%s(*this)) {
 ''' % (name, name)
 
