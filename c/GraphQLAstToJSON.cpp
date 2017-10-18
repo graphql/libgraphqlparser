@@ -9,7 +9,7 @@
 
 #include "GraphQLAstToJSON.h"
 
-#include <string.h>
+#include <cstring>
 
 #include "../JsonVisitor.h"
 #include "../AstNode.h"
@@ -18,6 +18,6 @@
 const char *graphql_ast_to_json(const struct GraphQLAstNode *node)
 {
   facebook::graphql::ast::visitor::JsonVisitor visitor;
-  ((facebook::graphql::ast::Node *)node)->accept(&visitor);
+  reinterpret_cast<const facebook::graphql::ast::Node *>(node)->accept(&visitor);
   return strdup(visitor.getResult().c_str());
 }

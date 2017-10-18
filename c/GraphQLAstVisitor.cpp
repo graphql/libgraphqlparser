@@ -10,7 +10,7 @@
 #include "c/GraphQLAstVisitor.h"
 #include "AstVisitor.h"
 
-using namespace facebook::graphql::ast;
+using namespace facebook::graphql::ast; // NOLINT
 
 #include "c/GraphQLAstForEachConcreteType.h"
 
@@ -25,8 +25,6 @@ public:
   explicit CVisitorBridge(const struct GraphQLAstVisitorCallbacks *callbacks,
                           void *userData)
     : callbacks_(callbacks), userData_(userData) {}
-
-  ~CVisitorBridge() {}
 
   FOR_EACH_CONCRETE_TYPE(DECLARE_VISIT)
 };
@@ -48,12 +46,12 @@ public:
 
 FOR_EACH_CONCRETE_TYPE(IMPLEMENT_VISIT)
 
-void graphql_node_visit(struct GraphQLAstNode *node,
+void graphql_node_visit(const struct GraphQLAstNode *node,
                         const struct GraphQLAstVisitorCallbacks *callbacks,
                         void *userData)
 {
   CVisitorBridge visitor(callbacks, userData);
   if (node) {
-    ((facebook::graphql::ast::Node *)node)->accept(&visitor);
+    reinterpret_cast<const facebook::graphql::ast::Node *>(node)->accept(&visitor);
   }
 }

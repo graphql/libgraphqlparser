@@ -14,24 +14,24 @@
 #include <cstdlib>
 
 struct GraphQLAstNode *graphql_parse_string(const char *text, const char **error) {
-  return (struct GraphQLAstNode *)facebook::graphql::parseString(text, error).release();
+  return reinterpret_cast<struct GraphQLAstNode *>(facebook::graphql::parseString(text, error).release());
 }
 
 struct GraphQLAstNode *graphql_parse_string_with_experimental_schema_support(
     const char *text, const char **error) {
-  return (struct GraphQLAstNode *)facebook::graphql::parseStringWithExperimentalSchemaSupport(
-    text, error).release();
+  return reinterpret_cast<struct GraphQLAstNode *>(facebook::graphql::parseStringWithExperimentalSchemaSupport(
+                                                     text, error).release());
 }
 
 struct GraphQLAstNode *graphql_parse_file(FILE *file, const char **error) {
-  return (struct GraphQLAstNode *)facebook::graphql::parseFile(file, error).release();
+  return reinterpret_cast<struct GraphQLAstNode *>(facebook::graphql::parseFile(file, error).release());
 }
 
 struct GraphQLAstNode *graphql_parse_file_with_experimental_schema_support(
     FILE *file, const char **error) {
-  return (struct GraphQLAstNode *)facebook::graphql::parseFileWithExperimentalSchemaSupport(file, error).release();
+  return reinterpret_cast<struct GraphQLAstNode *>(facebook::graphql::parseFileWithExperimentalSchemaSupport(file, error).release());
 }
 
 void graphql_error_free(const char *error) {
-  std::free((void *)error);
+  std::free((void *)(error)); // NOLINT
 }

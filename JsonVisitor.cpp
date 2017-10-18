@@ -10,7 +10,7 @@
 #include "position.hh"
 #include "JsonVisitor.h"
 
-#include <assert.h>
+#include <cassert>
 #include <iterator>
 
 namespace facebook {
@@ -28,7 +28,10 @@ JsonVisitor::NodeFieldPrinter::NodeFieldPrinter(
   if (!visitor_.printed_.empty()) {
     nextChild_ = visitor_.printed_.back().begin();
   }
-  out_ << "{\"kind\":\"" << nodeKind << "\",\"loc\":";
+  // NOTE: If you're an Emacs user and this file's use of C++11 raw
+  // strings doesn't highlight correctly in c++-mode, try upgrading to
+  // Emacs 26 if you can.
+  out_ << R"({"kind":")" << nodeKind << R"(","loc":)";
   printLocation(out_, node.getLocation());
 }
 
@@ -52,7 +55,7 @@ void JsonVisitor::NodeFieldPrinter::printSingularPrimitiveField(
     const char *fieldName,
     const char *value) {
   printFieldSeparator();
-  out_ << '"' << fieldName << "\":";
+  out_ << '"' << fieldName << R"(":)";
   out_ << '"' << value << '"';
 }
 
@@ -60,13 +63,13 @@ void JsonVisitor::NodeFieldPrinter::printSingularBooleanField(
     const char *fieldName,
     bool value) {
   printFieldSeparator();
-  out_ << '"' << fieldName << "\":";
+  out_ << '"' << fieldName << R"(":)";
   out_ << (value ? "true" : "false");
 }
 
 void JsonVisitor::NodeFieldPrinter::printSingularObjectField(const char *fieldName) {
   printFieldSeparator();
-  out_ << '"' << fieldName << "\":";
+  out_ << '"' << fieldName << R"(":)";
   assert(!visitor_.printed_.empty());
   out_ << *nextChild_++;
 }
@@ -75,7 +78,7 @@ void JsonVisitor::NodeFieldPrinter::printNullableSingularObjectField(
     const char *fieldName,
     const void *value) {
   printFieldSeparator();
-  out_ << '"' << fieldName << "\":";
+  out_ << '"' << fieldName << R"(":)";
   if (value != nullptr) {
     assert(!visitor_.printed_.empty());
     out_ << *nextChild_++;
@@ -89,10 +92,10 @@ void JsonVisitor::NodeFieldPrinter::printLocation(
     std::ostringstream &out,
     const yy::location &location)
 {
-  out << "{\"start\": {\"line\": " << location.begin.line
-       << ",\"column\":" << location.begin.column
-       << "}, \"end\": {\"line\":" << location.end.line
-       << ",\"column\":" << location.end.column
+  out << R"({"start": {"line": )" << location.begin.line
+       << R"(,"column":)" << location.begin.column
+       << R"(}, "end": {"line":)" << location.end.line
+       << R"(,"column":)" << location.end.column
        << "}}";
 }
 
@@ -131,7 +134,7 @@ std::string JsonVisitor::getResult() const {
 
 #include "JsonVisitor.cpp.inc"
 
-}
-}
-}
-}
+}  // namespace visitor
+}  // namespace ast
+}  // namespace graphql
+}  // namespace facebook

@@ -13,14 +13,13 @@
 #include "GraphQLParser.h"
 #include "c/GraphQLAstToJSON.h"
 
-using namespace facebook::graphql;
-using namespace facebook::graphql::ast;
+using facebook::graphql::parseString;
 
 TEST(JsonVisitorTests, NullValueEmitsValidJSONWithoutTrailingComma) {
   const char *error = nullptr;
   auto AST = parseString("{field(arg: null)}", &error);
   ASSERT_STREQ(nullptr, error) << "GraphQL parser error: " << error;
-  const char *json = graphql_ast_to_json((const struct GraphQLAstNode *)AST.get());
+  const char *json = graphql_ast_to_json(reinterpret_cast<const struct GraphQLAstNode *>(AST.get()));
 
   EXPECT_STREQ(
     json,

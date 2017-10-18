@@ -22,7 +22,7 @@ class Printer(object):
 #include "GraphQLAst.h"
 #include "../Ast.h"
 
-using namespace facebook::graphql::ast;
+using namespace facebook::graphql::ast;  // NOLINT
 '''
 
   def end_file(self):
@@ -33,7 +33,7 @@ using namespace facebook::graphql::ast;
 
   def field(self, type, name, nullable, plural):
     print field_prototype(self._current_type, type, name, nullable, plural) + ' {'
-    print '  const auto *realNode = (const %s *)node;' % self._current_type
+    print '  const auto *realNode = reinterpret_cast<const %s *>(node);' % self._current_type
     title_name = title(name)
     call_get = 'realNode->get%s()' % title_name
     if plural:
@@ -45,7 +45,7 @@ using namespace facebook::graphql::ast;
       if type in ['string', 'OperationKind', 'boolean']:
         print '  return %s;' % call_get
       else:
-        fmt = '  return (const struct %s *)%s%s;'
+        fmt = '  return reinterpret_cast<const struct %s *>(%s%s);'
         print fmt % (struct_name(type), '' if nullable else '&', call_get)
 
     print '}'
