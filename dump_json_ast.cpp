@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   const char *error;
   FILE * in;
   if (argc > 1) {
-    in = fopen(argv[1], "r");
+    in = fopen(argv[1], "r"); // NOLINT
   } else {
     in = stdin;
   }
@@ -38,13 +38,13 @@ int main(int argc, char **argv) {
   }
   if (!AST) {
     cerr << "Parser failed with error: " << error << endl;
-    free((void *)error);
+    free((void *)error);  // NOLINT
     return 1;
   }
 
-  const char *json = graphql_ast_to_json((const struct GraphQLAstNode *)AST.get());
+  const char *json = graphql_ast_to_json(reinterpret_cast<const struct GraphQLAstNode *>(AST.get()));
   puts(json);
-  free((void *)json);
+  free((void *)json);  // NOLINT
 
   return 0;
 }

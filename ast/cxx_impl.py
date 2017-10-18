@@ -23,9 +23,9 @@ namespace ast {
 '''
 
   def end_file(self):
-    print '}'
-    print '}'
-    print '}'
+    print '}  // namespace ast'
+    print '}  // namespace graphql'
+    print '}  // namespace facebook'
 
   def start_type(self, name):
     print '''void %s::accept(visitor::AstVisitor *visitor) const {

@@ -14,7 +14,7 @@ using facebook::graphql::ast::Node;
 
 void graphql_node_get_location(const struct GraphQLAstNode *node,
                                struct GraphQLAstLocation *location) {
-  const Node *realNode = (Node *)node;
+  const auto *realNode = reinterpret_cast<const Node *>(node);
   const auto &loc = realNode->getLocation();
   location->beginLine = loc.begin.line;
   location->beginColumn = loc.begin.column;
@@ -23,5 +23,5 @@ void graphql_node_get_location(const struct GraphQLAstNode *node,
 }
 
 void graphql_node_free(struct GraphQLAstNode *node) {
-  delete (Node *)node;
+  delete reinterpret_cast<Node *>(node);
 }

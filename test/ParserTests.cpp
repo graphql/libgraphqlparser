@@ -39,7 +39,7 @@ static void expectSuccessImpl(const char *queryStr, bool enableSchema) {
   EXPECT_TRUE(ast != nullptr);
   EXPECT_STREQ(nullptr, actualError);
 
-  std::free((void *)actualError);
+  std::free((void *)actualError);  // NOLINT
 }
 
 static void expectSuccess(const char *queryStr) {
@@ -62,7 +62,7 @@ TEST(ParserTests, RejectsUnrecognizedCharacter) {
 
 TEST(ParserTests, RejectsControlCharacter) {
   expectError("query myQuery { \a }",
-              "1.17: unrecognized character \\a");
+              R"(1.17: unrecognized character \a)");
 }
 
 TEST(ParserTests, AcceptsUnicodeBOM) {
@@ -78,19 +78,19 @@ TEST(ParserTests, ReportsErrorLocationAfterIgnoredBOM) {
 
 TEST(ParserTests, RejectsPartialBOM) {
   expectError("\xefquery myquery { field };",
-              "1.1: unrecognized character \\xef");
+              R"(1.1: unrecognized character \xef)");
 }
 
 TEST(ParserTests, RejectsVerticalTab) {
-  expectError("\v", "1.1: unrecognized character \\v");
+  expectError("\v", R"(1.1: unrecognized character \v)");
 }
 
 TEST(ParserTests, RejectsFormFeed) {
-  expectError("\f", "1.1: unrecognized character \\f");
+  expectError("\f", R"(1.1: unrecognized character \f)");
 }
 
 TEST(ParserTests, RejectsNoBreakSpace) {
-  expectError("\xa0", "1.1: unrecognized character \\xa0");
+  expectError("\xa0", R"(1.1: unrecognized character \xa0)");
 }
 
 
@@ -117,7 +117,7 @@ TEST(ParserTests, LocationTrackingCollapsesCRLF) {
 }
 
 TEST(ParserTests, AcceptsEmptyString) {
-  expectSuccess("{ field(arg:\"\") }");
+  expectSuccess(R"({ field(arg:"") })");
 }
 
 TEST(ParserTests, UnterminatedString) {
@@ -126,27 +126,27 @@ TEST(ParserTests, UnterminatedString) {
 }
 
 TEST(ParserTests, RejectControlCharacterInString) {
-  expectError("{ field(arg:\"\b\") }", "1.13-14: unrecognized character \\b");
+  expectError("{ field(arg:\"\b\") }", R"(1.13-14: unrecognized character \b)");
 }
 
 TEST(ParserTests, RejectsBadXEscapeSequence) {
-  expectError("{ field(arg:\"\\x\") }", "1.13-15: bad escape sequence \\x");
+  expectError(R"({ field(arg:"\x") })", R"(1.13-15: bad escape sequence \x)");
 }
 
 TEST(ParserTests, RejectsIncompleteUnicodeEscape) {
-  expectError("{ field(arg:\"\\u1\") }", "1.13-15: bad Unicode escape sequence");
+  expectError(R"({ field(arg:"\u1") })", "1.13-15: bad Unicode escape sequence");
 }
 
 TEST(ParserTests, RejectsUnicodeEscapeWithBadChars) {
-  expectError("{ field(arg:\"\\u0XX1\") }", "1.13-15: bad Unicode escape sequence");
-  expectError("{ field(arg:\"\\uXXXX\") }", "1.13-15: bad Unicode escape sequence");
-  expectError("{ field(arg:\"\\uFXXX\") }", "1.13-15: bad Unicode escape sequence");
-  expectError("{ field(arg:\"\\uXXXF\") }", "1.13-15: bad Unicode escape sequence");
+  expectError(R"({ field(arg:"\u0XX1") })", "1.13-15: bad Unicode escape sequence");
+  expectError(R"({ field(arg:"\uXXXX") })", "1.13-15: bad Unicode escape sequence");
+  expectError(R"({ field(arg:"\uFXXX") })", "1.13-15: bad Unicode escape sequence");
+  expectError(R"({ field(arg:"\uXXXF") })", "1.13-15: bad Unicode escape sequence");
 }
 
 TEST(ParserTests, AcceptsValidUnicodeEscape) {
   const char *actualError = nullptr;
-  auto ast = parseString("{ field(arg:\"\\u0009Hello\") }", &actualError);
+  auto ast = parseString(R"({ field(arg:"\u0009Hello") })", &actualError);
 
   EXPECT_TRUE(ast != nullptr);
   EXPECT_STREQ(nullptr, actualError);
@@ -175,7 +175,7 @@ TEST(ParserTests, AcceptsValidUnicodeEscape) {
 }
 
 TEST(ParserTests, TracksLocationAcrossStrings) {
-  expectError("{ field(arg:\"\\uFEFF\\n\") };",
+  expectError(R"({ field(arg:"\uFEFF\n") };)",
               "1.26: unrecognized character ;");
 }
 
@@ -256,8 +256,7 @@ TEST(ParserTests, AllowsNonKeywordsForNames) {
     "false"
   };
 
-  for (int ii = 0; ii < sizeof(nonKeywords) / sizeof(nonKeywords[0]); ++ii) {
-    const char *keyword = nonKeywords[ii];
+  for (auto keyword : nonKeywords) {
     const char *fragmentName = !strcmp(keyword, "on") ? "a" : keyword;
 
     std::ostringstream str;

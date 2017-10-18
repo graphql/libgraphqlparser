@@ -45,7 +45,7 @@ struct GraphQLAstNode;
  * callbacks struct as appropriate. userData will be passed as the userData
  * argument to each callback.
  */
-void graphql_node_visit(struct GraphQLAstNode *node,
+void graphql_node_visit(const struct GraphQLAstNode *node,
                         const struct GraphQLAstVisitorCallbacks *callbacks,
                         void *userData);
 

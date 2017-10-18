@@ -71,5 +71,5 @@ std::unique_ptr<ast::Node> parseFileWithExperimentalSchemaSupport(
 }
 
 
-}
-}
+}  // namespace graphql
+}  // namespace facebook
