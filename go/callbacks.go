@@ -10,6 +10,9 @@ package main
 
 /*
 struct GraphQLAstField;
+
+int printField(struct GraphQLAstField *field, void *unused);
+
 int printField_cgo(struct GraphQLAstField *field, void *unused) {
   return printField(field, unused);
 }
