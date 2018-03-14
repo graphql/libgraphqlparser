@@ -69,7 +69,7 @@ and it should also simplify the task of creating bindings to other
 programming languages.
 
 ## License
-libgraphqlparser is BSD-licensed. We also provide an additional patent grant.
+libgraphqlparser is MIT-licensed.
 
 ## Related Projects
 

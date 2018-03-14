@@ -549,12 +549,10 @@ static const flex_int16_t yy_chk[326] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "lexer.lpp"
 /**
- * Copyright (c) 2015, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 #line 11 "lexer.lpp"
 #include <cassert>
