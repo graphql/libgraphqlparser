@@ -19,9 +19,12 @@ namespace graphql {
 // Given properly-configured yylex, run the parser and return the
 // result.
 static std::unique_ptr<ast::Node> doParse(const char **outError, yyscan_t scanner, bool enableSchema) {
-  Node *outAST;
+  Node *outAST = NULL;
   yy::GraphQLParserImpl parser(enableSchema, &outAST, outError, scanner);
   int failure = parser.parse();
+  if (failure) {
+    delete outAST;
+  }
   return !failure ? std::unique_ptr<ast::Node>(outAST) : nullptr;
 }
 
