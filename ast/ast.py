@@ -56,10 +56,10 @@ if __name__ == '__main__':
   lang = sys.argv[1]
 
   try:
-      if sys.version_info >= (3,0):
-        lang = "%s_py3" % lang
+    if sys.version_info >= (3,0):
+      lang = "%s_py3" % lang
   except:
-      pass
+    pass
 
   filename = sys.argv[2]
 
