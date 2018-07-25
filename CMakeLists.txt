@@ -5,11 +5,15 @@ SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
 INCLUDE(version)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-
 FIND_PACKAGE(PythonInterp 2 REQUIRED)
 IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
   MESSAGE(FATAL_ERROR "Python 2 is required.")
+ENDIF()
+
+IF(UNIX)
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h") 
+ELSEIF(WIN32)
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h --wincompat") 
 ENDIF()
 
 FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
@@ -21,7 +25,7 @@ IF (BISON_FOUND)
 ENDIF()
 
 IF(FLEX_FOUND)
-  FLEX_TARGET(GraphQLScanner lexer.lpp ${CMAKE_CURRENT_SOURCE_DIR}/lexer.cpp COMPILE_FLAGS "--header-file=lexer.h")
+  FLEX_TARGET(GraphQLScanner lexer.lpp ${CMAKE_CURRENT_SOURCE_DIR}/lexer.cpp COMPILE_FLAGS ${FLEX_COMPILE_FLAGS})
   IF (BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(GraphQLScanner graphqlparser)
   ENDIF()
@@ -31,7 +35,7 @@ FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/c)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
-ADD_LIBRARY(graphqlparser SHARED
+SET(GRAPHQLPARSER_SOURCES
   JsonVisitor.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/Ast.h
   ${CMAKE_CURRENT_BINARY_DIR}/Ast.cpp
@@ -52,10 +56,19 @@ ADD_LIBRARY(graphqlparser SHARED
   lexer.h
   GraphQLParser.cpp)
 
-# Enable this and remove CMAKE_CXX_FLAGS fiddle above when we are able
-# to upgrade to CMake 2.8.12. Blocker seems to be Travis CI being on
-# Ubuntu Precise; Trusty has 2.8.12.
-# TARGET_COMPILE_OPTIONS(graphqlparser PUBLIC -std=gnu++11)
+IF(UNIX)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
+  ADD_LIBRARY(graphqlparser SHARED ${GRAPHQLPARSER_SOURCES})
+
+  # Enable this and remove CMAKE_CXX_FLAGS fiddle above when we are able
+  # to upgrade to CMake 2.8.12. Blocker seems to be Travis CI being on
+  # Ubuntu Precise; Trusty has 2.8.12.
+  # TARGET_COMPILE_OPTIONS(graphqlparser PUBLIC -std=gnu++11)
+ELSEIF(WIN32)
+  ADD_LIBRARY(graphqlparser STATIC ${GRAPHQLPARSER_SOURCES})
+ENDIF()
+
 
 ADD_EXECUTABLE(dump_json_ast dump_json_ast.cpp)
 TARGET_LINK_LIBRARIES(dump_json_ast graphqlparser)
@@ -104,10 +117,11 @@ INSTALL(FILES
   stack.hh
   syntaxdefs.h
   DESTINATION include/graphqlparser)
-INSTALL(TARGETS graphqlparser
-  LIBRARY DESTINATION lib)
 
 if (UNIX)
+  INSTALL(TARGETS graphqlparser
+    LIBRARY DESTINATION lib)
+
   # generate pkgconfig file
   include(FindPkgConfig QUIET)
   if(PKG_CONFIG_FOUND)
@@ -116,16 +130,19 @@ if (UNIX)
     install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libgraphqlparser.pc"
             DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
   endif()
+
+  IF (test)
+    ADD_SUBDIRECTORY(test)
+
+    if(UNIX)
+      # setup valgrind
+      ADD_CUSTOM_TARGET(memcheck
+        valgrind --leak-check=full --suppressions=./test/valgrind.supp --dsymutil=yes --error-exitcode=1 ./test/runTests  >/dev/null
+      )
+    endif()
+
+  ENDIF()
+elseif(WIN32)
+  INSTALL(TARGETS graphqlparser
+    ARCHIVE DESTINATION lib)
 endif()
-
-IF (test)
-  ADD_SUBDIRECTORY(test)
-
-  if(UNIX)
-    # setup valgrind
-    ADD_CUSTOM_TARGET(memcheck
-      valgrind --leak-check=full --suppressions=./test/valgrind.supp --dsymutil=yes --error-exitcode=1 ./test/runTests  >/dev/null
-    )
-  endif()
-
-ENDIF()
