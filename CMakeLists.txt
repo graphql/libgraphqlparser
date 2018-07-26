@@ -152,4 +152,9 @@ if (UNIX)
     endif()
 
   ENDIF()
+elseif(WIN32)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/graphqlparser.lib
+	DESTINATION lib)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/graphqlparser.pdb
+	DESTINATION bin)
 endif()
