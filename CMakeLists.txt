@@ -4,7 +4,8 @@ PROJECT(libgraphqlparser C CXX)
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
 IF(UNIX)
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h") 
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h")
 ELSEIF(WIN32)
   # If we're building this with vcpkg on Windows, let portfile.cmake tell us where it
   # stored these tools. Otherwise these variables should be empty and we'll fall back
@@ -29,9 +30,9 @@ IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
 ENDIF()
 
 IF(UNIX)
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h") 
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h")
 ELSEIF(WIN32)
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h --wincompat") 
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h --wincompat")
 ENDIF()
 
 FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
