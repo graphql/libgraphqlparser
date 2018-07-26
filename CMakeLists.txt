@@ -3,6 +3,24 @@ PROJECT(libgraphqlparser C CXX)
 
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
+IF(UNIX)
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h") 
+ELSEIF(WIN32)
+  # If we're building this with vcpkg on Windows, let portfile.cmake tell us where it
+  # stored these tools. Otherwise these variables should be empty and we'll fall back
+  # to the normal CMake FIND_PACKAGE logic for each of these programs.
+  SET(CMAKE_PROGRAM_PATH
+    "${VCPKG_DOWNLOADS_PYTHON2_DIR}"
+	"${VCPKG_DOWNLOADS_FLEX_DIR}"
+	"${VCPKG_DOWNLOADS_BISON_DIR}"
+	"${CMAKE_PROGRAM_PATH}")
+
+  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h --wincompat")
+
+  # Let CMake figure out the exports for the SHARED library (DLL) on Windows.
+  SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+ENDIF()
+
 INCLUDE(version)
 
 FIND_PACKAGE(PythonInterp 2 REQUIRED)
@@ -35,7 +53,7 @@ FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/c)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
-SET(GRAPHQLPARSER_SOURCES
+ADD_LIBRARY(graphqlparser SHARED
   JsonVisitor.cpp
   ${CMAKE_CURRENT_BINARY_DIR}/Ast.h
   ${CMAKE_CURRENT_BINARY_DIR}/Ast.cpp
@@ -56,19 +74,10 @@ SET(GRAPHQLPARSER_SOURCES
   lexer.h
   GraphQLParser.cpp)
 
-IF(UNIX)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-
-  ADD_LIBRARY(graphqlparser SHARED ${GRAPHQLPARSER_SOURCES})
-
-  # Enable this and remove CMAKE_CXX_FLAGS fiddle above when we are able
-  # to upgrade to CMake 2.8.12. Blocker seems to be Travis CI being on
-  # Ubuntu Precise; Trusty has 2.8.12.
-  # TARGET_COMPILE_OPTIONS(graphqlparser PUBLIC -std=gnu++11)
-ELSEIF(WIN32)
-  ADD_LIBRARY(graphqlparser STATIC ${GRAPHQLPARSER_SOURCES})
-ENDIF()
-
+# Enable this and remove CMAKE_CXX_FLAGS fiddle above when we are able
+# to upgrade to CMake 2.8.12. Blocker seems to be Travis CI being on
+# Ubuntu Precise; Trusty has 2.8.12.
+# TARGET_COMPILE_OPTIONS(graphqlparser PUBLIC -std=gnu++11)
 
 ADD_EXECUTABLE(dump_json_ast dump_json_ast.cpp)
 TARGET_LINK_LIBRARIES(dump_json_ast graphqlparser)
@@ -118,10 +127,11 @@ INSTALL(FILES
   syntaxdefs.h
   DESTINATION include/graphqlparser)
 
-if (UNIX)
-  INSTALL(TARGETS graphqlparser
-    LIBRARY DESTINATION lib)
+INSTALL(TARGETS graphqlparser
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
+if (UNIX)
   # generate pkgconfig file
   include(FindPkgConfig QUIET)
   if(PKG_CONFIG_FOUND)
@@ -142,7 +152,4 @@ if (UNIX)
     endif()
 
   ENDIF()
-elseif(WIN32)
-  INSTALL(TARGETS graphqlparser
-    ARCHIVE DESTINATION lib)
 endif()
