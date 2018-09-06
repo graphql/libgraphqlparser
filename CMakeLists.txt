@@ -29,12 +29,6 @@ IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
   MESSAGE(FATAL_ERROR "Python 2 is required.")
 ENDIF()
 
-IF(UNIX)
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h")
-ELSEIF(WIN32)
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h --wincompat")
-ENDIF()
-
 FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
 
 FIND_PACKAGE(BISON 3)
@@ -141,21 +135,20 @@ if (UNIX)
     install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libgraphqlparser.pc"
             DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
   endif()
-
-  IF (test)
-    ADD_SUBDIRECTORY(test)
-
-    if(UNIX)
-      # setup valgrind
-      ADD_CUSTOM_TARGET(memcheck
-        valgrind --leak-check=full --suppressions=./test/valgrind.supp --dsymutil=yes --error-exitcode=1 ./test/runTests  >/dev/null
-      )
-    endif()
-
-  ENDIF()
 elseif(WIN32)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/graphqlparser.lib
 	DESTINATION lib)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/graphqlparser.pdb
 	DESTINATION bin)
 endif()
+
+IF (test)
+  ADD_SUBDIRECTORY(test)
+
+  if(UNIX)
+    # setup valgrind
+    ADD_CUSTOM_TARGET(memcheck
+      valgrind --leak-check=full --suppressions=./test/valgrind.supp --dsymutil=yes --error-exitcode=1 ./test/runTests  >/dev/null
+    )
+  endif()
+ENDIF()
