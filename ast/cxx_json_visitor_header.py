@@ -3,7 +3,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-
+from __future__ import print_function
 from casing import title
 from license import C_LICENSE_COMMENT
 
@@ -12,7 +12,7 @@ class Printer(object):
     self._anyFieldIsANode = False
 
   def start_file(self):
-    print C_LICENSE_COMMENT + '/** @generated */'
+    print(C_LICENSE_COMMENT + '/** @generated */')
 
   def end_file(self):
     pass
@@ -23,9 +23,9 @@ class Printer(object):
   def end_type(self, name):
     titleName = title(name)
     if self._anyFieldIsANode:
-      print 'bool visit%s(const %s &node) override;' % (titleName, titleName)
-    print 'void endVisit%s(const %s &node) override;' % (titleName, titleName)
-    print
+      print('bool visit%s(const %s &node) override;' % (titleName, titleName))
+    print('void endVisit%s(const %s &node) override;' % (titleName, titleName))
+    print()
 
   def field(self, type, name, nullable, plural):
     if (not self._anyFieldIsANode and

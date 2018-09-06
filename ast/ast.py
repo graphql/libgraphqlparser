@@ -53,14 +53,8 @@ def print_ast(lang_module, input_file):
   lang_module.end_file()
 if __name__ == '__main__':
   import sys
+
   lang = sys.argv[1]
-
-  try:
-    if sys.version_info >= (3,0):
-      lang = "%s_py3" % lang
-  except:
-    pass
-
   filename = sys.argv[2]
 
   lang_module = load_lang(lang)
