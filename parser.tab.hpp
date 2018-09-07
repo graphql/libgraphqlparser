@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.0.4.
+// A Bison parser, made by GNU Bison 3.0.5.
 
 // Skeleton interface for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@
 #ifndef YY_YY_PARSER_TAB_HPP_INCLUDED
 # define YY_YY_PARSER_TAB_HPP_INCLUDED
 // //                    "%code requires" blocks.
-#line 22 "parser.ypp" // lalr1.cc:392
+#line 20 "parser.ypp" // lalr1.cc:394
 
 #include <cstdlib>
 #include <cstring>
@@ -171,7 +171,7 @@ union yystype {                                         \
 #define YYLTYPE yy::location
 
 
-#line 175 "parser.tab.hpp" // lalr1.cc:392
+#line 175 "parser.tab.hpp" // lalr1.cc:394
 
 
 # include <cstdlib> // std::abort
@@ -243,7 +243,7 @@ union yystype {                                         \
 
 
 namespace yy {
-#line 247 "parser.tab.hpp" // lalr1.cc:392
+#line 247 "parser.tab.hpp" // lalr1.cc:394
 
 
 
@@ -583,6 +583,8 @@ namespace yy {
       typedef basic_symbol<by_state> super_type;
       /// Construct an empty symbol.
       stack_symbol_type ();
+      /// Copy construct.
+      stack_symbol_type (const stack_symbol_type& that);
       /// Steal the contents from \a sym to build this.
       stack_symbol_type (state_type s, symbol_type& sym);
       /// Assignment, needed by push_back.
@@ -611,7 +613,7 @@ namespace yy {
     void yypush_ (const char* m, state_type s, symbol_type& sym);
 
     /// Pop \a n symbols the three stacks.
-    void yypop_ (unsigned int n = 1);
+    void yypop_ (unsigned n = 1);
 
     /// Constants.
     enum
@@ -636,7 +638,7 @@ namespace yy {
 
 
 } // yy
-#line 640 "parser.tab.hpp" // lalr1.cc:392
+#line 642 "parser.tab.hpp" // lalr1.cc:394
 
 
 
