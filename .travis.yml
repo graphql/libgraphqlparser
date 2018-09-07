@@ -11,14 +11,7 @@ addons:
       - valgrind
 
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-  # bison and flex are not installed in CI because
-  # 1) the versions in Travis are too old, and
-  # 2) up-to-date bison and flex output should be checked in.
   # Versions of g++ prior to 4.8 don't have very good C++11 support.
-  - sudo apt-get install -y g++-4.8
-    && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
   - wget https://codeload.github.com/google/googletest/zip/release-1.8.0
       && cd test
       && unzip ../release-1.8.0
