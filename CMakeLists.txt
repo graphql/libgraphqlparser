@@ -5,7 +5,7 @@ SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
 IF(UNIX)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h")
+  SET(FLEX_COMPILE_FLAGS "--header-file=${CMAKE_CURRENT_BINARY_DIR}/lexer.h")
 ELSEIF(WIN32)
   # If we're building this with vcpkg on Windows, let portfile.cmake tell us where it
   # stored these tools. Otherwise these variables should be empty and we'll fall back
@@ -16,7 +16,7 @@ ELSEIF(WIN32)
 	"${VCPKG_DOWNLOADS_BISON_DIR}"
 	"${CMAKE_PROGRAM_PATH}")
 
-  SET(FLEX_COMPILE_FLAGS "--header-file=lexer.h --wincompat")
+  SET(FLEX_COMPILE_FLAGS "--header-file=${CMAKE_CURRENT_BINARY_DIR}/lexer.h --wincompat")
 
   # Let CMake figure out the exports for the SHARED library (DLL) on Windows.
   SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
@@ -34,14 +34,38 @@ FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
 FIND_PACKAGE(BISON 3)
 FIND_PACKAGE(FLEX)
 IF (BISON_FOUND)
-  BISON_TARGET(graphqlparser parser.ypp ${CMAKE_CURRENT_SOURCE_DIR}/parser.tab.cpp)
+  BISON_TARGET(graphqlparser_bison parser.ypp ${CMAKE_CURRENT_BINARY_DIR}/parser.tab.cpp)
+  SET(BISON_LOCATION_HEADER ${CMAKE_CURRENT_BINARY_DIR}/location.hh)
+ELSE()
+  SET(BISON_graphqlparser_bison_OUTPUT_SOURCE ${CMAKE_CURRENT_BINARY_DIR}/parser.tab.cpp)
+  SET(BISON_graphqlparser_bison_OUTPUT_HEADER ${CMAKE_CURRENT_BINARY_DIR}/parser.tab.hpp)
+  SET(BISON_graphqlparser_bison_OUTPUTS
+    ${BISON_graphqlparser_bison_OUTPUT_SOURCE}
+    ${BISON_graphqlparser_bison_OUTPUT_HEADER}
+    ${CMAKE_CURRENT_BINARY_DIR}/location.hh
+    ${CMAKE_CURRENT_BINARY_DIR}/position.hh
+    ${CMAKE_CURRENT_BINARY_DIR}/stack.hh)
+  SET(BISON_LOCATION_HEADER ${CMAKE_CURRENT_BINARY_DIR}/location.hh)
+  FILE(COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/parser.tab.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/parser.tab.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/location.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/position.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/stack.hh
+    ${CMAKE_CURRENT_BINARY_DIR})
 ENDIF()
 
 IF(FLEX_FOUND)
   FLEX_TARGET(GraphQLScanner lexer.lpp ${CMAKE_CURRENT_SOURCE_DIR}/lexer.cpp COMPILE_FLAGS ${FLEX_COMPILE_FLAGS})
   IF (BISON_FOUND)
-    ADD_FLEX_BISON_DEPENDENCY(GraphQLScanner graphqlparser)
+    ADD_FLEX_BISON_DEPENDENCY(GraphQLScanner graphqlparser_bison)
   ENDIF()
+ELSE()
+  SET(FLEX_GraphQLScanner_OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp)
+  FILE(COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/lexer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parsergen/lexer.h
+    ${CMAKE_CURRENT_BINARY_DIR})
 ENDIF()
 
 FILE(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/c)
@@ -58,15 +82,13 @@ ADD_LIBRARY(graphqlparser SHARED
   ${CMAKE_CURRENT_BINARY_DIR}/c/GraphQLAstForEachConcreteType.h
   ${CMAKE_CURRENT_BINARY_DIR}/JsonVisitor.h.inc
   ${CMAKE_CURRENT_BINARY_DIR}/JsonVisitor.cpp.inc
+  ${BISON_graphqlparser_bison_OUTPUTS}
+  ${FLEX_GraphQLScanner_OUTPUTS}
   c/GraphQLAstNode.cpp
   c/GraphQLAstToJSON.cpp
   c/GraphQLAstVisitor.h
   c/GraphQLAstVisitor.cpp
   c/GraphQLParser.cpp
-  parser.tab.cpp
-  parser.tab.hpp
-  lexer.cpp
-  lexer.h
   GraphQLParser.cpp)
 
 # Enable this and remove CMAKE_CXX_FLAGS fiddle above when we are able
@@ -114,12 +136,7 @@ INSTALL(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/AstVisitor.h
   GraphQLParser.h
   JsonVisitor.h
-  lexer.h
-  location.hh
-  parser.tab.hpp
-  position.hh
-  stack.hh
-  syntaxdefs.h
+  ${BISON_LOCATION_HEADER}
   DESTINATION include/graphqlparser)
 
 INSTALL(TARGETS graphqlparser
