@@ -41,6 +41,7 @@ T VariableDefinition
 S Variable variable
 S Type type
 S? Value defaultValue
+P? Directive directives
 
 T SelectionSet
 P Selection selections
