@@ -1,3 +1,5 @@
+# Copyright (c) Facebook, Inc. and its affiliates.
+
 # Mini-language for AST definition.
 # All AST nodes extend AstNode.
 # All AST nodes are visitible.
