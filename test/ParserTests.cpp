@@ -319,7 +319,7 @@ TEST(ParserTests, ProducesCorrectOutputForSchemaKitchenSink) {
 }
 
 static void expectSchemaParsing(const char *queryStr) {
-  char buf[strlen("1.1-XXX: schema support disabled") + 1];
+  char buf[sizeof("1.1-XXX: schema support disabled")];
   ASSERT_LT(strlen(queryStr), 999);
   snprintf(
     buf,

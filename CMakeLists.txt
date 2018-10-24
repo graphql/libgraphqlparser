@@ -3,9 +3,26 @@ PROJECT(libgraphqlparser C CXX)
 
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 
-INCLUDE(version)
+IF(UNIX)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+  SET(FLEX_COMPILE_FLAGS "--header-file=${CMAKE_CURRENT_BINARY_DIR}/lexer.h")
+ELSEIF(WIN32)
+  # If we're building this with vcpkg on Windows, let portfile.cmake tell us where it
+  # stored these tools. Otherwise these variables should be empty and we'll fall back
+  # to the normal CMake FIND_PACKAGE logic for each of these programs.
+  SET(CMAKE_PROGRAM_PATH
+    "${VCPKG_DOWNLOADS_PYTHON2_DIR}"
+	"${VCPKG_DOWNLOADS_FLEX_DIR}"
+	"${VCPKG_DOWNLOADS_BISON_DIR}"
+	"${CMAKE_PROGRAM_PATH}")
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+  SET(FLEX_COMPILE_FLAGS "--header-file=${CMAKE_CURRENT_BINARY_DIR}/lexer.h --wincompat")
+
+  # Let CMake figure out the exports for the SHARED library (DLL) on Windows.
+  SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+ENDIF()
+
+INCLUDE(version)
 
 FIND_PACKAGE(PythonInterp 2 REQUIRED)
 IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
@@ -39,7 +56,7 @@ ELSE()
 ENDIF()
 
 IF(FLEX_FOUND)
-  FLEX_TARGET(GraphQLScanner lexer.lpp ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp COMPILE_FLAGS "--header-file=${CMAKE_CURRENT_BINARY_DIR}/lexer.h")
+  FLEX_TARGET(GraphQLScanner lexer.lpp ${CMAKE_CURRENT_SOURCE_DIR}/lexer.cpp COMPILE_FLAGS ${FLEX_COMPILE_FLAGS})
   IF (BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(GraphQLScanner graphqlparser_bison)
   ENDIF()
@@ -121,8 +138,10 @@ INSTALL(FILES
   JsonVisitor.h
   ${BISON_LOCATION_HEADER}
   DESTINATION include/graphqlparser)
+
 INSTALL(TARGETS graphqlparser
-  LIBRARY DESTINATION lib)
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
 if (UNIX)
   # generate pkgconfig file
@@ -133,6 +152,11 @@ if (UNIX)
     install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libgraphqlparser.pc"
             DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
   endif()
+elseif(WIN32)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/graphqlparser.lib
+	DESTINATION lib)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/graphqlparser.pdb
+	DESTINATION bin)
 endif()
 
 IF (test)
@@ -144,5 +168,4 @@ IF (test)
       valgrind --leak-check=full --suppressions=./test/valgrind.supp --dsymutil=yes --error-exitcode=1 ./test/runTests  >/dev/null
     )
   endif()
-
 ENDIF()
