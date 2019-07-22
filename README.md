@@ -22,9 +22,13 @@ pure C API.
 libgraphqlparser requires a C++ compiler that supports C++11. It
 also requires Mac OS X or Linux.
 
-To run tests, please download googletest from
+To run tests, first, compile and install the library as described above. Then,
+please download googletest from
 https://github.com/google/googletest/archive/release-1.8.0.zip
-and unzip it in the `test` subdirectory.
+and unzip it in the `test` subdirectory. In consequence, a folder
+`googletest-release-1.8.0` should be contained in `test`. Next, within the
+`test` folder, run `cmake .` and `make` to generate the `runTests` binary.
+To execute the tests run `./test/runTests` from the main folder.
 
 ## Building libgraphqlparser
 
@@ -69,6 +73,7 @@ and it should also simplify the task of creating bindings to other
 programming languages.
 
 ## License
+
 libgraphqlparser is MIT-licensed.
 
 ## Related Projects
