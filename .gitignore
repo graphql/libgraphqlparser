@@ -21,3 +21,10 @@ build/
 libgraphqlparser.pc
 JsonVisitor.cpp.inc
 JsonVisitor.h.inc
+lexer.cpp
+lexer.h
+location.hh
+parser.tab.cpp
+parser.tab.hpp
+position.hh
+stack.hh
