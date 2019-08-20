@@ -28,4 +28,4 @@ outlined on that page and do not file a public issue.
 
 ## License
 By contributing to libgraphqlparser, you agree that your contributions
-will be licensed under its BSD license.
+will be licensed under the LICENSE file in the project root directory.
