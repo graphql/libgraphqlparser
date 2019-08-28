@@ -16,6 +16,29 @@ namespace graphql {
 namespace ast {
 namespace visitor {
 
+static std::string escape(const char *s) {
+  static char hex[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+  std::string result;
+  while (unsigned char ch = *s++) {
+    if (ch >= '\0' && ch <= '\x1f') {
+      result.push_back('\\');
+      result.push_back('u');
+      result.push_back('0');
+      result.push_back('0');
+      result.push_back(ch >= 16 ? '1' : '0');
+      result.push_back(hex[ch % 16]);
+    } else if (ch == '"') {
+      result.push_back('\\');
+      result.push_back('"');
+    } else if (ch == '\\') {
+      result.push_back('\\');
+      result.push_back('\\');
+    } else {
+      result.push_back(ch);
+    }
+  }
+  return result;
+}
 
 JsonVisitor::NodeFieldPrinter::NodeFieldPrinter(
     JsonVisitor &visitor,
@@ -54,7 +77,7 @@ void JsonVisitor::NodeFieldPrinter::printSingularPrimitiveField(
     const char *value) {
   printFieldSeparator();
   out_ << '"' << fieldName << R"(":)";
-  out_ << '"' << value << '"';
+  out_ << '"' << escape(value) << '"';
 }
 
 void JsonVisitor::NodeFieldPrinter::printSingularBooleanField(

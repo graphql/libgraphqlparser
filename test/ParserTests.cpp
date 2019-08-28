@@ -118,6 +118,10 @@ TEST(ParserTests, AcceptsEmptyString) {
   expectSuccess(R"({ field(arg:"") })");
 }
 
+TEST(ParserTests, AcceptsEmptyBlockString) {
+  expectSuccess(R"({ field(arg:"""""") })");
+}
+
 TEST(ParserTests, UnterminatedString) {
   expectError("\"", "1.1: Unterminated string at EOF");
   expectError("\"\n\"", "1.1-2: Unterminated string");

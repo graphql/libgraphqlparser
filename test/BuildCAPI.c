@@ -1,3 +1,4 @@
+// Copyright (c) Facebook, Inc. and its affiliates.
 #include <c/GraphQLAst.h>
 #include <c/GraphQLAstVisitor.h>
 
