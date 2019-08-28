@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-%require "3"
+/* %require "3" */
 
 %skeleton "lalr1.cc"
 
@@ -278,7 +278,7 @@ union yystype {                                         \
 %type <typeNameList> union_members;
 %type <fieldDefinition> field_definition;
 %type <fieldDefinitionList> field_definition_list;
-%type <inputValueDefinitionList> arguments_definition_opt; 
+%type <inputValueDefinitionList> arguments_definition_opt;
 %type <inputValueDefinitionList> arguments_definition;
 %type <inputValueDefinitionList> input_value_definition_list;
 %type <inputValueDefinition> input_value_definition;
@@ -333,7 +333,7 @@ name_opt:
 
 document:       definition_list { $$ = new Document(@$, $1); }
         ;
-                
+
 definition_list:definition { $$ = new std::vector<std::unique_ptr<Definition>>(); $$->emplace_back($1); }
         |       definition_list definition { $1->emplace_back($2); $$ = $1; }
         ;
