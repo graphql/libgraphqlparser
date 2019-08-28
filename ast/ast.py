@@ -53,6 +53,7 @@ def print_ast(lang_module, input_file):
   lang_module.end_file()
 if __name__ == '__main__':
   import sys
+
   lang = sys.argv[1]
   filename = sys.argv[2]
 
