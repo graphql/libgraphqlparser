@@ -64,6 +64,10 @@ extend type Foo {
   seven(argument: [String]): Type
 }
 
+extend interface Bar {
+  name: String
+}
+
 # NOTE: out-of-spec test cases commented out until the spec is clarified; see
 # https://github.com/graphql/graphql-js/issues/650 .
 # extend type Foo @onType {}
