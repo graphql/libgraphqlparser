@@ -50,6 +50,6 @@ void graphql_node_visit(const struct GraphQLAstNode *node,
 {
   CVisitorBridge visitor(callbacks, userData);
   if (node) {
-    reinterpret_cast<const graphql::ast::Node *>(node)->accept(&visitor);
+    reinterpret_cast<const facebook::graphql::ast::Node *>(node)->accept(&visitor);
   }
 }
