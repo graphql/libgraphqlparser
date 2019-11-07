@@ -1,4 +1,4 @@
-// Copyright (c) Facebook, Inc. and its affiliates.
+// Copyright GraphQL Foundation
 #include <c/GraphQLAst.h>
 #include <c/GraphQLAstVisitor.h>
 

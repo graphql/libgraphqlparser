@@ -587,7 +587,7 @@ static const flex_int16_t yy_chk[345] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "lexer.lpp"
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright 2019-present, GraphQL Foundation
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.

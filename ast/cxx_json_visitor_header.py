@@ -1,4 +1,4 @@
-# Copyright (c) 2016-present, Facebook, Inc.
+# Copyright 2019-present, GraphQL Foundation
 # All rights reserved.
 #
 # This source code is licensed under the MIT license found in the
