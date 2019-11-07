@@ -1,4 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
+# Copyright 2019-present, GraphQL Foundation
 
 find_package(Git QUIET)
 

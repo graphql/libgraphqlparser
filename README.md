@@ -1,13 +1,12 @@
 # libgraphqlparser
 
 libgraphqlparser is a parser for
-[GraphQL](http://facebook.github.io/graphql/), a query language
-created by Facebook for describing data requirements on complex
-application data models, implemented in C++11. It can be used on its
-own in C++ code (or in C code via the pure C API defined in the `c`
-subdirectory), or you can use it as the basis for an extension module
-for your favorite programming language instead of writing your own
-parser from scratch.
+[GraphQL](http://graphql.org/), a query language for describing data
+requirements on complex application data models, implemented in C++11.
+It can be used on its own in C++ code (or in C code via the pure C API
+defined in the `c` subdirectory), or you can use it as the basis for an
+extension module for your favorite programming language instead of writing
+your own parser from scratch.
 
 ## Example
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2015-present, Facebook, Inc.
+# Copyright 2019-present, GraphQL Foundation
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
@@ -33,7 +33,7 @@ namespace ast {
   def field(self, type, name, nullable, plural):
     if type in ['OperationKind', 'string', 'boolean']:
       return
-  
+
     if plural:
       accept = '{ for (const auto &x : *%s_) { x->accept(visitor); } }' % name
       if nullable:

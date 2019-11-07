@@ -1,4 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
+# Copyright 2019-present, GraphQL Foundation
 
 # Mini-language for AST definition.
 # All AST nodes extend AstNode.
@@ -135,7 +135,7 @@ S Type type
 T NonNullType
 # JS version prohibits nesting nonnull in nonnull, we can't because we
 # can't support multiple unions. Fix?
-S Type type  
+S Type type
 
 T Name
 S string value

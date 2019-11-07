@@ -1,4 +1,4 @@
-# Copyright (c) 2015-present, Facebook, Inc.
+# Copyright 2019-present, GraphQL Foundation
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
@@ -178,7 +178,7 @@ struct CDeleter {
       self._type_name, self._type_name)
     print >> self._deferredOutput, '  %s& operator=(const %s&) = delete;' % (
       self._type_name, self._type_name)
-  
+
   def start_union(self, name):
     self._type_name = name
     # non-deferred!
