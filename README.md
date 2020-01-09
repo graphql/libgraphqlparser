@@ -81,4 +81,4 @@ libgraphqlparser is MIT-licensed.
 - [graphql_parser (Elixir interface)](https://github.com/aarvay/graphql_parser)
 - [graphql-parser-php (PHP interface)](https://github.com/dosten/graphql-parser-php)
 - [graphql-libgraphqlparser (Ruby interface)](https://github.com/rmosolgo/graphql-libgraphqlparser-ruby)
-- [graphql-ruby-client (Ruby interface)](https://github.com/Shopify/graphql-ruby-client)
+- [graphql-ruby (Ruby interface)](https://github.com/Shopify/graphql-ruby)
