@@ -7,12 +7,13 @@ INCLUDE(version)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 
-FIND_PACKAGE(PythonInterp 2 REQUIRED)
+FIND_PACKAGE(PythonInterp 2)
 IF (NOT PYTHON_VERSION_MAJOR EQUAL 2)
-  MESSAGE(FATAL_ERROR "Python 2 is required.")
+  MESSAGE(WARNING "Python 2 is required.")
+ELSE()
+  FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
 ENDIF()
 
-FIND_PROGRAM(CTYPESGEN_FOUND ctypesgen.py)
 
 FIND_PACKAGE(BISON 3)
 FIND_PACKAGE(FLEX)
@@ -89,21 +90,29 @@ FUNCTION(GENERATE_AST_FILE FILE_TYPE FILE_RELATIVE_PATH)
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.ast ${CMAKE_CURRENT_SOURCE_DIR}/ast/ast.py ${CMAKE_CURRENT_SOURCE_DIR}/ast/${FILE_TYPE}.py)
 ENDFUNCTION(GENERATE_AST_FILE)
 
-GENERATE_AST_FILE(cxx Ast.h)
-
-GENERATE_AST_FILE(cxx_visitor AstVisitor.h)
-
-GENERATE_AST_FILE(cxx_impl Ast.cpp)
-
-GENERATE_AST_FILE(c c/GraphQLAst.h)
-
-GENERATE_AST_FILE(c_impl c/GraphQLAst.cpp)
-
-GENERATE_AST_FILE(c_visitor_impl c/GraphQLAstForEachConcreteType.h)
-
-GENERATE_AST_FILE(cxx_json_visitor_header JsonVisitor.h.inc)
-
-GENERATE_AST_FILE(cxx_json_visitor_impl JsonVisitor.cpp.inc)
+IF(PythonInterp_FOUND)
+  GENERATE_AST_FILE(cxx Ast.h)
+  GENERATE_AST_FILE(cxx_visitor AstVisitor.h)
+  GENERATE_AST_FILE(cxx_impl Ast.cpp)
+  GENERATE_AST_FILE(c c/GraphQLAst.h)
+  GENERATE_AST_FILE(c_impl c/GraphQLAst.cpp)
+  GENERATE_AST_FILE(c_visitor_impl c/GraphQLAstForEachConcreteType.h)
+  GENERATE_AST_FILE(cxx_json_visitor_header JsonVisitor.h.inc)
+  GENERATE_AST_FILE(cxx_json_visitor_impl JsonVisitor.cpp.inc)
+ELSE()
+  FILE(COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/Ast.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/Ast.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/AstVisitor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/JsonVisitor.h.inc
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/JsonVisitor.cpp.inc
+    DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
+  FILE(COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/c/GraphQLAst.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/c/GraphQLAst.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/pregenerated_ast/c/GraphQLAstForEachConcreteType.h
+    DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/c)
+ENDIF()
 
 ADD_SUBDIRECTORY(python)
 
