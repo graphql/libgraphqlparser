@@ -38,11 +38,11 @@ public:
   def start_type(self, name):
     titleName = title(name)
     camelName = camel(titleName)
-    print '  virtual bool visit%s(const %s &%s) { return true; }' % (
+    print '  virtual bool visit%s([[maybe_unused]] const %s &%s) { return true; }' % (
       titleName,
       titleName,
       camelName)
-    print '  virtual void endVisit%s(const %s &%s) { }' % (
+    print '  virtual void endVisit%s([[maybe_unused]] const %s &%s) { }' % (
       titleName,
       titleName,
       camelName)
