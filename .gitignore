@@ -3,9 +3,9 @@ bison.tab.hpp
 *.o
 parser.output
 dump_json_ast
-Ast.h
-Ast.cpp
-AstVisitor.h
+/Ast.h
+/Ast.cpp
+/AstVisitor.h
 *.dSYM
 CMakeCache.txt
 CMakeFiles
