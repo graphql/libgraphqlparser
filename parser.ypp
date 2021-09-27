@@ -391,7 +391,7 @@ variable:       VARIABLE { $$ = new Variable(@$, new Name(@1, strdup($1))); }
         ;
 
 variable_definition:
-                variable ":" type default_value_opt { $$ = new VariableDefinition(@$, $1, $3, $4); }
+                variable ":" type default_value_opt directives_opt { $$ = new VariableDefinition(@$, $1, $3, $4, $5); }
         ;
 
 default_value_opt:
