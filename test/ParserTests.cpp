@@ -347,6 +347,8 @@ TEST(SchemaParserTests, SimpleSchema) {
                       "otherField: otherType }");
   expectSchemaParsing("extend type SomeType " DIRECTIVES
                       "{ anotherField : AnotherType }");
+  expectSchemaParsing("extend interface SomeInterface " DIRECTIVES
+                      "{ anotherField : AnotherType }");
   expectSchemaParsing("directive @somedirective(a1 : t1 = 1 " DIRECTIVES
                       ", a2 : t2) on foo | bar");
 }

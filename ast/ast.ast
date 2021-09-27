@@ -20,6 +20,7 @@ O SchemaDefinition
 O ScalarTypeDefinition
 O ObjectTypeDefinition
 O InterfaceTypeDefinition
+O InterfaceExtensionDefinition
 O UnionTypeDefinition
 O EnumTypeDefinition
 O InputObjectTypeDefinition
@@ -174,6 +175,9 @@ T InterfaceTypeDefinition
 S Name name
 P? Directive directives
 P FieldDefinition fields
+
+T InterfaceExtensionDefinition
+S InterfaceTypeDefinition definition
 
 T UnionTypeDefinition
 S Name name
