@@ -13,7 +13,7 @@ Assuming pkg-config has been installed, it should be possible to then build
 using Go in the normal fashion:
 ```sh
 $ cd libgraphqlparser/go
-$ go build
+$ GO111MODULE="off" go build
 $ ./go
 field : myfield
 Example error: 1.18-19: syntax error, unexpected on, expecting ( or @ or {
