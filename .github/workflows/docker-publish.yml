@@ -17,4 +17,4 @@ jobs:
     strategy:
       matrix:
         repo:
-          - lib.docker
+          - postgres.docker
