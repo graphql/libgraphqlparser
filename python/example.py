@@ -10,7 +10,7 @@ from GraphQLParser import *
 def print_field(field, unused):
   field_name = GraphQLAstField_get_name(field)
   field_name_value = GraphQLAstName_get_value(field_name)
-  print 'field : ' + field_name_value
+  print('field : ' + field_name_value)
   return 0
 
 def main():
@@ -22,10 +22,10 @@ def main():
   graphql_node_free(ast)
 
   ast = graphql_parse_string('query errorQuery on oops { myfield }', byref(error))
-  print 'Example error:', string_at(error)
+  print('Example error:', string_at(error))
   graphql_error_free(error)
   if ast:
-    print 'BUG: we should have got a null AST back, but we got:', ast
+    print('BUG: we should have got a null AST back, but we got:', ast)
 
 if __name__ == '__main__':
   main()
