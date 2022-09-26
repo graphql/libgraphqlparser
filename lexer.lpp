@@ -90,7 +90,7 @@ notnewline [^\n\r]
   \\f { yyextra->str.push_back('\f'); }
 
   \\u[0-9A-Fa-f]{4} {
-    int ch;
+    unsigned int ch;
     sscanf(yytext + 2, "%x", &ch);
     yyextra->str.push_back(ch);
   }
@@ -261,7 +261,7 @@ static std::vector<std::string> splitLines(const std::string &str) {
   return lines;
 }
 
-static int count_leading_whitespace(const std::string &str) {
+static unsigned int count_leading_whitespace(const std::string &str) {
   auto pos = str.find_first_not_of(" \t", 0, strlen(" \t"));
   if (pos == std::string::npos) {
     return str.length();
@@ -276,7 +276,7 @@ static bool is_all_whitespace(const std::string &str) {
 static std::string clean_up_block_string(const std::string &str) {
   auto lines = splitLines(str);
   bool first = true;
-  int commonIndent = INT_MAX;
+  unsigned int commonIndent = INT_MAX;
   for (const auto &line : lines) {
     if (first) {
       first = false;
