@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "c/GraphQLAst.h"
-#include "c/GraphQLAstForEachConcreteType.h"
+#include "GraphQLAst.h"
+#include "GraphQLAstForEachConcreteType.h"
 
 #ifdef __cplusplus
 extern "C" {
